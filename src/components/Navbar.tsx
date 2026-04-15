@@ -38,7 +38,7 @@ function Navbar() {
         </Stack>
 
         <Drawer anchor="right" open={open} onClose={close}>
-          <Stack sx={{ width: 280, p: 2 }} spacing={2}>
+          <Stack sx={{ p: 2 }} spacing={2}>
             <IconButton
               color="inherit"
               aria-label="Zavřít navigaci"

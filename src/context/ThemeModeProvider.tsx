@@ -17,7 +17,10 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
   const theme = useMemo(
     () =>
       createTheme({
-        palette: { mode },
+        palette: {
+          mode,
+          info: { main: mode === 'dark' ? '#1E4E8C' : '#87CEEB' },
+        },
         typography: {
           fontFamily: '"Figtree", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
         },
