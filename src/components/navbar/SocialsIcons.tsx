@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 
 import { SocialIconButton } from './SocialIconButton';
-import { socialLinks } from './socialLinks';
+import { socialLinks } from '../../data/navbar/socialLinks';
 
 type SocialsIconsProps = {
   direction?: 'row' | 'column';

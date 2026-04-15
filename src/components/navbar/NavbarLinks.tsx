@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 
 import { NavbarLink } from './NavbarLink';
-import { navbarLinks } from './navbarLinksData';
+import { navbarLinks } from '../../data/navbar/navbarLinksData';
 
 type NavbarLinksProps = {
   direction?: 'row' | 'column';
