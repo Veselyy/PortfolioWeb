@@ -14,6 +14,12 @@ function ThemeSwitcher() {
         color="inherit"
         onClick={toggle}
         aria-label={isDark ? 'Přepnout na světlý motiv' : 'Přepnout na tmavý motiv'}
+        sx={{
+          '&:focus-visible': {
+            outline: '1px solid currentColor',
+            outlineOffset: 4,
+          },
+        }}
       >
         {isDark ? <LightModeIcon /> : <DarkModeIcon />}
       </IconButton>

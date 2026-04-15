@@ -30,6 +30,11 @@ export function SocialIconButton({
           transition: (theme) =>
             theme.transitions.create('transform', { duration: theme.transitions.duration.shorter }),
           '&:hover': { transform: 'scale(1.1)' },
+          '&:focus-visible': {
+            transform: 'scale(1.1)',
+            outline: '1px solid currentColor',
+            outlineOffset: 4,
+          },
         }}
       >
         {icon}

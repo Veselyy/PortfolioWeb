@@ -22,7 +22,17 @@ function Navbar() {
           sx={{ alignItems: 'center', justifyContent: 'space-between' }}
         >
           <ThemeSwitcher />
-          <IconButton color="inherit" aria-label="Otevřít navigaci" onClick={() => setOpen(true)}>
+          <IconButton
+            color="inherit"
+            aria-label="Otevřít navigaci"
+            onClick={() => setOpen(true)}
+            sx={{
+              '&:focus-visible': {
+                outline: '1px solid currentColor',
+                outlineOffset: 4,
+              },
+            }}
+          >
             <MenuIcon />
           </IconButton>
         </Stack>
@@ -33,7 +43,13 @@ function Navbar() {
               color="inherit"
               aria-label="Zavřít navigaci"
               onClick={close}
-              sx={{ alignSelf: 'flex-end' }}
+              sx={{
+                alignSelf: 'flex-end',
+                '&:focus-visible': {
+                  outline: '1px solid currentColor',
+                  outlineOffset: 4,
+                },
+              }}
             >
               <CloseIcon />
             </IconButton>
