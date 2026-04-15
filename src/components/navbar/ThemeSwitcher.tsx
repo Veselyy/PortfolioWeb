@@ -16,7 +16,7 @@ function ThemeSwitcher() {
         aria-label={isDark ? 'Přepnout na světlý motiv' : 'Přepnout na tmavý motiv'}
         size="small"
       >
-        {isDark ? <LightModeIcon /> : <DarkModeIcon />}
+        {isDark ? <LightModeIcon fontSize="small" /> : <DarkModeIcon fontSize="small" />}
       </IconButton>
     </Tooltip>
   );
