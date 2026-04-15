@@ -14,7 +14,16 @@ function getInitialMode(): ThemeMode {
 
 export function ThemeModeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<ThemeMode>(getInitialMode);
-  const theme = useMemo(() => createTheme({ palette: { mode } }), [mode]);
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: { mode },
+        typography: {
+          fontFamily: '"Figtree", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+        },
+      }),
+    [mode],
+  );
   const toggle = () => setMode((m) => (m === 'light' ? 'dark' : 'light'));
 
   useEffect(() => {

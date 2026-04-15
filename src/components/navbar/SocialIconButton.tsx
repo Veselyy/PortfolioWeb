@@ -27,6 +27,11 @@ export function SocialIconButton({
         aria-label={ariaLabel}
         size="small"
         disabled={disabled}
+        sx={{
+          transition: (theme) =>
+            theme.transitions.create('transform', { duration: theme.transitions.duration.shorter }),
+          '&:hover': { transform: 'scale(1.1)' },
+        }}
       >
         {icon}
       </IconButton>

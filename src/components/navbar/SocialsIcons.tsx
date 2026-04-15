@@ -5,7 +5,7 @@ import { socialLinks } from './socialLinks';
 
 function SocialsIcons() {
   return (
-    <Stack component="div" direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+    <Stack component="div" direction="row" spacing={1}>
       {socialLinks.map(({ id, href, tooltip, ariaLabel, Icon, disabled }) => (
         <SocialIconButton
           key={id}
