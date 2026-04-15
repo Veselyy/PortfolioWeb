@@ -10,7 +10,7 @@ function App() {
       <CssBaseline enableColorScheme />
       <Container
         maxWidth={false}
-        sx={{ width: '95%', maxWidth: '1200px', marginInline: 'auto' }}
+        sx={{ width: '95%', maxWidth: '1200px', marginInline: 'auto', paddingBlock: '10px' }}
         disableGutters
       >
         <Navbar />
