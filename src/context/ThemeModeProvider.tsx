@@ -21,6 +21,14 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
         typography: {
           fontFamily: '"Figtree", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
         },
+        components: {
+          MuiIconButton: {
+            defaultProps: { size: 'small' },
+          },
+          MuiSvgIcon: {
+            defaultProps: { fontSize: 'small' },
+          },
+        },
       }),
     [mode],
   );

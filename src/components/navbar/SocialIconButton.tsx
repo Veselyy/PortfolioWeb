@@ -6,7 +6,7 @@ type SocialIconButtonProps = {
   tooltip: string;
   ariaLabel: string;
   icon: ReactNode;
-  disabled?: boolean;
+  onClick?: () => void;
 };
 
 export function SocialIconButton({
@@ -14,7 +14,7 @@ export function SocialIconButton({
   tooltip,
   ariaLabel,
   icon,
-  disabled,
+  onClick,
 }: SocialIconButtonProps) {
   return (
     <Tooltip title={tooltip}>
@@ -25,8 +25,7 @@ export function SocialIconButton({
         target="_blank"
         rel="noreferrer"
         aria-label={ariaLabel}
-        size="small"
-        disabled={disabled}
+        onClick={onClick}
         sx={{
           transition: (theme) =>
             theme.transitions.create('transform', { duration: theme.transitions.duration.shorter }),

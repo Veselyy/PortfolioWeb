@@ -3,17 +3,23 @@ import { Stack } from '@mui/material';
 import { SocialIconButton } from './SocialIconButton';
 import { socialLinks } from './socialLinks';
 
-function SocialsIcons() {
+type SocialsIconsProps = {
+  direction?: 'row' | 'column';
+  spacing?: number;
+  onNavigate?: () => void;
+};
+
+function SocialsIcons({ direction = 'row', spacing = 1, onNavigate }: SocialsIconsProps) {
   return (
-    <Stack component="div" direction="row" spacing={1}>
-      {socialLinks.map(({ id, href, tooltip, ariaLabel, Icon, disabled }) => (
+    <Stack component="div" direction={direction} spacing={spacing}>
+      {socialLinks.map(({ id, href, tooltip, ariaLabel, Icon }) => (
         <SocialIconButton
           key={id}
           href={href}
           tooltip={tooltip}
           ariaLabel={ariaLabel}
-          disabled={disabled}
-          icon={<Icon fontSize="small" />}
+          icon={<Icon />}
+          onClick={onNavigate}
         />
       ))}
     </Stack>

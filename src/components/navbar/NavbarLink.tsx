@@ -4,15 +4,17 @@ type NavbarLinkProps = {
   label: string;
   href: string;
   ariaLabel: string;
+  onClick?: () => void;
 };
 
-export function NavbarLink({ label, href, ariaLabel }: NavbarLinkProps) {
+export function NavbarLink({ label, href, ariaLabel, onClick }: NavbarLinkProps) {
   return (
     <Link
       color="inherit"
       underline="none"
       href={href}
       aria-label={ariaLabel}
+      onClick={onClick}
       sx={{
         fontWeight: 700,
         fontSize: 16,

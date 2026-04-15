@@ -14,9 +14,8 @@ function ThemeSwitcher() {
         color="inherit"
         onClick={toggle}
         aria-label={isDark ? 'Přepnout na světlý motiv' : 'Přepnout na tmavý motiv'}
-        size="small"
       >
-        {isDark ? <LightModeIcon fontSize="small" /> : <DarkModeIcon fontSize="small" />}
+        {isDark ? <LightModeIcon /> : <DarkModeIcon />}
       </IconButton>
     </Tooltip>
   );

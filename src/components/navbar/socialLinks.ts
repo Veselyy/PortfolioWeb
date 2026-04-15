@@ -10,7 +10,6 @@ export type SocialLink = {
   tooltip: string;
   ariaLabel: string;
   Icon: SvgIconComponent;
-  disabled?: boolean;
 };
 
 export const socialLinks: SocialLink[] = [
