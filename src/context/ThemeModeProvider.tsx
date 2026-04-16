@@ -27,6 +27,22 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
         components: {
           MuiIconButton: {
             defaultProps: { size: 'small' },
+            styleOverrides: {
+              root: ({ theme }) => ({
+                transition: theme.transitions.create(['transform', 'outline-offset'], {
+                  duration: theme.transitions.duration.shorter,
+                }),
+                '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
+                '&:focus-visible': {
+                  outline: '1px solid currentColor',
+                  outlineOffset: 4,
+                },
+                '&.Mui-disabled': {
+                  transform: 'none',
+                  outline: 'none',
+                },
+              }),
+            },
           },
           MuiSvgIcon: {
             defaultProps: { fontSize: 'small' },

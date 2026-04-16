@@ -26,11 +26,6 @@ const styles = {
     bgcolor: 'info.main',
     p: 1,
     boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
-    transition: (theme) =>
-      theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shorter,
-      }),
-    '&:hover, &:focus-visible': { bgcolor: 'info.main', transform: 'scale(1.1)' },
   },
   availabilityDot: {
     width: 10,

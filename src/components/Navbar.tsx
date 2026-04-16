@@ -6,6 +6,12 @@ import NavbarLinks from './navbar/NavbarLinks';
 import SocialsIcons from './navbar/SocialsIcons';
 import ThemeSwitcher from './navbar/ThemeSwitcher';
 
+const styles = {
+  bar: { alignItems: 'center', justifyContent: 'space-between' },
+  drawerContent: { p: 2 },
+  drawerClose: { alignSelf: 'flex-end' },
+} as const;
+
 function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -16,40 +22,20 @@ function Navbar() {
   if (isMobile) {
     return (
       <>
-        <Stack
-          component="div"
-          direction="row"
-          sx={{ alignItems: 'center', justifyContent: 'space-between' }}
-        >
+        <Stack component="div" direction="row" sx={styles.bar}>
           <ThemeSwitcher />
-          <IconButton
-            color="inherit"
-            aria-label="Otevřít navigaci"
-            onClick={() => setOpen(true)}
-            sx={{
-              '&:focus-visible': {
-                outline: '1px solid currentColor',
-                outlineOffset: 4,
-              },
-            }}
-          >
+          <IconButton color="inherit" aria-label="Otevřít navigaci" onClick={() => setOpen(true)}>
             <MenuIcon />
           </IconButton>
         </Stack>
 
         <Drawer anchor="right" open={open} onClose={close}>
-          <Stack sx={{ p: 2 }} spacing={2}>
+          <Stack sx={styles.drawerContent} spacing={2}>
             <IconButton
               color="inherit"
               aria-label="Zavřít navigaci"
               onClick={close}
-              sx={{
-                alignSelf: 'flex-end',
-                '&:focus-visible': {
-                  outline: '1px solid currentColor',
-                  outlineOffset: 4,
-                },
-              }}
+              sx={styles.drawerClose}
             >
               <CloseIcon />
             </IconButton>
@@ -62,11 +48,7 @@ function Navbar() {
   }
 
   return (
-    <Stack
-      component="div"
-      direction="row"
-      sx={{ alignItems: 'center', justifyContent: 'space-between' }}
-    >
+    <Stack component="div" direction="row" sx={styles.bar}>
       <ThemeSwitcher />
       <NavbarLinks />
       <SocialsIcons />

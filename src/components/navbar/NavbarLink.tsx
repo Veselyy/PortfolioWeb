@@ -7,6 +7,22 @@ type NavbarLinkProps = {
   onClick?: () => void;
 };
 
+const styles = {
+  link: {
+    fontWeight: 700,
+    fontSize: 16,
+    transition: (theme) =>
+      theme.transitions.create(['transform', 'outline-offset'], {
+        duration: theme.transitions.duration.shorter,
+      }),
+    '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
+    '&:focus-visible': {
+      outline: '1px solid currentColor',
+      outlineOffset: 4,
+    },
+  },
+} as const;
+
 export function NavbarLink({ label, href, ariaLabel, onClick }: NavbarLinkProps) {
   return (
     <Link
@@ -15,19 +31,7 @@ export function NavbarLink({ label, href, ariaLabel, onClick }: NavbarLinkProps)
       href={href}
       aria-label={ariaLabel}
       onClick={onClick}
-      sx={{
-        fontWeight: 700,
-        fontSize: 16,
-        transform: 'translateZ(0)',
-        transition: (theme) =>
-          theme.transitions.create('transform', { duration: theme.transitions.duration.shorter }),
-        '&:hover': { transform: 'scale(1.1)' },
-        '&:focus-visible': {
-          transform: 'scale(1.1)',
-          outline: '1px solid currentColor',
-          outlineOffset: 2,
-        },
-      }}
+      sx={styles.link}
     >
       {label}
     </Link>
