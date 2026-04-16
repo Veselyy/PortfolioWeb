@@ -4,6 +4,8 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
+import { CONTACT } from '../contact';
+
 export type SocialLink = {
   id: 'github' | 'linkedin' | 'whatsapp';
   href: string;
@@ -29,7 +31,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     id: 'whatsapp',
-    href: 'https://wa.me/420732424435',
+    href: CONTACT.whatsapp.href,
     tooltip: 'WhatsApp',
     ariaLabel: 'Otevřít WhatsApp chat v nové kartě',
     Icon: WhatsAppIcon,
