@@ -12,17 +12,18 @@ const styles = {
     listStyleType: 'disc',
   },
   bulletItem: { typography: 'body1' },
+  introBulletItem: { typography: 'body1', mb: 1 },
 } as const;
 
 function AboutMe() {
   return (
-    <Stack spacing={3}>
+    <Stack id="about" spacing={3}>
       <Typography variant="h4" align="center" sx={styles.title}>
         {ABOUT_ME_CONTENT.title}
       </Typography>
       <Box component="ul" sx={styles.bulletList}>
         {ABOUT_ME_CONTENT.intro.map((p, idx) => (
-          <Box key={idx} component="li" sx={styles.bulletItem}>
+          <Box key={idx} component="li" sx={styles.introBulletItem}>
             {p.parts.map((part, i) =>
               part.bold ? <strong key={i}>{part.text}</strong> : <span key={i}>{part.text}</span>,
             )}
