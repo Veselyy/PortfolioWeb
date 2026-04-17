@@ -55,7 +55,7 @@ const styles = {
       const c =
         theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black;
 
-      return `0 0 20px ${c}`; // 66 = ~40% alpha
+      return `0 0 20px ${c}`;
     },
   },
 } as const;

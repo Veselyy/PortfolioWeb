@@ -1,0 +1,88 @@
+export const ABOUT_ME_CONTENT = {
+  title: 'O Mně',
+  intro: [
+    {
+      parts: [
+        { text: 'Zdravím, já jsem Martin, jsem z venkova a věnuji se ', bold: false },
+        { text: 'IT', bold: true },
+        { text: ' už ', bold: false },
+        { text: '4. rokem', bold: true },
+        { text: ' a jsem také ', bold: false },
+        { text: 'OSVČ', bold: true },
+        { text: '.', bold: false },
+      ],
+    },
+    {
+      parts: [
+        { text: 'Jsem ', bold: false },
+        { text: 'student', bold: true },
+        {
+          text: ', rád dělám sporty a rád se bavím s lidmi, kteří mi mají co předat.',
+          bold: false,
+        },
+      ],
+    },
+    {
+      parts: [
+        { text: 'Můj silný zájem o učení a ', bold: false },
+        { text: 'osobní rozvoj', bold: true },
+        { text: ' mě motivuje využívat každou ', bold: false },
+        { text: 'příležitost', bold: true },
+        { text: ' ke kariérnímu růstu.', bold: false },
+      ],
+    },
+    {
+      parts: [
+        { text: 'Rád budu ', bold: false },
+        { text: 'čelit', bold: true },
+        { text: ' novým výzvám a ', bold: false },
+        { text: 'rád přispěju', bold: true },
+        { text: ' ke společnému úspěchu.', bold: false },
+      ],
+    },
+  ],
+  sections: [
+    {
+      title: 'Dovednosti',
+      groups: [
+        {
+          title: '2-3 roky zkušeností',
+          items: [
+            'React',
+            'Figma',
+            'HTML',
+            'CSS',
+            'TypeScript',
+            'C',
+            'Vite',
+            'Git',
+            'GitHub/GitLab',
+            'spolupráce s AI',
+          ],
+        },
+        {
+          title: '1 rok zkušeností',
+          items: ['REST API', 'SQL'],
+        },
+      ],
+    },
+    {
+      title: 'Koníčky',
+      groups: [
+        { title: 'Sport', description: 'Jakýkoliv sport, který mě udržuje aktivním a fit.' },
+        {
+          title: 'Učení nových věcí',
+          description: 'Rád se učím nové technologie, dovednosti a rozšiřuji své znalosti.',
+        },
+        {
+          title: 'Komunikace',
+          description: 'Komunikace s lidmi s podobným zájmem mě inspiruje a motivuje.',
+        },
+        {
+          title: 'Svět v IT',
+          description: 'Věnuji se programování, designu aplikací a hledání inovativních řešení.',
+        },
+      ],
+    },
+  ],
+} as const;
