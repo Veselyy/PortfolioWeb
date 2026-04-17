@@ -26,6 +26,7 @@ const styles = {
     bgcolor: 'info.main',
     p: 1,
     boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+    '&:hover, &:focus-visible': { bgcolor: 'info.main' },
   },
   availabilityDot: {
     width: 10,
