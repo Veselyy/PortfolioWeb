@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Container, Divider } from '@mui/material';
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -5,6 +6,7 @@ import { ThemeModeProvider } from './context/ThemeModeProvider';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import AboutMe from './components/AboutMe';
+import Projects from './components/Projects';
 
 const styles = {
   container: {
@@ -14,7 +16,7 @@ const styles = {
     paddingBlock: '10px',
     display: 'flex',
     flexDirection: 'column',
-    gap: 4,
+    gap: 6,
   },
   divider: {
     width: '40%',
@@ -24,14 +26,23 @@ const styles = {
 } as const;
 
 function App() {
+  const sections = [
+    { key: 'navbar', node: <Navbar /> },
+    { key: 'header', node: <Header /> },
+    { key: 'about', node: <AboutMe /> },
+    { key: 'projects', node: <Projects /> },
+  ] as const;
+
   return (
     <ThemeModeProvider>
       <CssBaseline enableColorScheme />
       <Container maxWidth={false} sx={styles.container} disableGutters>
-        <Navbar />
-        <Header />
-        <Divider sx={styles.divider} />
-        <AboutMe />
+        {sections.map((section, idx) => (
+          <Fragment key={section.key}>
+            {section.node}
+            {idx !== 0 && idx < sections.length - 1 && <Divider sx={styles.divider} />}
+          </Fragment>
+        ))}
       </Container>
     </ThemeModeProvider>
   );

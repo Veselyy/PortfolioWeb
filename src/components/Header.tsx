@@ -1,6 +1,7 @@
 import { Box, IconButton, Stack, Typography } from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MailIcon from '@mui/icons-material/Mail';
+import { alpha } from '@mui/material/styles';
 
 import heroPhoto from '../assets/photo_of_me.png';
 import { CONTACT } from '../data/contact';
@@ -25,7 +26,6 @@ const styles = {
     color: 'inherit',
     bgcolor: 'info.main',
     p: 1,
-    boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
     '&:hover, &:focus-visible': { bgcolor: 'info.main' },
   },
   availabilityDot: {
@@ -56,7 +56,7 @@ const styles = {
       const c =
         theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black;
 
-      return `0 0 20px ${c}`;
+      return `0 0 20px ${alpha(c, 0.5)}`;
     },
   },
 } as const;

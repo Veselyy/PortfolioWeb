@@ -4,7 +4,7 @@ import { Box, Paper, Stack, Typography } from '@mui/material';
 import { ABOUT_ME_CONTENT } from '../data/aboutMeContent';
 
 const styles = {
-  title: { fontWeight: 700, textShadow: '0px 4px 4px rgba(0,0,0,0.25)' },
+  title: { fontWeight: 700 },
   sectionTitle: { fontWeight: 700 },
   groupTitle: { fontWeight: 700, textDecoration: 'underline' },
   bulletList: {
@@ -17,11 +17,10 @@ const styles = {
     p: 2,
     borderRadius: 1,
     bgcolor: 'info.main',
-    boxShadow: '0px 4px 4px 0px rgba(0,0,0,0.25)',
   },
   cardContent: { alignItems: 'flex-start' },
   cardTitle: { fontWeight: 700 },
-  cardLink: { typography: 'body1', color: 'inherit', textDecoration: 'none' },
+  cardLink: { typography: 'body1', color: 'inherit', textDecoration: 'none', fontWeight: '700' },
   cardLinkRowAnchor: {
     display: 'inline-flex',
     alignItems: 'center',
