@@ -91,7 +91,7 @@ export const ABOUT_ME_CONTENT = {
         {
           title: 'Střední škola (2020-2024)',
           linkLabel: 'SPŠ Žďár nad Sázavou',
-          linkHref: 'https://www.spszns.cz/',
+          linkHref: 'https://www.spszr.cz/',
           bullets: ['Studoval jsem obor IT, zaměřený na programování a správu sítí…'],
         },
         {
