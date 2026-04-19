@@ -19,3 +19,11 @@ html {
     scroll-behavior: auto;
   }
 }
+
+@media (max-width: 600px) {
+  #about,
+  #projects,
+  #contact {
+    scroll-margin-top: 66px;
+  }
+}
