@@ -17,7 +17,7 @@ export type SocialLink = {
 export const socialLinks: SocialLink[] = [
   {
     id: 'github',
-    href: 'https://github.com/Veselyy',
+    href: CONTACT.github.href,
     tooltip: 'GitHub',
     ariaLabel: 'Otevřít GitHub profil v nové kartě',
     Icon: GitHubIcon,

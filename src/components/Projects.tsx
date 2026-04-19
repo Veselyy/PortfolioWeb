@@ -2,6 +2,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Paper, Stack, Typography } from '@mui/material';
 
+import { CONTACT } from '../data/contact';
 import { PROJECTS_CONTENT } from '../data/projectsContent';
 
 const styles = {
@@ -13,7 +14,16 @@ const styles = {
     borderColor: (theme) =>
       theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black,
   },
-  cardContent: { alignItems: 'flex-start' },
+  cardLayout: {
+    flexDirection: { xs: 'column', md: 'row' },
+    gap: { xs: 5, md: 4 },
+    alignItems: 'center',
+  },
+  cardImageWrapper: { width: { xs: '100%', md: '30%' }, flexShrink: 0 },
+  cardImage: {
+    width: '100%',
+    p: { md: 0, sm: '0 20%', xs: '0 5%' },
+  },
   cardTitle: { fontWeight: 700 },
   cardLink: { typography: 'body1', color: 'inherit', textDecoration: 'none', fontWeight: '700' },
   cardLinkRowAnchor: {
@@ -41,6 +51,7 @@ const styles = {
     listStyleType: 'disc',
   },
   bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
+  moreProjectsLink: { fontWeight: 700, textDecoration: 'underline', color: 'inherit' },
 } as const;
 
 function Projects() {
@@ -53,42 +64,70 @@ function Projects() {
       <Stack spacing={3}>
         {PROJECTS_CONTENT.cards.map((card) => (
           <Paper key={card.title} sx={styles.card}>
-            <Stack spacing={1.5} sx={styles.cardContent}>
-              <Typography variant="h6" sx={styles.cardTitle}>
-                {card.title}
-              </Typography>
-              <Box
-                component="a"
-                href={card.githubLinkHref}
-                target="_blank"
-                rel="noreferrer"
-                sx={styles.cardLinkRowAnchor}
-              >
-                <LinkIcon fontSize="small" />
-                <Typography sx={styles.cardLink}>{card.githubLinkLabel}</Typography>
-              </Box>
+            <Stack sx={styles.cardLayout}>
+              <Stack spacing={1.5}>
+                <Typography variant="h6" sx={styles.cardTitle}>
+                  {card.title}
+                </Typography>
+                <Box
+                  component="a"
+                  href={card.githubLinkHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  sx={styles.cardLinkRowAnchor}
+                >
+                  <LinkIcon fontSize="small" />
+                  <Typography sx={styles.cardLink}>{card.githubLinkLabel}</Typography>
+                </Box>
 
-              <Box
-                component="a"
-                href={card.websiteLinkHref}
-                target="_blank"
-                rel="noreferrer"
-                sx={styles.cardLinkRowAnchor}
-              >
-                <LanguageIcon fontSize="small" />
-                <Typography sx={styles.cardLink}>{card.websiteLinkLabel}</Typography>
-              </Box>
+                <Box
+                  component="a"
+                  href={card.websiteLinkHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  sx={styles.cardLinkRowAnchor}
+                >
+                  <LanguageIcon fontSize="small" />
+                  <Typography sx={styles.cardLink}>{card.websiteLinkLabel}</Typography>
+                </Box>
 
-              <Box component="ul" sx={styles.bulletList}>
-                {card.bullets.map((bullet) => (
-                  <Box key={bullet} component="li" sx={styles.bulletItem}>
-                    {bullet}
-                  </Box>
-                ))}
+                <Box component="ul" sx={styles.bulletList}>
+                  {card.bullets.map((bullet) => (
+                    <Box key={bullet.strong} component="li" sx={styles.bulletItem}>
+                      <strong>{bullet.strong}</strong>
+                      {bullet.rest}
+                    </Box>
+                  ))}
+                </Box>
+              </Stack>
+
+              <Box sx={styles.cardImageWrapper}>
+                <Box
+                  component="img"
+                  src={new URL(`../assets/${card.image.src}`, import.meta.url).toString()}
+                  alt={card.image.alt}
+                  loading="lazy"
+                  sx={styles.cardImage}
+                />
               </Box>
             </Stack>
           </Paper>
         ))}
+
+        <Paper sx={styles.card}>
+          <Typography variant="body1">
+            {PROJECTS_CONTENT.moreProjectsCta.text}{' '}
+            <Box
+              component="a"
+              href={CONTACT.github.href}
+              target="_blank"
+              rel="noreferrer"
+              sx={styles.moreProjectsLink}
+            >
+              {PROJECTS_CONTENT.moreProjectsCta.linkLabel}
+            </Box>
+          </Typography>
+        </Paper>
       </Stack>
     </Stack>
   );

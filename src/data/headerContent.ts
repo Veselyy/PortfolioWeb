@@ -6,5 +6,8 @@ export const HEADER_CONTENT = {
     rest: '(Frontend/Fullstack), kde využiji React/TypeScript. Nejvíc mi sedí práce v týmu, nebojím se zeptat a věci dotáhnu do konce.',
   },
   cta: 'Klidně se ozvěte',
-  photoAlt: 'Profilová fotografie',
+  photo: {
+    src: 'photo_of_me.png',
+    alt: 'Profilová fotografie',
+  },
 } as const;

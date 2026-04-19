@@ -3,7 +3,6 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MailIcon from '@mui/icons-material/Mail';
 import { alpha } from '@mui/material/styles';
 
-import heroPhoto from '../assets/photo_of_me.png';
 import { CONTACT } from '../data/contact';
 import { HEADER_CONTENT } from '../data/headerContent';
 
@@ -105,8 +104,8 @@ function Header() {
       <Box sx={styles.heroWrapper}>
         <Box
           component="img"
-          src={heroPhoto}
-          alt={HEADER_CONTENT.photoAlt}
+          src={new URL(`../assets/${HEADER_CONTENT.photo.src}`, import.meta.url).toString()}
+          alt={HEADER_CONTENT.photo.alt}
           loading="lazy"
           sx={styles.heroImage}
         />

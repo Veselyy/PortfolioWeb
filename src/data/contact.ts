@@ -1,4 +1,7 @@
 export const CONTACT = {
+  github: {
+    href: 'https://github.com/Veselyy',
+  },
   whatsapp: {
     phone: '+420732424435',
     href: 'https://wa.me/420732424435',
