@@ -84,5 +84,38 @@ export const ABOUT_ME_CONTENT = {
         },
       ],
     },
+
+    {
+      title: 'Vzdělání, práce a brigády v IT',
+      cards: [
+        {
+          title: 'Střední škola (2020-2024)',
+          linkLabel: 'SPŠ Žďár nad Sázavou',
+          linkHref: 'https://www.spszns.cz/',
+          bullets: ['Studoval jsem obor IT, zaměřený na programování a správu sítí…'],
+        },
+        {
+          title: 'Vysoká škola (2024-202x)',
+          linkLabel: 'VUT FIT v Brně',
+          linkHref: 'https://www.vut.cz',
+          bullets: [
+            'Studuji obor FIT(IT), zaměřený především na vývoj softwarových řešení od algoritmů a datových struktur, přes umělou inteligenci až po softwarové inženýrství.',
+            'Dále se věnuje kybernetické bezpečnosti, vestavným systémům a IoT, digitálnímu zpracování signálu a obrazu, telekomunikačním a síťovým technologiím...',
+          ],
+        },
+        {
+          title:
+            'Brigáda u Commity (1.6.2024 - 10.9.2024), (1.6.2025 - 15.9.2025), (externí spolupráce během roku 2026)',
+          linkLabel: 'Commity',
+          linkHref: 'https://commity.cz',
+          bullets: [
+            'Pracoval jsem primárně na frontendu webových aplikací (TSX, React).',
+            'Také jsem si sáhl na práci s daty v Metabase (SQL dotazy) a na práci s API (REST, Postman).',
+            'V rámci práce jsem se podílel na vývoji a údržbě webových aplikací pro naše klienty.',
+            'Měl jsem možnost pracovat na různých projektech, které mi umožnily rozvíjet své dovednosti v oblasti programování, komunikace v týmu, organizace práce a time managementu...',
+          ],
+        },
+      ],
+    },
   ],
 } as const;
