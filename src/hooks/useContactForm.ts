@@ -10,7 +10,9 @@ type ContactFormValues = {
 export type ContactFormStatus = 'idle' | 'sending' | 'success' | 'error';
 
 export function useContactForm() {
-  const endpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT as string | undefined;
+  const endpoint =
+    (import.meta.env.VITE_CONTACT_FORM_ENDPOINT as string | undefined) ||
+    '/.netlify/functions/contact';
 
   const [values, setValues] = useState<ContactFormValues>({
     firstName: '',
@@ -31,18 +33,12 @@ export function useContactForm() {
     };
   }, [values.email, values.message]);
 
-  const canSubmit =
-    status !== 'sending' && Boolean(endpoint) && validation.email && validation.message;
+  const canSubmit = status !== 'sending' && validation.email && validation.message;
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMsg('');
 
-    if (!endpoint) {
-      setStatus('error');
-      setErrorMsg('Chybí konfigurace formuláře (VITE_CONTACT_FORM_ENDPOINT).');
-      return;
-    }
     if (!validation.email || !validation.message) {
       setStatus('error');
       setErrorMsg('Zkontroluj prosím email a zprávu.');
@@ -64,8 +60,20 @@ export function useContactForm() {
       });
 
       if (!res.ok) {
+        const ct = res.headers.get('content-type') ?? '';
         const txt = await res.text().catch(() => '');
-        throw new Error(txt || `HTTP ${res.status}`);
+        const msg =
+          ct.includes('application/json') && txt
+            ? (() => {
+                try {
+                  const parsed = JSON.parse(txt) as { error?: string };
+                  return parsed.error || `HTTP ${res.status}`;
+                } catch {
+                  return `HTTP ${res.status}`;
+                }
+              })()
+            : `Endpoint vrátil ${res.status}. Zkontroluj URL endpointu.`;
+        throw new Error(msg);
       }
 
       setStatus('success');
