@@ -14,6 +14,9 @@ const styles = {
     listStyleType: 'disc',
   },
   bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
+  referencesTitle: { fontWeight: 700, mt: 1 },
+  referencesList: { m: 0, pl: 2.5, listStyleType: 'disc' },
+  referenceItem: { typography: 'body2', mb: 1, fontStyle: 'italic', '&:last-child': { mb: 0 } },
   card: {
     p: 2,
     borderRadius: 1,
@@ -112,6 +115,21 @@ function AboutMe() {
                         </Box>
                       ))}
                     </Box>
+
+                    {'references' in card && card.references.length > 0 && (
+                      <>
+                        <Typography variant="subtitle1" sx={styles.referencesTitle}>
+                          Reference
+                        </Typography>
+                        <Box component="ul" sx={styles.referencesList}>
+                          {card.references.map((quote) => (
+                            <Box key={quote} component="li" sx={styles.referenceItem}>
+                              {quote}
+                            </Box>
+                          ))}
+                        </Box>
+                      </>
+                    )}
                   </Stack>
                 </Paper>
               ))}

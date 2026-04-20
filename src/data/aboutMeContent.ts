@@ -122,6 +122,7 @@ export const ABOUT_ME_CONTENT = {
             'V rámci práce jsem se podílel na vývoji a údržbě webových aplikací pro naše klienty.',
             'Měl jsem možnost pracovat na různých projektech, které mi umožnily rozvíjet své dovednosti v oblasti programování, komunikace v týmu, organizace práce a time managementu...',
           ],
+          references: ['SAMPLE', 'SAMPLE'],
         },
       ],
     },
