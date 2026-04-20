@@ -40,6 +40,14 @@ export const ABOUT_ME_CONTENT = {
         { text: ' ke společnému úspěchu.', bold: false },
       ],
     },
+    {
+      parts: [
+        { text: 'Angličtina pro mě není překážka - gramatiku mám na úrovni ', bold: false },
+        { text: 'B1', bold: true },
+        { text: ' a v mluvení jsem mezi ', bold: false },
+        { text: 'A2 - B1.', bold: true },
+      ],
+    },
   ],
   sections: [
     {
