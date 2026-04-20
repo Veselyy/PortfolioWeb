@@ -1,0 +1,10 @@
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+# SPA fallback (safe even without routing)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
