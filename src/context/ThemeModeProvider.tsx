@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 import { THEME_MODE_STORAGE_KEY, ThemeModeContext, type ThemeMode } from './themeModeContext';
 
@@ -16,39 +16,41 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<ThemeMode>(getInitialMode);
   const theme = useMemo(
     () =>
-      createTheme({
-        palette: {
-          mode,
-          info: { main: mode === 'dark' ? '#1E4E8C' : '#87CEEB' },
-        },
-        typography: {
-          fontFamily: '"Figtree", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
-        },
-        components: {
-          MuiIconButton: {
-            defaultProps: { size: 'small' },
-            styleOverrides: {
-              root: ({ theme }) => ({
-                transition: theme.transitions.create(['transform', 'outline-offset'], {
-                  duration: theme.transitions.duration.shorter,
+      responsiveFontSizes(
+        createTheme({
+          palette: {
+            mode,
+            info: { main: mode === 'dark' ? '#1E4E8C' : '#87CEEB' },
+          },
+          typography: {
+            fontFamily: '"Figtree", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+          },
+          components: {
+            MuiIconButton: {
+              defaultProps: { size: 'small' },
+              styleOverrides: {
+                root: ({ theme }) => ({
+                  transition: theme.transitions.create(['transform', 'outline-offset'], {
+                    duration: theme.transitions.duration.shorter,
+                  }),
+                  '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
+                  '&:focus-visible': {
+                    outline: '1px solid currentColor',
+                    outlineOffset: 4,
+                  },
+                  '&.Mui-disabled': {
+                    transform: 'none',
+                    outline: 'none',
+                  },
                 }),
-                '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
-                '&:focus-visible': {
-                  outline: '1px solid currentColor',
-                  outlineOffset: 4,
-                },
-                '&.Mui-disabled': {
-                  transform: 'none',
-                  outline: 'none',
-                },
-              }),
+              },
+            },
+            MuiSvgIcon: {
+              defaultProps: { fontSize: 'small' },
             },
           },
-          MuiSvgIcon: {
-            defaultProps: { fontSize: 'small' },
-          },
-        },
-      }),
+        }),
+      ),
     [mode],
   );
   const toggle = () => setMode((m) => (m === 'light' ? 'dark' : 'light'));

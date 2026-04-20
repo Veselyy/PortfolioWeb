@@ -65,7 +65,11 @@ function Header() {
     <Stack direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
       <Stack spacing={3} sx={styles.headerContent}>
         <Typography variant="h1" sx={{ fontWeight: '700' }}>
-          {HEADER_CONTENT.title}
+          {HEADER_CONTENT.heroTitle.parts.map((p, idx) => (
+            <Box key={idx} component="span" sx={p.highlight ? { color: 'info.main' } : undefined}>
+              {p.text}
+            </Box>
+          ))}
         </Typography>
         <Typography variant="h4">{HEADER_CONTENT.subtitle}</Typography>
 
