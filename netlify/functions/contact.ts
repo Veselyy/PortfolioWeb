@@ -64,9 +64,12 @@ export const handler: Handler = async (event) => {
       auth: { user, pass },
     });
 
+    // Surface SMTP/auth issues early with a clearer log.
+    await transporter.verify();
+
     await transporter.sendMail({
       to,
-      from: to,
+      from: `"Portfolio web" <${user}>`,
       replyTo: fromEmail,
       subject: `Portfolio kontakt: ${name || fromEmail}`,
       text: [
@@ -81,7 +84,33 @@ export const handler: Handler = async (event) => {
     });
 
     return json(200, { ok: true });
-  } catch {
-    return json(500, { ok: false, error: 'Email send failed' });
+  } catch (err) {
+    // Don't leak secrets, but return enough to debug provider responses.
+    const e = err as {
+      code?: string;
+      responseCode?: number;
+      command?: string;
+      message?: string;
+      response?: string;
+    };
+
+    console.error('Email send failed', {
+      code: e.code,
+      responseCode: e.responseCode,
+      command: e.command,
+      message: e.message,
+      response: e.response,
+    });
+
+    return json(500, {
+      ok: false,
+      error: 'Email send failed',
+      details: {
+        code: e.code,
+        responseCode: e.responseCode,
+        command: e.command,
+        message: e.message,
+      },
+    });
   }
 };
