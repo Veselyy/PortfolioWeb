@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { Container, Divider } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeModeProvider } from './context/ThemeModeProvider';
@@ -7,6 +8,7 @@ import Navbar from './components/Navbar';
 import Header from './components/Header';
 import AboutMe from './components/AboutMe';
 import Projects from './components/Projects';
+import Footer from './components/Footer';
 
 const styles = {
   container: {
@@ -21,7 +23,7 @@ const styles = {
   divider: {
     width: '40%',
     mx: 'auto',
-    bgcolor: (theme) => (theme.palette.mode === 'dark' ? 'common.white' : 'common.black'),
+    bgcolor: (theme: Theme) => (theme.palette.mode === 'dark' ? 'common.white' : 'common.black'),
   },
 } as const;
 
@@ -31,6 +33,7 @@ function App() {
     { key: 'header', node: <Header /> },
     { key: 'about', node: <AboutMe /> },
     { key: 'projects', node: <Projects /> },
+    { key: 'footer', node: <Footer /> },
   ] as const;
 
   return (

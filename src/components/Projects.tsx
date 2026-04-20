@@ -1,6 +1,7 @@
-import LinkIcon from '@mui/icons-material/Link';
-import LanguageIcon from '@mui/icons-material/Language';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import { Box, Paper, Stack, Typography } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
 
 import { CONTACT } from '../data/contact';
 import { PROJECTS_CONTENT } from '../data/projectsContent';
@@ -11,7 +12,7 @@ const styles = {
     p: 2,
     borderRadius: 1,
     border: '1px solid',
-    borderColor: (theme) =>
+    borderColor: (theme: Theme) =>
       theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black,
   },
   cardLayout: {
@@ -35,7 +36,7 @@ const styles = {
     alignSelf: 'flex-start',
     width: 'fit-content',
     transformOrigin: 'left center',
-    transition: (theme) =>
+    transition: (theme: Theme) =>
       theme.transitions.create(['transform', 'outline-offset'], {
         duration: theme.transitions.duration.shorter,
       }),
@@ -65,7 +66,7 @@ function Projects() {
         {PROJECTS_CONTENT.cards.map((card) => (
           <Paper key={card.title} sx={styles.card}>
             <Stack sx={styles.cardLayout}>
-              <Stack spacing={1.5}>
+              <Stack spacing={1}>
                 <Typography variant="h6" sx={styles.cardTitle}>
                   {card.title}
                 </Typography>
@@ -76,7 +77,7 @@ function Projects() {
                   rel="noreferrer"
                   sx={styles.cardLinkRowAnchor}
                 >
-                  <LinkIcon fontSize="small" />
+                  <LinkOutlinedIcon fontSize="small" />
                   <Typography sx={styles.cardLink}>{card.githubLinkLabel}</Typography>
                 </Box>
 
@@ -87,7 +88,7 @@ function Projects() {
                   rel="noreferrer"
                   sx={styles.cardLinkRowAnchor}
                 >
-                  <LanguageIcon fontSize="small" />
+                  <LanguageOutlinedIcon fontSize="small" />
                   <Typography sx={styles.cardLink}>{card.websiteLinkLabel}</Typography>
                 </Box>
 

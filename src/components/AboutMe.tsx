@@ -1,5 +1,6 @@
-import LinkIcon from '@mui/icons-material/Link';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { Box, Paper, Stack, Typography } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
 
 import { ABOUT_ME_CONTENT } from '../data/aboutMeContent';
 
@@ -29,7 +30,7 @@ const styles = {
     textDecoration: 'none',
     alignSelf: 'flex-start',
     width: 'fit-content',
-    transition: (theme) =>
+    transition: (theme: Theme) =>
       theme.transitions.create(['transform', 'outline-offset'], {
         duration: theme.transitions.duration.shorter,
       }),
@@ -101,7 +102,7 @@ function AboutMe() {
                       rel="noreferrer"
                       sx={styles.cardLinkRowAnchor}
                     >
-                      <LinkIcon fontSize="small" />
+                      <LinkOutlinedIcon fontSize="small" />
                       <Typography sx={styles.cardLink}>{card.linkLabel}</Typography>
                     </Box>
                     <Box component="ul" sx={styles.bulletList}>

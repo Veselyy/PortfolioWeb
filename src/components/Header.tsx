@@ -1,7 +1,7 @@
 import { Box, IconButton, Stack, Typography } from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import MailIcon from '@mui/icons-material/Mail';
-import { alpha } from '@mui/material/styles';
+import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+import { alpha, type Theme } from '@mui/material/styles';
 
 import { CONTACT } from '../data/contact';
 import { HEADER_CONTENT } from '../data/headerContent';
@@ -51,7 +51,7 @@ const styles = {
   heroImage: {
     width: '100%',
     borderRadius: '50%',
-    boxShadow: (theme) => {
+    boxShadow: (theme: Theme) => {
       const c =
         theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black;
 
@@ -96,7 +96,7 @@ function Header() {
             aria-label="Napsat e-mail"
             sx={styles.contactIconButton}
           >
-            <MailIcon />
+            <MailOutlinedIcon />
           </IconButton>
         </Stack>
       </Stack>

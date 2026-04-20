@@ -1,5 +1,5 @@
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { IconButton, Tooltip } from '@mui/material';
 
 import { useThemeMode } from '../../context/useThemeMode';
@@ -15,7 +15,7 @@ function ThemeSwitcher() {
         onClick={toggle}
         aria-label={isDark ? 'Přepnout na světlý motiv' : 'Přepnout na tmavý motiv'}
       >
-        {isDark ? <LightModeIcon /> : <DarkModeIcon />}
+        {isDark ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
       </IconButton>
     </Tooltip>
   );

@@ -1,6 +1,7 @@
-import CloseIcon from '@mui/icons-material/Close';
-import MenuIcon from '@mui/icons-material/Menu';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { Drawer, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
 import { useState } from 'react';
 import NavbarLinks from './navbar/NavbarLinks';
 import SocialsIcons from './navbar/SocialsIcons';
@@ -11,8 +12,8 @@ const styles = {
   mobileStickyBar: {
     position: 'sticky',
     top: 0,
-    zIndex: (theme) => theme.zIndex.appBar,
-    backgroundColor: (theme) =>
+    zIndex: (theme: Theme) => theme.zIndex.appBar,
+    backgroundColor: (theme: Theme) =>
       theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.7)',
     backdropFilter: 'blur(5px)',
     WebkitBackdropFilter: 'blur(5px)',
@@ -37,7 +38,7 @@ function Navbar() {
         <Stack component="div" direction="row" sx={{ ...styles.bar, ...styles.mobileStickyBar }}>
           <ThemeSwitcher />
           <IconButton color="inherit" aria-label="Otevřít navigaci" onClick={() => setOpen(true)}>
-            <MenuIcon />
+            <MenuOutlinedIcon />
           </IconButton>
         </Stack>
 
@@ -49,7 +50,7 @@ function Navbar() {
               onClick={close}
               sx={styles.drawerClose}
             >
-              <CloseIcon />
+              <CloseOutlinedIcon />
             </IconButton>
             <NavbarLinks direction="column" spacing={2} onNavigate={close} />
             <SocialsIcons direction="row" spacing={1} onNavigate={close} />

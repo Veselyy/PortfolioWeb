@@ -1,4 +1,5 @@
 import { Link } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
 
 type NavbarLinkProps = {
   label: string;
@@ -11,7 +12,7 @@ const styles = {
   link: {
     fontWeight: 700,
     fontSize: 16,
-    transition: (theme) =>
+    transition: (theme: Theme) =>
       theme.transitions.create(['transform', 'outline-offset'], {
         duration: theme.transitions.duration.shorter,
       }),
