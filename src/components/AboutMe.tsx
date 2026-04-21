@@ -1,28 +1,28 @@
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { Box, Paper, Stack, Typography } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
+import MuiMarkdown from 'mui-markdown';
 
+import aboutMeMarkdown from '../content/about-me.md?raw';
 import { ABOUT_ME_CONTENT } from '../data/aboutMeContent';
 
 const styles = {
   title: { fontWeight: 700 },
-  sectionTitle: { fontWeight: 700 },
-  groupTitle: { fontWeight: 700, textDecoration: 'underline' },
-  bulletList: {
-    m: 0,
-    pl: 2.5,
-    listStyleType: 'disc',
+  markdown: {
+    '& p': { mt: 1 },
+    '& ul': { m: 0, pl: 2.5 },
+    '& h5': { fontWeight: 700, mt: 3 },
   },
-  bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
-  card: {
+  educationTitle: { fontWeight: 700 },
+  educationCard: {
     p: 2,
     borderRadius: 1,
     bgcolor: 'info.main',
   },
-  cardContent: { alignItems: 'flex-start' },
-  cardTitle: { fontWeight: 700 },
-  cardLink: { typography: 'body1', color: 'inherit', textDecoration: 'none', fontWeight: '700' },
-  cardLinkRowAnchor: {
+  educationCardContent: { alignItems: 'flex-start' },
+  educationCardTitle: { fontWeight: 700 },
+  educationLink: { typography: 'body1', color: 'inherit', textDecoration: 'none', fontWeight: 700 },
+  educationLinkRowAnchor: {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 1,
@@ -40,85 +40,83 @@ const styles = {
       outlineOffset: 4,
     },
   },
+  bulletList: { m: 0, pl: 2.5, listStyleType: 'disc' },
+  bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
 } as const;
 
+const EDUCATION_SECTION_TITLE = 'Vzdělání, práce a brigády v IT';
+
+type EducationCard = {
+  title: string;
+  linkLabel: string;
+  linkHref: string;
+  bullets: readonly string[];
+};
+
+type EducationSection = {
+  title: string;
+  cards: readonly EducationCard[];
+};
+
+function getEducationSection(): EducationSection {
+  const section = ABOUT_ME_CONTENT.sections.find(
+    (s) => 'cards' in s && s.title === EDUCATION_SECTION_TITLE,
+  ) as EducationSection | undefined;
+
+  if (!section) {
+    throw new Error(`Missing section "${EDUCATION_SECTION_TITLE}" in ABOUT_ME_CONTENT`);
+  }
+
+  return section;
+}
+
 function AboutMe() {
+  const educationSection = getEducationSection();
+
   return (
     <Stack id="about" spacing={3}>
       <Typography variant="h4" align="center" sx={styles.title}>
-        {ABOUT_ME_CONTENT.title}
+        O Mně
       </Typography>
-      <Box component="ul" sx={styles.bulletList}>
-        {ABOUT_ME_CONTENT.intro.map((p, idx) => (
-          <Box key={idx} component="li" sx={styles.bulletItem}>
-            {p.parts.map((part, i) =>
-              part.bold ? <strong key={i}>{part.text}</strong> : <span key={i}>{part.text}</span>,
-            )}
-          </Box>
-        ))}
+
+      <Box sx={styles.markdown}>
+        <MuiMarkdown>{aboutMeMarkdown}</MuiMarkdown>
       </Box>
 
-      {ABOUT_ME_CONTENT.sections.map((section) => (
-        <Stack key={section.title} spacing={1}>
-          <Typography variant="h5" sx={styles.sectionTitle}>
-            {section.title}
-          </Typography>
+      <Stack spacing={2}>
+        <Typography variant="h5" sx={styles.educationTitle}>
+          {educationSection.title}
+        </Typography>
 
-          {'groups' in section &&
-            section.groups.map((group) => (
-              <Stack key={group.title} spacing={0.5}>
-                <Typography variant="subtitle1" sx={styles.groupTitle}>
-                  {group.title}
-                </Typography>
+        {educationSection.cards.map((card: EducationCard) => (
+          <Paper key={card.title} sx={styles.educationCard}>
+            <Stack spacing={1} sx={styles.educationCardContent}>
+              <Typography variant="h6" sx={styles.educationCardTitle}>
+                {card.title}
+              </Typography>
 
-                {'items' in group ? (
-                  <Box component="ul" sx={styles.bulletList}>
-                    <Box component="li" sx={styles.bulletItem}>
-                      {group.items.join(', ')}
-                    </Box>
+              <Box
+                component="a"
+                href={card.linkHref}
+                target="_blank"
+                rel="noreferrer"
+                sx={styles.educationLinkRowAnchor}
+              >
+                <LinkOutlinedIcon fontSize="small" />
+                <Typography sx={styles.educationLink}>{card.linkLabel}</Typography>
+              </Box>
+
+              <Box component="ul" sx={styles.bulletList}>
+                {card.bullets.map((bullet: string) => (
+                  <Box key={bullet} component="li" sx={styles.bulletItem}>
+                    {bullet}
                   </Box>
-                ) : (
-                  <Box component="ul" sx={styles.bulletList}>
-                    <Box component="li" sx={styles.bulletItem}>
-                      {group.description}
-                    </Box>
-                  </Box>
-                )}
-              </Stack>
-            ))}
-
-          {'cards' in section && (
-            <Stack spacing={2}>
-              {section.cards.map((card) => (
-                <Paper key={card.title} sx={styles.card}>
-                  <Stack spacing={1} sx={styles.cardContent}>
-                    <Typography variant="h6" sx={styles.cardTitle}>
-                      {card.title}
-                    </Typography>
-                    <Box
-                      component="a"
-                      href={card.linkHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      sx={styles.cardLinkRowAnchor}
-                    >
-                      <LinkOutlinedIcon fontSize="small" />
-                      <Typography sx={styles.cardLink}>{card.linkLabel}</Typography>
-                    </Box>
-                    <Box component="ul" sx={styles.bulletList}>
-                      {card.bullets.map((bullet) => (
-                        <Box key={bullet} component="li" sx={styles.bulletItem}>
-                          {bullet}
-                        </Box>
-                      ))}
-                    </Box>
-                  </Stack>
-                </Paper>
-              ))}
+                ))}
+              </Box>
             </Stack>
-          )}
-        </Stack>
-      ))}
+          </Paper>
+        ))}
+      </Stack>
     </Stack>
   );
 }

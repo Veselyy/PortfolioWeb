@@ -1,5 +1,5 @@
 export type NavbarLinkItem = {
-  id: 'about' | 'projects' | 'footer';
+  id: 'about' | 'projects' | 'work' | 'footer';
   label: string;
   href: string;
   ariaLabel: string;
@@ -17,6 +17,12 @@ export const navbarLinks: NavbarLinkItem[] = [
     label: 'Projekty',
     href: '#projects',
     ariaLabel: 'Přejít na sekci Projekty',
+  },
+  {
+    id: 'work',
+    label: 'Spolupráce',
+    href: '#work',
+    ariaLabel: 'Přejít na sekci Spolupráce a způsob práce',
   },
   {
     id: 'footer',

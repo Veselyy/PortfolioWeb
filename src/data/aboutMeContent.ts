@@ -92,7 +92,6 @@ export const ABOUT_ME_CONTENT = {
         },
       ],
     },
-
     {
       title: 'Vzdělání, práce a brigády v IT',
       cards: [
