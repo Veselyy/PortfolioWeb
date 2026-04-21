@@ -21,7 +21,7 @@ const styles = {
     borderColor: 'divider',
     py: 1,
   },
-  drawerContent: { p: 2 },
+  drawerContent: { p: 2, alignItems: 'center' },
   drawerClose: { alignSelf: 'flex-end' },
 } as const;
 
@@ -42,7 +42,7 @@ function Navbar() {
           </IconButton>
         </Stack>
 
-        <Drawer anchor="right" open={open} onClose={close}>
+        <Drawer anchor="top" open={open} onClose={close}>
           <Stack sx={styles.drawerContent} spacing={2}>
             <IconButton
               color="inherit"
