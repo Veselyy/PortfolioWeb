@@ -1,7 +1,7 @@
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { Drawer, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
-import type { Theme } from '@mui/material/styles';
+import { alpha, type Theme } from '@mui/material/styles';
 import { useState } from 'react';
 import NavbarLinks from './navbar/NavbarLinks';
 import SocialsIcons from './navbar/SocialsIcons';
@@ -13,8 +13,7 @@ const styles = {
     position: 'sticky',
     top: 0,
     zIndex: (theme: Theme) => theme.zIndex.appBar,
-    backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.7)',
+    backgroundColor: (theme: Theme) => alpha(theme.palette.background.paper, 0.7),
     backdropFilter: 'blur(5px)',
     WebkitBackdropFilter: 'blur(5px)',
     borderBottom: '1px solid',
