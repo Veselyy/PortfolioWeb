@@ -23,7 +23,8 @@ html {
 @media (max-width: 600px) {
   #about,
   #projects,
-  #footer {
+  #footer,
+  #work {
     scroll-margin-top: 66px;
   }
 }
