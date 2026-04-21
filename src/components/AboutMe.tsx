@@ -12,6 +12,7 @@ const styles = {
     '& p': { mt: 1 },
     '& ul': { m: 0, pl: 2.5 },
     '& h5': { fontWeight: 700, mt: 3 },
+    '& li': { mb: 1, '&:last-child': { mb: 0 } },
   },
   educationTitle: { fontWeight: 700 },
   educationCard: {
