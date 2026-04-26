@@ -43,6 +43,7 @@ const styles = {
   },
   bulletList: { m: 0, pl: 2.5, listStyleType: 'disc' },
   bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
+  referencesTitle: { fontWeight: 700, mt: 1 },
 } as const;
 
 const EDUCATION_SECTION_TITLE = 'Vzdělání, práce a brigády v IT';
@@ -52,6 +53,7 @@ type EducationCard = {
   linkLabel: string;
   linkHref: string;
   bullets: readonly string[];
+  references?: readonly string[];
 };
 
 type EducationSection = {
@@ -112,53 +114,23 @@ function AboutMe() {
                   <Box key={bullet} component="li" sx={styles.bulletItem}>
                     {bullet}
                   </Box>
-                )}
-              </Stack>
-            ))}
+                ))}
+              </Box>
 
-          {'cards' in section && (
-            <Stack spacing={2}>
-              {section.cards.map((card) => (
-                <Paper key={card.title} sx={styles.card}>
-                  <Stack spacing={1} sx={styles.cardContent}>
-                    <Typography variant="h6" sx={styles.cardTitle}>
-                      {card.title}
-                    </Typography>
-                    <Box
-                      component="a"
-                      href={card.linkHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      sx={styles.cardLinkRowAnchor}
-                    >
-                      <LinkOutlinedIcon fontSize="small" />
-                      <Typography sx={styles.cardLink}>{card.linkLabel}</Typography>
-                    </Box>
-                    <Box component="ul" sx={styles.bulletList}>
-                      {card.bullets.map((bullet) => (
-                        <Box key={bullet} component="li" sx={styles.bulletItem}>
-                          {bullet}
-                        </Box>
-                      ))}
-                    </Box>
-
-                    {'references' in card && card.references.length > 0 && (
-                      <>
-                        <Typography variant="subtitle1" sx={styles.referencesTitle}>
-                          Reference
-                        </Typography>
-                        <Box component="ul" sx={styles.referencesList}>
-                          {card.references.map((quote) => (
-                            <Box key={quote} component="li" sx={styles.referenceItem}>
-                              {`"${quote}"`}
-                            </Box>
-                          ))}
-                        </Box>
-                      </>
-                    )}
-                  </Stack>
-                </Paper>
-              ))}
+              {card.references && card.references.length > 0 && (
+                <>
+                  <Typography variant="subtitle1" sx={styles.referencesTitle}>
+                    Reference
+                  </Typography>
+                  <Box component="ul" sx={styles.bulletList}>
+                    {card.references.map((quote) => (
+                      <Box key={quote} component="li" sx={styles.bulletItem}>
+                        {`"${quote}"`}
+                      </Box>
+                    ))}
+                  </Box>
+                </>
+              )}
             </Stack>
           </Paper>
         ))}
