@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Header from './components/Header';
 import AboutMe from './components/AboutMe';
 import Projects from './components/Projects';
+import WorkApproach from './components/WorkApproach';
 import Footer from './components/Footer';
 
 const styles = {
@@ -33,6 +34,7 @@ function App() {
     { key: 'header', node: <Header /> },
     { key: 'about', node: <AboutMe /> },
     { key: 'projects', node: <Projects /> },
+    { key: 'work', node: <WorkApproach /> },
     { key: 'footer', node: <Footer /> },
   ] as const;
 
