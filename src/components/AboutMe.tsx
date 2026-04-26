@@ -124,7 +124,7 @@ function AboutMe() {
                         <Box component="ul" sx={styles.referencesList}>
                           {card.references.map((quote) => (
                             <Box key={quote} component="li" sx={styles.referenceItem}>
-                              {quote}
+                              {`"${quote}"`}
                             </Box>
                           ))}
                         </Box>
