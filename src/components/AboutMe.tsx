@@ -42,7 +42,7 @@ const styles = {
     },
   },
   bulletList: { m: 0, pl: 2.5, listStyleType: 'disc' },
-  bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
+  bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 }, fontStyle: 'italic' },
   referencesTitle: { fontWeight: 700, mt: 1 },
 } as const;
 
