@@ -110,9 +110,9 @@ function AboutMe() {
               </Box>
 
               <Box component="ul" sx={styles.bulletList}>
-                {card.bullets.map((bullet: string) => (
-                  <Box key={bullet} component="li" sx={styles.bulletItem}>
-                    {bullet}
+                {card.bullets.map((bullet: string, i: number) => (
+                  <Box key={`${card.title}-b-${i}`} component="li" sx={styles.bulletItem}>
+                    <MuiMarkdown options={{ forceInline: true }}>{bullet}</MuiMarkdown>
                   </Box>
                 ))}
               </Box>
@@ -123,9 +123,13 @@ function AboutMe() {
                     Reference
                   </Typography>
                   <Box component="ul" sx={styles.bulletList}>
-                    {card.references.map((quote) => (
-                      <Box key={quote} component="li" sx={styles.bulletItem}>
-                        {`"${quote}"`}
+                    {card.references.map((quote, i) => (
+                      <Box key={`${card.title}-r-${i}`} component="li" sx={styles.bulletItem}>
+                        <Box component="span">
+                          {'\u201E'}
+                          <MuiMarkdown options={{ forceInline: true }}>{quote}</MuiMarkdown>
+                          {'\u201C'}
+                        </Box>
                       </Box>
                     ))}
                   </Box>

@@ -20,6 +20,19 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
         createTheme({
           palette: {
             mode,
+            ...(mode === 'light'
+              ? {
+                  background: {
+                    default: '#f5f7fa',
+                    paper: '#fafbfd',
+                  },
+                }
+              : {
+                  background: {
+                    default: '#151518',
+                    paper: '#1b1c20',
+                  },
+                }),
             info: { main: mode === 'dark' ? '#1E4E8C' : '#87CEEB' },
           },
           typography: {
