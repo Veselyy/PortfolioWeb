@@ -124,7 +124,11 @@ function AboutMe() {
                   </Typography>
                   <Box component="ul" sx={styles.bulletList}>
                     {card.references.map((quote, i) => (
-                      <Box key={`${card.title}-r-${i}`} component="li" sx={styles.bulletItem}>
+                      <Box
+                        key={`${card.title}-r-${i}`}
+                        component="li"
+                        sx={{ ...styles.bulletItem, fontStyle: 'italic' }}
+                      >
                         <Box component="span">
                           {'\u201E'}
                           <MuiMarkdown options={{ forceInline: true }}>{quote}</MuiMarkdown>
