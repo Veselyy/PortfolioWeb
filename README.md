@@ -1,75 +1,54 @@
-# React + TypeScript + Vite
+# Portfolio Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Osobní portfolio — responzivní jednostránková webová aplikace s přepínáním světlého a tmavého režimu.
 
-Currently, two official plugins are available:
+**Stránky:** [martinvesely.netlify.app](https://martinvesely.netlify.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Design
 
-## React Compiler
+Návrh rozhraní ve Figmě: [Portfolio (Figma)](https://www.figma.com/design/ngYKYc1BqeqU4aX4Dt9JAf/Portfolio?node-id=1-2&t=dRxpI9N45NsHH9CQ-1)
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Technologie
 
-Note: This will impact Vite dev & build performances.
+### Frontend
 
-## Expanding the ESLint configuration
+| Oblast             | Technologie                                                           |
+| ------------------ | --------------------------------------------------------------------- |
+| Framework          | [React](https://react.dev/)                                           |
+| Jazyk              | [TypeScript](https://www.typescriptlang.org/)                         |
+| Build & dev server | [Vite](https://vite.dev/)                                             |
+| UI                 | [MUI (Material UI)](https://mui.com/), [Emotion](https://emotion.sh/) |
+| Ikony              | [MUI Icons](https://mui.com/material-ui/material-icons/)              |
+| Obsah (markdown)   | [mui-markdown](https://github.com/HPouyanmehr/mui-markdown)           |
+| Font               | [Figtree](https://fonts.google.com/specimen/Figtree) (Google Fonts)   |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Nástroje a kvalita kódu
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **pnpm** — správa balíčků
+- **ESLint** + **typescript-eslint** — lint
+- **Prettier** — formátování
+- **Husky** — git hooky (pre-commit / pre-push)
+- **GitHub Actions** — CI (`lint`, `format:check`)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Nasazení a backend
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+- **Netlify** — hosting statické aplikace, SPA redirecty
+- **Netlify Functions** + **Nodemailer** — odeslání kontaktního formuláře
+
+## Spuštění lokálně
+
+Požadavky: Node.js (viz `.nvmrc`), [pnpm](https://pnpm.io/).
+
+```bash
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Další příkazy:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+pnpm build    # produkční build
+pnpm preview  # náhled buildu
+pnpm lint
+pnpm format
 ```
