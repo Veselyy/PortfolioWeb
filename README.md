@@ -32,7 +32,7 @@ Návrh rozhraní ve Figmě: [Portfolio (Figma)](https://www.figma.com/design/ngY
 
 ### Nasazení a backend
 
-- **Netlify** — hosting statické aplikace, SPA redirecty
+- **Netlify** — hosting
 - **Netlify Functions** + **Nodemailer** — odeslání kontaktního formuláře
 
 ## Spuštění lokálně
