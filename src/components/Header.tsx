@@ -3,8 +3,11 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import { alpha, type Theme } from '@mui/material/styles';
 
+import { useState } from 'react';
+
 import { CONTACT } from '../data/contact';
-import { HEADER_CONTENT } from '../data/headerContent';
+import { HEADER_CONTENT, HEADER_CTA } from '../data/headerContent';
+import { useHeaderIntroFromRoleQuery } from '../hooks/useHeaderIntroFromRoleQuery';
 
 const styles = {
   headerWrapper: {
@@ -61,28 +64,34 @@ const styles = {
 } as const;
 
 function Header() {
+  const [intro, setIntro] = useState<(typeof HEADER_CONTENT)[keyof typeof HEADER_CONTENT]>(
+    HEADER_CONTENT.frontend,
+  );
+
+  useHeaderIntroFromRoleQuery(setIntro);
+
   return (
     <Stack direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
       <Stack spacing={3} sx={styles.headerContent}>
         <Typography variant="h1" sx={{ fontWeight: '700' }}>
-          {HEADER_CONTENT.heroTitle.parts.map((p, idx) => (
+          {intro.title.parts.map((p, idx) => (
             <Box key={idx} component="span" sx={p.highlight ? { color: 'info.main' } : undefined}>
               {p.text}
             </Box>
           ))}
         </Typography>
-        <Typography variant="h4">{HEADER_CONTENT.subtitle}</Typography>
+        <Typography variant="h4">{intro.subtitle}</Typography>
 
         <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
           <Box sx={styles.availabilityDot} />
           <Typography variant="body1">
-            <strong>{HEADER_CONTENT.availability.strong}</strong> {HEADER_CONTENT.availability.rest}
+            <strong>{intro.availability.strong}</strong> {intro.availability.normal}
           </Typography>
         </Stack>
 
         <Stack direction="row" spacing={3} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <Typography variant="subtitle1" sx={styles.subtitle}>
-            {HEADER_CONTENT.cta}
+            {HEADER_CTA.title}
           </Typography>
           <IconButton
             component="a"
@@ -108,8 +117,8 @@ function Header() {
       <Box sx={styles.heroWrapper}>
         <Box
           component="img"
-          src={new URL(`../assets/${HEADER_CONTENT.photo.src}`, import.meta.url).toString()}
-          alt={HEADER_CONTENT.photo.alt}
+          src={new URL(`../assets/${HEADER_CTA.photo.src}`, import.meta.url).toString()}
+          alt={HEADER_CTA.photo.alt}
           loading="lazy"
           sx={styles.heroImage}
         />

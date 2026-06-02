@@ -96,7 +96,7 @@ function Projects() {
                   {card.bullets.map((bullet) => (
                     <Box key={bullet.strong} component="li" sx={styles.bulletItem}>
                       <strong>{bullet.strong}</strong>
-                      {bullet.rest}
+                      {bullet.normal}
                     </Box>
                   ))}
                 </Box>
