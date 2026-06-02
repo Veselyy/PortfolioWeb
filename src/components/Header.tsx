@@ -85,7 +85,8 @@ function Header() {
         <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
           <Box sx={styles.availabilityDot} />
           <Typography variant="body1">
-            <strong>{intro.availability.strong}</strong> {intro.availability.normal}
+            <strong>{intro.availability.strong}</strong>
+            {intro.availability.normal}
           </Typography>
         </Stack>
 
