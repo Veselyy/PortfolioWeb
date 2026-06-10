@@ -1,0 +1,27 @@
+\usepackage[a4paper, left=1.2cm, right=1.2cm, top=1.4cm, bottom=1.4cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xurl}
+\usepackage{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em}
+\setlist{
+  leftmargin=*,
+  nosep,
+  itemsep=0.15em,
+  parsep=0pt,
+  topsep=0.2em
+}
+
+\renewenvironment{quote}{%
+  \list{}{%
+    \leftmargin=0.4em
+    \rightmargin=0.4em
+    \listparindent=0pt
+    \parsep=0pt
+    \itemsep=0pt
+  }%
+  \item\relax
+}{%
+  \endlist
+}

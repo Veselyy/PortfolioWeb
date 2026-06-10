@@ -51,4 +51,23 @@ pnpm build    # produkční build
 pnpm preview  # náhled buildu
 pnpm lint
 pnpm format
+pnpm cv       # vygeneruje CV-FE/BE/SUPP a exportuje PDF
+```
+
+### Životopis (CV)
+
+Obsah se skládá ze stejných zdrojů jako web (`about-me.md`, `work-approach.md`, data v `src/data/`). Hlavička a profil odpovídají parametru `?role=` na webu (`frontend`, `backend`, `support`).
+
+| Soubor    | Role na webu     | Pozice                    |
+| --------- | ---------------- | ------------------------- |
+| `CV-FE`   | `?role=frontend` | Junior Frontend Developer |
+| `CV-BE`   | `?role=backend`  | Junior Software Tester    |
+| `CV-SUPP` | `?role=support`  | Junior IT Support         |
+
+Sekce **Dovednosti** a **Koníčky** se z `aboutMeContent.ts` neberou — už jsou v `about-me.md` (stejně jako na stránce O mně).
+
+```bash
+pnpm cv:generate  # CV-FE.md, CV-BE.md, CV-SUPP.md
+pnpm cv:pdf       # odpovídající PDF (vyžaduje pandoc)
+pnpm cv           # obojí
 ```

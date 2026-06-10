@@ -1,0 +1,52 @@
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.35;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+h2,
+h3,
+h4 {
+  margin-top: 0.8em;
+  margin-bottom: 0.35em;
+}
+
+p,
+ul,
+ol,
+blockquote {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
+ul,
+ol {
+  padding-left: 1.2em;
+}
+
+blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0.8em;
+  border-left: 3px solid #cccccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+a {
+  word-break: break-word;
+}
