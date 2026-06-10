@@ -42,6 +42,8 @@ Pro více informací najdeš na: https://martinvesely.netlify.app?role=backend
 
 - Věnuji se programování, designu aplikací a hledání inovativních řešení.
 
+- test hook bullet
+
 ### Vzdělání, práce a brigády v IT
 
 #### Střední škola (2020-2024) — SPŠ Žďár nad Sázavou

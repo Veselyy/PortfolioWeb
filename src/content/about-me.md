@@ -31,3 +31,5 @@
 **<u>Svět v IT</u>**
 
 - Věnuji se programování, designu aplikací a hledání inovativních řešení.
+
+- test hook bullet

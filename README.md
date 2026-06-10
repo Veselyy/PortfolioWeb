@@ -69,5 +69,8 @@ Sekce **Dovednosti** a **Koníčky** se z `aboutMeContent.ts` neberou — už js
 ```bash
 pnpm cv:generate  # CV-FE.md, CV-BE.md, CV-SUPP.md
 pnpm cv:pdf       # odpovídající PDF (vyžaduje pandoc)
+pnpm cv:check     # ověří, že CV.md odpovídá obsahu webu
 pnpm cv           # obojí
 ```
+
+Po změně obsahu webu je potřeba spustit `pnpm cv` a commitnout i aktualizované `CV-*.md`. Jinak `pre-commit` / `pre-push` a CI selžou (`cv:check`).

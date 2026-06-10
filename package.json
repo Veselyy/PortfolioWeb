@@ -13,6 +13,7 @@
     "preview": "vite preview",
     "cv:generate": "node --experimental-strip-types scripts/generate-cv.ts",
     "cv:pdf": "sh scripts/export-cv-pdf.sh",
+    "cv:check": "sh scripts/check-cv-sync.sh",
     "cv": "pnpm cv:generate && pnpm cv:pdf",
     "prepare": "husky"
   },
