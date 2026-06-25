@@ -1,18 +1,16 @@
 const GA_MEASUREMENT_ID = 'G-H7NS5VRYQ7';
 
 export function initAnalytics(): void {
-  if (!import.meta.env.PROD) {
-    return;
-  }
+  if (!import.meta.env.PROD) return;
 
-  const dataLayer = ((window as Window & { dataLayer?: unknown[] }).dataLayer ??= []);
+  window.dataLayer = window.dataLayer || [];
 
-  function gtag(...args: unknown[]) {
-    dataLayer.push(args);
-  }
+  window.gtag = (...args: unknown[]) => {
+    window.dataLayer.push(args);
+  };
 
-  gtag('js', new Date());
-  gtag('config', GA_MEASUREMENT_ID);
+  window.gtag('js', new Date());
+  window.gtag('config', GA_MEASUREMENT_ID);
 
   const script = document.createElement('script');
   script.async = true;
