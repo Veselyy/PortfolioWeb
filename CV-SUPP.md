@@ -63,6 +63,15 @@ Pro více informací najdeš na: https://martinvesely.netlify.app?role=support
 - V rámci práce jsem se podílel na vývoji a údržbě webových aplikací pro naše klienty.
 - Měl jsem možnost pracovat na různých projektech, které mi umožnily rozvíjet své dovednosti v oblasti programování, komunikace v týmu, organizace práce a time managementu...
 
+**Reference:**
+
+- „Velmi jsi mě překvapil svými znalostmi!“
+- „Moc se mi líbí tvůj přístup k práci — i s minimem zkušeností věci zkoušíš, jdeš do nich naplno, jsi Lukášovi velkou týmovou oporou a krásně rosteš. A baví mě i naše mimopracovní hovory!“
+- „Jsi nadějný a talentovaný juniorní vývojář se zodpovědným přístupem a smyslem pro efektivitu.“
+- „Máš chuť věci zkoumat, poznávat a učit se dělat je správně.“
+- „Rychle se učíš a těší mě, jak rozumně používáš AI. Jsi dostatečně samostatný, ale zároveň dokážeš poznat, kdy je čas se zeptat někoho zkušenějšího.“
+- „Díky, že se každé výzvě umíš postavit čelem!“
+
 ## Projekty
 
 #### Myšlenkové mapy — Edukativní web zaměřený na metodiku myšlenkových map
