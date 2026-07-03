@@ -6,7 +6,7 @@ Osobní portfolio — responzivní jednostránková webová aplikace s přepín�
 
 ## Design
 
-Návrh rozhraní ve Figmě: [Portfolio (Figma)](https://www.figma.com/design/ngYKYc1BqeqU4aX4Dt9JAf/Portfolio?node-id=1-2&t=dRxpI9N45NsHH9CQ-1)
+Návrh rozhraní ve Figmě: [Portfolio (Figma)](https://www.figma.com/design/zznqhRm0Dif7eVXfq5EVW1/Portfolio?node-id=0-1&t=ZSddmSVTUA5sR8mt-1)
 
 ## Technologie
 

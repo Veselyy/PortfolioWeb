@@ -22,6 +22,7 @@ const styles = {
     borderRadius: 1,
     borderColor: 'info.main',
     color: 'inherit',
+    boxShadow: 'none',
     px: 2,
     py: 1,
   },
