@@ -47,6 +47,6 @@ export const HEADER_CTA = {
   title: 'Klidně se ozvěte',
   photo: {
     src: 'photo_of_me.png',
-    alt: 'Profilová fotografie',
+    alt: 'Martin Veselý, portrétní fotografie',
   },
 } as const;

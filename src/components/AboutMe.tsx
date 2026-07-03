@@ -1,5 +1,5 @@
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import { Box, Paper, Stack, Typography } from '@mui/material';
+import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 import MuiMarkdown from 'mui-markdown';
 
@@ -43,7 +43,14 @@ const styles = {
   },
   bulletList: { m: 0, pl: 2.5, listStyleType: 'disc' },
   bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
-  referencesTitle: { fontWeight: 700, mt: 1 },
+  referencesDivider: {
+    width: '20%',
+    mx: 'auto',
+    my: 2,
+    bgcolor: (theme: Theme) => (theme.palette.mode === 'dark' ? 'common.white' : 'common.black'),
+  },
+  referencesTitle: { fontWeight: 700 },
+  referenceItem: { typography: 'body1', mb: 1, fontStyle: 'italic', '&:last-child': { mb: 0 } },
 } as const;
 
 const EDUCATION_SECTION_TITLE = 'Vzdělání, práce a brigády v IT';
@@ -119,16 +126,16 @@ function AboutMe() {
 
               {card.references && card.references.length > 0 && (
                 <>
+                  <Box sx={{ width: '100%' }}>
+                    <Divider sx={styles.referencesDivider} />
+                  </Box>
+
                   <Typography variant="subtitle1" sx={styles.referencesTitle}>
                     Reference
                   </Typography>
                   <Box component="ul" sx={styles.bulletList}>
                     {card.references.map((quote, i) => (
-                      <Box
-                        key={`${card.title}-r-${i}`}
-                        component="li"
-                        sx={{ ...styles.bulletItem, fontStyle: 'italic' }}
-                      >
+                      <Box key={`${card.title}-r-${i}`} component="li" sx={styles.referenceItem}>
                         <Box component="span">
                           {'\u201E'}
                           <MuiMarkdown options={{ forceInline: true }}>{quote}</MuiMarkdown>

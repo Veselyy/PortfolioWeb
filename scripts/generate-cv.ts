@@ -97,6 +97,14 @@ function formatEducationSection(): string {
       lines.push(`- ${stripMarkdownInline(bullet)}`);
     }
 
+    if (card.references && card.references.length > 0) {
+      lines.push('', '**Reference:**', '');
+
+      for (const quote of card.references) {
+        lines.push(`- „${stripMarkdownInline(quote)}“`);
+      }
+    }
+
     lines.push('');
   }
 

@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import { alpha, type Theme } from '@mui/material/styles';
@@ -17,17 +17,20 @@ const styles = {
   headerContent: {
     width: { md: '70%', xs: '100%' },
   },
-  subtitle: {
-    fontWeight: 500,
-    p: 0.5,
-    border: '1px solid',
-    borderColor: 'info.main',
+  ctaButton: {
+    fontWeight: 700,
     borderRadius: 1,
+    borderColor: 'info.main',
+    color: 'inherit',
+    px: 2,
+    py: 1,
   },
   contactIconButton: {
     color: 'inherit',
     bgcolor: 'info.main',
-    p: 1,
+    p: 1.5,
+    minWidth: 44,
+    minHeight: 44,
     '&:hover, &:focus-visible': { bgcolor: 'info.main' },
   },
   availabilityDot: {
@@ -91,9 +94,15 @@ function Header() {
         </Stack>
 
         <Stack direction="row" spacing={3} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          <Typography variant="subtitle1" sx={styles.subtitle}>
+          <Button
+            component="a"
+            href="#footer"
+            variant="outlined"
+            color="info"
+            sx={styles.ctaButton}
+          >
             {HEADER_CTA.title}
-          </Typography>
+          </Button>
           <IconButton
             component="a"
             href={CONTACT.whatsapp.href}
