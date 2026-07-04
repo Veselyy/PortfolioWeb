@@ -1,12 +1,23 @@
 # Portfolio Web
 
-Osobní portfolio — responzivní jednostránková webová aplikace s přepínáním světlého a tmavého režimu.
+Tohle je moje osobní portfolio a online životopis — jsem Martin Veselý a tenhle
+projekt jsem si sám navrhl, naprogramoval a udržuji jako vlastní vizitku pro uchazeče
+o práci v IT. Je to responzivní jednostránková webová aplikace s přepínáním světlého
+a tmavého režimu, obsahem přizpůsobeným podle role (frontend / backend / support)
+a automaticky generovaným CV ve formátu PDF.
 
-**Stránky:** [martinvesely.netlify.app](https://martinvesely.netlify.app)
+- 🌐 **Web:** [martinvesely.netlify.app](https://martinvesely.netlify.app)
+- 🎨 **Figma design:** [Portfolio (Figma)](https://www.figma.com/design/zznqhRm0Dif7eVXfq5EVW1/Portfolio?node-id=0-1&t=ZSddmSVTUA5sR8mt-1)
+- 💼 **LinkedIn:** [linkedin.com/in/veselymartin-online](https://www.linkedin.com/in/veselymartin-online/)
+- ✉️ **Kontakt:** [veselymartin.online@gmail.com](mailto:veselymartin.online@gmail.com)
 
-## Design
+## O projektu
 
-Návrh rozhraní ve Figmě: [Portfolio (Figma)](https://www.figma.com/design/zznqhRm0Dif7eVXfq5EVW1/Portfolio?node-id=0-1&t=ZSddmSVTUA5sR8mt-1)
+Web mi slouží zároveň jako portfolio i jako živé CV — obsah (o mně, zkušenosti,
+projekty, dovednosti) držím v jednom zdroji (`src/content`, `src/data`) a promítá se
+jak do webu, tak do vygenerovaného PDF životopisu (viz [Životopis (CV)](#životopis-cv)
+níže). Web i CV tak vždy zobrazují stejné informace, jen v jiném formátu, a přizpůsobují
+obsah podle role, o kterou se zrovna hlásím (`?role=frontend|backend|support`).
 
 ## Technologie
 
