@@ -10,10 +10,6 @@ type ContactFormValues = {
 export type ContactFormStatus = 'idle' | 'sending' | 'success' | 'error';
 
 export function useContactForm() {
-  const endpoint =
-    (import.meta.env.VITE_CONTACT_FORM_ENDPOINT as string | undefined) ||
-    '/.netlify/functions/contact';
-
   const [values, setValues] = useState<ContactFormValues>({
     firstName: '',
     lastName: '',
@@ -47,33 +43,22 @@ export function useContactForm() {
 
     try {
       setStatus('sending');
-      const res = await fetch(endpoint, {
+      const body = new URLSearchParams({
+        'form-name': 'contact',
+        firstName: values.firstName.trim(),
+        lastName: values.lastName.trim(),
+        email: values.email.trim(),
+        message: values.message.trim(),
+      }).toString();
+
+      const res = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          firstName: values.firstName.trim(),
-          lastName: values.lastName.trim(),
-          email: values.email.trim(),
-          message: values.message.trim(),
-          page: window.location.href,
-        }),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
       });
 
       if (!res.ok) {
-        const ct = res.headers.get('content-type') ?? '';
-        const txt = await res.text().catch(() => '');
-        const msg =
-          ct.includes('application/json') && txt
-            ? (() => {
-                try {
-                  const parsed = JSON.parse(txt) as { error?: string };
-                  return parsed.error || `HTTP ${res.status}`;
-                } catch {
-                  return `HTTP ${res.status}`;
-                }
-              })()
-            : `Endpoint vrátil ${res.status}. Zkontroluj URL endpointu.`;
-        throw new Error(msg);
+        throw new Error(`Odeslání selhalo (HTTP ${res.status}).`);
       }
 
       setStatus('success');
@@ -90,7 +75,6 @@ export function useContactForm() {
   }
 
   return {
-    endpoint,
     values,
     setField,
     status,
