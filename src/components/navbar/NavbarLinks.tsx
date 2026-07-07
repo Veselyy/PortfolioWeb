@@ -11,7 +11,13 @@ type NavbarLinksProps = {
 
 export function NavbarLinks({ direction = 'row', spacing = 8, onNavigate }: NavbarLinksProps) {
   return (
-    <Stack component="nav" direction={direction} spacing={spacing} aria-label="Navigace">
+    <Stack
+      component="nav"
+      direction={direction}
+      spacing={spacing}
+      aria-label="Navigace"
+      sx={{ alignItems: 'center' }}
+    >
       {navbarLinks.map(({ id, label, href, ariaLabel }) => (
         <NavbarLink key={id} label={label} href={href} ariaLabel={ariaLabel} onClick={onNavigate} />
       ))}

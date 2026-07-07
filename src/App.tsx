@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Container, Divider } from '@mui/material';
+import { Box, Container, Divider } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,15 +16,20 @@ const styles = {
     width: '95%',
     maxWidth: '1200px',
     marginInline: 'auto',
-    paddingBlock: '10px',
+    paddingBottom: '10px',
     display: 'flex',
     flexDirection: 'column',
-    gap: 6,
+    gap: { xs: 4, md: 6 },
   },
   divider: {
     width: '40%',
     mx: 'auto',
     bgcolor: (theme: Theme) => (theme.palette.mode === 'dark' ? 'common.white' : 'common.black'),
+  },
+  navbar: {
+    width: { xs: '100vw', md: 'auto' },
+    marginInline: { xs: 'calc(50% - 50vw)', md: 0 },
+    paddingTop: { xs: 0, md: '10px' },
   },
 } as const;
 
@@ -44,7 +49,7 @@ function App() {
       <Container maxWidth={false} sx={styles.container} disableGutters>
         {sections.map((section, idx) => (
           <Fragment key={section.key}>
-            {section.node}
+            {section.key === 'navbar' ? <Box sx={styles.navbar}>{section.node}</Box> : section.node}
             {idx !== 0 && idx < sections.length - 1 && <Divider sx={styles.divider} />}
           </Fragment>
         ))}
