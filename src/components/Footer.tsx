@@ -58,8 +58,7 @@ const iconByKey = {
 } as const;
 
 function Footer() {
-  const { endpoint, values, setField, status, errorMsg, validation, canSubmit, submit } =
-    useContactForm();
+  const { values, setField, status, errorMsg, validation, canSubmit, submit } = useContactForm();
 
   return (
     <Stack id="footer" spacing={3}>
@@ -88,16 +87,17 @@ function Footer() {
           })}
         </Stack>
 
-        <Stack component="form" sx={styles.form} spacing={2} onSubmit={submit}>
+        <Stack
+          component="form"
+          name="contact"
+          data-netlify="true"
+          sx={styles.form}
+          spacing={2}
+          onSubmit={submit}
+        >
           {status === 'success' && <Alert severity="success">Odesláno.</Alert>}
           {status === 'error' && (
             <Alert severity="error">{errorMsg || 'Nepodařilo se odeslat.'}</Alert>
-          )}
-
-          {!endpoint && (
-            <Alert severity="warning">
-              Formulář není napojený na odesílání. Nastav `VITE_CONTACT_FORM_ENDPOINT`.
-            </Alert>
           )}
 
           <TextField
