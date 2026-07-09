@@ -93,14 +93,14 @@ export const HEADER_CTA = {
   cs: {
     title: 'Klidně se ozvěte',
     photo: {
-      src: 'photo_of_me.png',
+      src: 'photo_of_me.jpg',
       alt: 'Martin Veselý, portrétní fotografie',
     },
   },
   en: {
     title: 'Feel free to reach out',
     photo: {
-      src: 'photo_of_me.png',
+      src: 'photo_of_me.jpg',
       alt: 'Martin Veselý, portrait photo',
     },
   },
