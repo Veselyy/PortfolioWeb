@@ -6,6 +6,30 @@ import type { Theme } from '@mui/material/styles';
 
 import { FOOTER_CONTENT } from '../data/footerContent';
 import { useContactForm } from '../hooks/useContactForm';
+import { useLanguage } from '../context/useLanguage';
+
+const FORM_TEXT = {
+  cs: {
+    sent: 'Odesláno.',
+    firstName: 'Jméno',
+    lastName: 'Příjmení',
+    email: 'Email',
+    emailError: 'Zadej platný email.',
+    message: 'Zpráva',
+    messageError: 'Zpráva musí mít aspoň 5 znaků.',
+    send: 'Odeslat',
+  },
+  en: {
+    sent: 'Sent.',
+    firstName: 'First name',
+    lastName: 'Last name',
+    email: 'Email',
+    emailError: 'Enter a valid email.',
+    message: 'Message',
+    messageError: 'Message must be at least 5 characters.',
+    send: 'Send',
+  },
+} as const;
 
 const styles = {
   title: { fontWeight: 700 },
@@ -58,17 +82,21 @@ const iconByKey = {
 } as const;
 
 function Footer() {
-  const { values, setField, status, errorMsg, validation, canSubmit, submit } = useContactForm();
+  const { lang } = useLanguage();
+  const content = FOOTER_CONTENT[lang];
+  const text = FORM_TEXT[lang];
+  const { values, setField, status, errorMsg, validation, canSubmit, submit } =
+    useContactForm(lang);
 
   return (
     <Stack id="footer" spacing={3}>
       <Typography variant="h4" align="center" sx={styles.title}>
-        {FOOTER_CONTENT.title}
+        {content.title}
       </Typography>
 
       <Stack sx={styles.content}>
         <Stack spacing={2} sx={styles.contactList}>
-          {FOOTER_CONTENT.contactItems.map((item) => {
+          {content.contactItems.map((item) => {
             const icon = iconByKey[item.icon];
 
             return (
@@ -95,39 +123,35 @@ function Footer() {
           spacing={2}
           onSubmit={submit}
         >
-          {status === 'success' && <Alert severity="success">Odesláno.</Alert>}
-          {status === 'error' && (
-            <Alert severity="error">{errorMsg || 'Nepodařilo se odeslat.'}</Alert>
-          )}
+          {status === 'success' && <Alert severity="success">{text.sent}</Alert>}
+          {status === 'error' && <Alert severity="error">{errorMsg}</Alert>}
 
           <TextField
-            label="Jméno"
+            label={text.firstName}
             name="firstName"
             autoComplete="given-name"
             value={values.firstName}
             onChange={(e) => setField('firstName', e.target.value)}
           />
           <TextField
-            label="Příjmení"
+            label={text.lastName}
             name="lastName"
             autoComplete="family-name"
             value={values.lastName}
             onChange={(e) => setField('lastName', e.target.value)}
           />
           <TextField
-            label="Email"
+            label={text.email}
             name="email"
             type="email"
             autoComplete="email"
             value={values.email}
             onChange={(e) => setField('email', e.target.value)}
             error={values.email.trim().length > 0 && !validation.email}
-            helperText={
-              values.email.trim().length > 0 && !validation.email ? 'Zadej platný email.' : ' '
-            }
+            helperText={values.email.trim().length > 0 && !validation.email ? text.emailError : ' '}
           />
           <TextField
-            label="Zpráva"
+            label={text.message}
             name="message"
             multiline
             minRows={4}
@@ -135,9 +159,7 @@ function Footer() {
             onChange={(e) => setField('message', e.target.value)}
             error={values.message.trim().length > 0 && !validation.message}
             helperText={
-              values.message.trim().length > 0 && !validation.message
-                ? 'Zpráva musí mít aspoň 5 znaků.'
-                : ' '
+              values.message.trim().length > 0 && !validation.message ? text.messageError : ' '
             }
           />
 
@@ -149,7 +171,7 @@ function Footer() {
             color="info"
             disabled={!canSubmit}
           >
-            Odeslat
+            {text.send}
           </Button>
         </Stack>
       </Stack>

@@ -3,8 +3,12 @@ import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 import MuiMarkdown from 'mui-markdown';
 
-import aboutMeMarkdown from '../content/about-me.md?raw';
+import aboutMeMarkdownCs from '../content/about-me.cs.md?raw';
+import aboutMeMarkdownEn from '../content/about-me.en.md?raw';
 import { ABOUT_ME_CONTENT } from '../data/aboutMeContent';
+import { useLanguage } from '../context/useLanguage';
+
+const aboutMeMarkdown = { cs: aboutMeMarkdownCs, en: aboutMeMarkdownEn } as const;
 
 const styles = {
   title: { fontWeight: 700 },
@@ -53,7 +57,16 @@ const styles = {
   referenceItem: { typography: 'body1', mb: 1, fontStyle: 'italic', '&:last-child': { mb: 0 } },
 } as const;
 
-const EDUCATION_SECTION_TITLE = 'Vzdělání, práce a brigády v IT';
+const EDUCATION_SECTION_TITLE = {
+  cs: 'Vzdělání, práce a brigády v IT',
+  en: 'Education, work and IT jobs',
+} as const;
+
+const REFERENCES_TITLE = { cs: 'Reference', en: 'References' } as const;
+const QUOTE_MARKS = {
+  cs: { open: '„', close: '“' },
+  en: { open: '“', close: '”' },
+} as const;
 
 type EducationCard = {
   title: string;
@@ -68,29 +81,33 @@ type EducationSection = {
   cards: readonly EducationCard[];
 };
 
-function getEducationSection(): EducationSection {
-  const section = ABOUT_ME_CONTENT.sections.find(
-    (s) => 'cards' in s && s.title === EDUCATION_SECTION_TITLE,
+function getEducationSection(lang: 'cs' | 'en'): EducationSection {
+  const sectionTitle = EDUCATION_SECTION_TITLE[lang];
+  const section = ABOUT_ME_CONTENT[lang].sections.find(
+    (s) => 'cards' in s && s.title === sectionTitle,
   ) as EducationSection | undefined;
 
   if (!section) {
-    throw new Error(`Missing section "${EDUCATION_SECTION_TITLE}" in ABOUT_ME_CONTENT`);
+    throw new Error(`Missing section "${sectionTitle}" in ABOUT_ME_CONTENT`);
   }
 
   return section;
 }
 
 function AboutMe() {
-  const educationSection = getEducationSection();
+  const { lang } = useLanguage();
+  const content = ABOUT_ME_CONTENT[lang];
+  const educationSection = getEducationSection(lang);
+  const quoteMarks = QUOTE_MARKS[lang];
 
   return (
     <Stack id="about" spacing={3}>
       <Typography variant="h4" align="center" sx={styles.title}>
-        O Mně
+        {content.title}
       </Typography>
 
       <Box sx={styles.markdown}>
-        <MuiMarkdown>{aboutMeMarkdown}</MuiMarkdown>
+        <MuiMarkdown>{aboutMeMarkdown[lang]}</MuiMarkdown>
       </Box>
 
       <Stack spacing={2}>
@@ -131,15 +148,15 @@ function AboutMe() {
                   </Box>
 
                   <Typography variant="subtitle1" sx={styles.referencesTitle}>
-                    Reference
+                    {REFERENCES_TITLE[lang]}
                   </Typography>
                   <Box component="ul" sx={styles.bulletList}>
                     {card.references.map((quote, i) => (
                       <Box key={`${card.title}-r-${i}`} component="li" sx={styles.referenceItem}>
                         <Box component="span">
-                          {'\u201E'}
+                          {quoteMarks.open}
                           <MuiMarkdown options={{ forceInline: true }}>{quote}</MuiMarkdown>
-                          {'\u201C'}
+                          {quoteMarks.close}
                         </Box>
                       </Box>
                     ))}

@@ -4,6 +4,7 @@ import type { Theme } from '@mui/material/styles';
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeModeProvider } from './context/ThemeModeProvider';
+import { LanguageProvider } from './context/LanguageProvider';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import AboutMe from './components/AboutMe';
@@ -44,17 +45,23 @@ function App() {
   ] as const;
 
   return (
-    <ThemeModeProvider>
-      <CssBaseline enableColorScheme />
-      <Container maxWidth={false} sx={styles.container} disableGutters>
-        {sections.map((section, idx) => (
-          <Fragment key={section.key}>
-            {section.key === 'navbar' ? <Box sx={styles.navbar}>{section.node}</Box> : section.node}
-            {idx !== 0 && idx < sections.length - 1 && <Divider sx={styles.divider} />}
-          </Fragment>
-        ))}
-      </Container>
-    </ThemeModeProvider>
+    <LanguageProvider>
+      <ThemeModeProvider>
+        <CssBaseline enableColorScheme />
+        <Container maxWidth={false} sx={styles.container} disableGutters>
+          {sections.map((section, idx) => (
+            <Fragment key={section.key}>
+              {section.key === 'navbar' ? (
+                <Box sx={styles.navbar}>{section.node}</Box>
+              ) : (
+                section.node
+              )}
+              {idx !== 0 && idx < sections.length - 1 && <Divider sx={styles.divider} />}
+            </Fragment>
+          ))}
+        </Container>
+      </ThemeModeProvider>
+    </LanguageProvider>
   );
 }
 

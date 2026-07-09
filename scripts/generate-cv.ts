@@ -13,7 +13,12 @@ const rootDir = join(__dirname, '..');
 const PORTFOLIO_URL = 'https://martinvesely.netlify.app';
 const LINKEDIN_URL = 'https://www.linkedin.com/in/veselymartin-online/';
 
-/** Sections already covered by `about-me.md` — same as on the About page. */
+// CVs are always generated in Czech, regardless of the site's language switcher.
+const aboutMeContent = ABOUT_ME_CONTENT.cs;
+const headerContent = HEADER_CONTENT.cs;
+const projectsContent = PROJECTS_CONTENT.cs;
+
+/** Sections already covered by `about-me.cs.md` — same as on the About page. */
 const IGNORED_ABOUT_SECTIONS = new Set(['Dovednosti', 'Koníčky']);
 
 const EDUCATION_SECTION_TITLE = 'Vzdělání, práce a brigády v IT';
@@ -23,7 +28,7 @@ const CV_VARIANTS = [
   { role: 'backend', suffix: 'BE' },
   { role: 'support', suffix: 'SUPP' },
 ] as const satisfies ReadonlyArray<{
-  role: keyof typeof HEADER_CONTENT;
+  role: keyof typeof headerContent;
   suffix: string;
 }>;
 
@@ -61,8 +66,8 @@ function formatPhone(phone: string): string {
   return `+${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)} ${digits.slice(9)}`;
 }
 
-function formatHeader(role: keyof typeof HEADER_CONTENT): string {
-  const intro = HEADER_CONTENT[role];
+function formatHeader(role: keyof typeof headerContent): string {
+  const intro = headerContent[role];
 
   return [
     `## Martin Veselý — ${intro.subtitle}`,
@@ -80,7 +85,7 @@ function formatEducationCardHeading(card: { title: string; linkLabel: string }):
 }
 
 function formatEducationSection(): string {
-  const section = ABOUT_ME_CONTENT.sections.find(
+  const section = aboutMeContent.sections.find(
     (item) => 'cards' in item && item.title === EDUCATION_SECTION_TITLE,
   );
 
@@ -112,9 +117,9 @@ function formatEducationSection(): string {
 }
 
 function formatProjectsSection(): string {
-  const lines = [`## ${PROJECTS_CONTENT.title}`, ''];
+  const lines = [`## ${projectsContent.title}`, ''];
 
-  for (const card of PROJECTS_CONTENT.cards) {
+  for (const card of projectsContent.cards) {
     const [firstBullet, ...restBullets] = card.bullets;
     lines.push(`#### ${card.title} — ${firstBullet.strong}`, '');
     lines.push(`- ${firstBullet.strong}${firstBullet.normal}`);
@@ -142,9 +147,11 @@ function formatContactSection(): string {
   ].join('\n');
 }
 
-function buildCvMarkdown(role: keyof typeof HEADER_CONTENT): string {
-  const aboutMe = normalizeAboutMeMarkdown(readRootFile('src/content/about-me.md'));
-  const workApproach = normalizeWorkApproachMarkdown(readRootFile('src/content/work-approach.md'));
+function buildCvMarkdown(role: keyof typeof headerContent): string {
+  const aboutMe = normalizeAboutMeMarkdown(readRootFile('src/content/about-me.cs.md'));
+  const workApproach = normalizeWorkApproachMarkdown(
+    readRootFile('src/content/work-approach.cs.md'),
+  );
   const ignoredSections = [...IGNORED_ABOUT_SECTIONS].sort().join(', ');
 
   return [

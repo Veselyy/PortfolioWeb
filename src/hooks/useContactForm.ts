@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 
+import type { Language } from '../context/languageContext';
+
 type ContactFormValues = {
   firstName: string;
   lastName: string;
@@ -9,7 +11,21 @@ type ContactFormValues = {
 
 export type ContactFormStatus = 'idle' | 'sending' | 'success' | 'error';
 
-export function useContactForm() {
+const MESSAGES = {
+  cs: {
+    invalid: 'Zkontroluj prosím email a zprávu.',
+    sendFailedWithStatus: (status: number) => `Odeslání selhalo (HTTP ${status}).`,
+    sendFailed: 'Nepodařilo se odeslat.',
+  },
+  en: {
+    invalid: 'Please check the email and message.',
+    sendFailedWithStatus: (status: number) => `Failed to send (HTTP ${status}).`,
+    sendFailed: 'Failed to send.',
+  },
+} as const;
+
+export function useContactForm(lang: Language) {
+  const messages = MESSAGES[lang];
   const [values, setValues] = useState<ContactFormValues>({
     firstName: '',
     lastName: '',
@@ -37,7 +53,7 @@ export function useContactForm() {
 
     if (!validation.email || !validation.message) {
       setStatus('error');
-      setErrorMsg('Zkontroluj prosím email a zprávu.');
+      setErrorMsg(messages.invalid);
       return;
     }
 
@@ -58,14 +74,14 @@ export function useContactForm() {
       });
 
       if (!res.ok) {
-        throw new Error(`Odeslání selhalo (HTTP ${res.status}).`);
+        throw new Error(messages.sendFailedWithStatus(res.status));
       }
 
       setStatus('success');
       setValues({ firstName: '', lastName: '', email: '', message: '' });
     } catch (err) {
       setStatus('error');
-      setErrorMsg(err instanceof Error ? err.message : 'Nepodařilo se odeslat.');
+      setErrorMsg(err instanceof Error ? err.message : messages.sendFailed);
     }
   }
 
