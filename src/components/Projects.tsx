@@ -5,6 +5,7 @@ import type { Theme } from '@mui/material/styles';
 
 import { CONTACT } from '../data/contact';
 import { PROJECTS_CONTENT } from '../data/projectsContent';
+import { useLanguage } from '../context/useLanguage';
 
 const styles = {
   title: { fontWeight: 700 },
@@ -56,14 +57,17 @@ const styles = {
 } as const;
 
 function Projects() {
+  const { lang } = useLanguage();
+  const content = PROJECTS_CONTENT[lang];
+
   return (
     <Stack id="projects" spacing={3}>
       <Typography variant="h4" align="center" sx={styles.title}>
-        {PROJECTS_CONTENT.title}
+        {content.title}
       </Typography>
 
       <Stack spacing={3}>
-        {PROJECTS_CONTENT.cards.map((card) => (
+        {content.cards.map((card) => (
           <Paper key={card.title} sx={styles.card}>
             <Stack sx={styles.cardLayout}>
               <Stack spacing={1}>
@@ -117,7 +121,7 @@ function Projects() {
 
         <Paper sx={styles.card}>
           <Typography variant="body1">
-            {PROJECTS_CONTENT.moreProjectsCta.text}{' '}
+            {content.moreProjectsCta.text}{' '}
             <Box
               component="a"
               href={CONTACT.github.href}
@@ -125,7 +129,7 @@ function Projects() {
               rel="noreferrer"
               sx={styles.moreProjectsLink}
             >
-              {PROJECTS_CONTENT.moreProjectsCta.linkLabel}
+              {content.moreProjectsCta.linkLabel}
             </Box>
           </Typography>
         </Paper>

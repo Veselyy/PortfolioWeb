@@ -3,11 +3,15 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import { alpha, type Theme } from '@mui/material/styles';
 
-import { useState } from 'react';
-
 import { CONTACT } from '../data/contact';
 import { HEADER_CONTENT, HEADER_CTA } from '../data/headerContent';
-import { useHeaderIntroFromRoleQuery } from '../hooks/useHeaderIntroFromRoleQuery';
+import { useHeaderRoleFromQuery } from '../hooks/useHeaderRoleFromQuery';
+import { useLanguage } from '../context/useLanguage';
+
+const CONTACT_ARIA_LABELS = {
+  cs: { whatsapp: 'Kontaktovat přes WhatsApp', email: 'Napsat e-mail' },
+  en: { whatsapp: 'Contact via WhatsApp', email: 'Send an email' },
+} as const;
 
 const styles = {
   headerWrapper: {
@@ -68,11 +72,11 @@ const styles = {
 } as const;
 
 function Header() {
-  const [intro, setIntro] = useState<(typeof HEADER_CONTENT)[keyof typeof HEADER_CONTENT]>(
-    HEADER_CONTENT.frontend,
-  );
-
-  useHeaderIntroFromRoleQuery(setIntro);
+  const { lang } = useLanguage();
+  const role = useHeaderRoleFromQuery();
+  const intro = HEADER_CONTENT[lang][role];
+  const cta = HEADER_CTA[lang];
+  const contactAriaLabels = CONTACT_ARIA_LABELS[lang];
 
   return (
     <Stack direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
@@ -102,14 +106,14 @@ function Header() {
             color="info"
             sx={styles.ctaButton}
           >
-            {HEADER_CTA.title}
+            {cta.title}
           </Button>
           <IconButton
             component="a"
             href={CONTACT.whatsapp.href}
             target="_blank"
             rel="noreferrer"
-            aria-label="Kontaktovat přes WhatsApp"
+            aria-label={contactAriaLabels.whatsapp}
             sx={styles.contactIconButton}
           >
             <WhatsAppIcon />
@@ -117,7 +121,7 @@ function Header() {
           <IconButton
             component="a"
             href={CONTACT.email.href}
-            aria-label="Napsat e-mail"
+            aria-label={contactAriaLabels.email}
             sx={styles.contactIconButton}
           >
             <MailOutlinedIcon />
@@ -128,8 +132,8 @@ function Header() {
       <Box sx={styles.heroWrapper}>
         <Box
           component="img"
-          src={new URL(`../assets/${HEADER_CTA.photo.src}`, import.meta.url).toString()}
-          alt={HEADER_CTA.photo.alt}
+          src={new URL(`../assets/${cta.photo.src}`, import.meta.url).toString()}
+          alt={cta.photo.alt}
           loading="lazy"
           sx={styles.heroImage}
         />

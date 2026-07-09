@@ -6,6 +6,13 @@ import { useState } from 'react';
 import NavbarLinks from './navbar/NavbarLinks';
 import SocialsIcons from './navbar/SocialsIcons';
 import ThemeSwitcher from './navbar/ThemeSwitcher';
+import LanguageSwitcher from './navbar/LanguageSwitcher';
+import { useLanguage } from '../context/useLanguage';
+
+const NAV_ARIA_LABELS = {
+  cs: { open: 'Otevřít navigaci', close: 'Zavřít navigaci' },
+  en: { open: 'Open navigation', close: 'Close navigation' },
+} as const;
 
 const styles = {
   bar: { alignItems: 'center', justifyContent: 'space-between' },
@@ -22,12 +29,15 @@ const styles = {
   },
   drawerContent: { p: 2, alignItems: 'center' },
   drawerClose: { alignSelf: 'flex-end' },
+  switchers: { alignItems: 'center' },
 } as const;
 
 function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = useState(false);
+  const { lang } = useLanguage();
+  const navAriaLabels = NAV_ARIA_LABELS[lang];
 
   const close = () => setOpen(false);
 
@@ -35,8 +45,11 @@ function Navbar() {
     return (
       <>
         <Stack component="div" direction="row" sx={{ ...styles.bar, ...styles.mobileStickyBar }}>
-          <ThemeSwitcher />
-          <IconButton color="inherit" aria-label="Otevřít navigaci" onClick={() => setOpen(true)}>
+          <Stack direction="row" spacing={1} sx={styles.switchers}>
+            <LanguageSwitcher />
+            <ThemeSwitcher />
+          </Stack>
+          <IconButton color="inherit" aria-label={navAriaLabels.open} onClick={() => setOpen(true)}>
             <MenuOutlinedIcon />
           </IconButton>
         </Stack>
@@ -45,7 +58,7 @@ function Navbar() {
           <Stack sx={styles.drawerContent} spacing={2}>
             <IconButton
               color="inherit"
-              aria-label="Zavřít navigaci"
+              aria-label={navAriaLabels.close}
               onClick={close}
               sx={styles.drawerClose}
             >
@@ -61,7 +74,10 @@ function Navbar() {
 
   return (
     <Stack component="div" direction="row" sx={styles.bar}>
-      <ThemeSwitcher />
+      <Stack direction="row" spacing={1} sx={styles.switchers}>
+        <ThemeSwitcher />
+        <LanguageSwitcher />
+      </Stack>
       <NavbarLinks />
       <SocialsIcons />
     </Stack>
