@@ -134,7 +134,8 @@ function Header() {
           component="img"
           src={new URL(`../assets/${cta.photo.src}`, import.meta.url).toString()}
           alt={cta.photo.alt}
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           sx={styles.heroImage}
         />
       </Box>

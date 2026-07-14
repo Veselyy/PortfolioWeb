@@ -111,7 +111,8 @@ function Projects() {
                   component="img"
                   src={new URL(`../assets/${card.image.src}`, import.meta.url).toString()}
                   alt={card.image.alt}
-                  loading="lazy"
+                  loading="eager"
+                  fetchPriority="high"
                   sx={styles.cardImage}
                 />
               </Box>
