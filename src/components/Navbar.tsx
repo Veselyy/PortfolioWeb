@@ -46,7 +46,7 @@ function Navbar() {
       <>
         <Stack component="div" direction="row" sx={{ ...styles.bar, ...styles.mobileStickyBar }}>
           <Stack direction="row" spacing={1} sx={styles.switchers}>
-            <LanguageSwitcher />
+            <LanguageSwitcher small />
             <ThemeSwitcher small />
           </Stack>
           <IconButton color="inherit" aria-label={navAriaLabels.open} onClick={() => setOpen(true)}>

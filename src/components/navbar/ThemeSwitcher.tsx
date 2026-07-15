@@ -1,10 +1,11 @@
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
-import { Box, Switch, Tooltip } from '@mui/material';
-import { alpha, styled, type Theme } from '@mui/material/styles';
+import { Box, Tooltip } from '@mui/material';
+import { type Theme } from '@mui/material/styles';
 
 import { useThemeMode } from '../../context/useThemeMode';
 import { useLanguage } from '../../context/useLanguage';
+import { PillSwitchRoot, getPillSwitchMetrics } from './PillSwitch';
 
 const TEXT = {
   cs: {
@@ -31,59 +32,12 @@ const SIZES: Record<Size, { track: number; height: number; thumb: number; iconFo
 
 function getMetrics(size: Size) {
   const { track, height, thumb, iconFontSize } = SIZES[size];
-  const margin = (height - thumb) / 2;
-  const travel = track - thumb - margin * 2;
+  const { margin, travel } = getPillSwitchMetrics({ track, height, thumb });
   // Centers the icon within the thumb's resting spot on either side.
   const iconInset = margin + thumb / 2 - iconFontSize / 2;
 
   return { track, height, thumb, iconFontSize, margin, travel, iconInset };
 }
-
-const ThemeSwitchRoot = styled(Switch, {
-  shouldForwardProp: (prop) => prop !== 'sizePreset',
-})<{ sizePreset: Size }>(({ theme, sizePreset }) => {
-  const { thumb, margin, travel } = getMetrics(sizePreset);
-  const { track, height } = SIZES[sizePreset];
-
-  return {
-    width: track,
-    height,
-    padding: 0,
-    '& .MuiSwitch-switchBase': {
-      padding: 0,
-      margin,
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.standard,
-        easing: theme.transitions.easing.easeInOut,
-      }),
-      '&.Mui-checked': {
-        transform: `translateX(${travel}px)`,
-        '& + .MuiSwitch-track': {
-          backgroundColor: alpha(theme.palette.text.primary, 0.15),
-          opacity: 1,
-        },
-      },
-    },
-    '& .MuiSwitch-thumb': {
-      width: thumb,
-      height: thumb,
-      zIndex: 0,
-      boxShadow: theme.shadows[1],
-      backgroundColor: theme.palette.background.paper,
-      transition: theme.transitions.create('background-color', {
-        duration: theme.transitions.duration.standard,
-      }),
-    },
-    '& .MuiSwitch-track': {
-      borderRadius: height / 2,
-      backgroundColor: alpha(theme.palette.text.primary, 0.15),
-      opacity: 1,
-      transition: theme.transitions.create('background-color', {
-        duration: theme.transitions.duration.standard,
-      }),
-    },
-  };
-});
 
 const iconTransition = (theme: Theme) =>
   theme.transitions.create(['color', 'transform'], {
@@ -96,7 +50,7 @@ function ThemeSwitcher({ small = false }: { small?: boolean }) {
   const isDark = mode === 'dark';
   const text = TEXT[lang];
   const size: Size = small ? 'small' : 'medium';
-  const { track, height, iconInset, iconFontSize } = getMetrics(size);
+  const { track, height, thumb, iconInset, iconFontSize } = getMetrics(size);
 
   return (
     <Tooltip title={isDark ? text.lightMode : text.darkMode}>
@@ -131,10 +85,10 @@ function ThemeSwitcher({ small = false }: { small?: boolean }) {
             color: isDark ? 'common.white' : 'grey.500',
           }}
         />
-        <ThemeSwitchRoot
+        <PillSwitchRoot
           checked={isDark}
           onChange={toggle}
-          sizePreset={size}
+          dims={{ track, height, thumb }}
           slotProps={{
             input: { 'aria-label': isDark ? text.switchToLight : text.switchToDark },
           }}
