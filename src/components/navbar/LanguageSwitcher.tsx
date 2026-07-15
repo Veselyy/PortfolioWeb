@@ -1,7 +1,7 @@
-import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
-import { IconButton, Tooltip } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { useLanguage } from '../../context/useLanguage';
+import PillToggleSwitch from './PillSwitch';
 
 const TEXT = {
   cs: {
@@ -14,16 +14,39 @@ const TEXT = {
   },
 } as const;
 
-function LanguageSwitcher() {
+type Size = 'medium' | 'small';
+
+const SIZES: Record<Size, { track: number; height: number; thumb: number; labelFontSize: number }> =
+  {
+    medium: { track: 64, height: 32, thumb: 24, labelFontSize: 12 },
+    small: { track: 52, height: 26, thumb: 20, labelFontSize: 10 },
+  };
+
+function LanguageSwitcher({ small = false }: { small?: boolean }) {
   const { lang, toggle } = useLanguage();
+  const isCs = lang === 'cs';
   const text = TEXT[lang];
+  const size: Size = small ? 'small' : 'medium';
+  const { track, height, thumb, labelFontSize } = SIZES[size];
 
   return (
-    <Tooltip title={text.tooltip}>
-      <IconButton color="inherit" onClick={toggle} aria-label={text.ariaLabel}>
-        <TranslateOutlinedIcon />
-      </IconButton>
-    </Tooltip>
+    <PillToggleSwitch
+      size={{ track, height, thumb }}
+      checked={isCs}
+      onChange={toggle}
+      ariaLabel={text.ariaLabel}
+      tooltip={text.tooltip}
+      startContent={
+        <Box component="span" sx={{ fontSize: labelFontSize, fontWeight: 700 }}>
+          EN
+        </Box>
+      }
+      endContent={
+        <Box component="span" sx={{ fontSize: labelFontSize, fontWeight: 700 }}>
+          CS
+        </Box>
+      }
+    />
   );
 }
 
