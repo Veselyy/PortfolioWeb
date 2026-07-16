@@ -31,5 +31,3 @@
 **<u>The world of IT</u>**
 
 - I'm into programming, app design, and finding innovative solutions.
-
-- test hook bullet
