@@ -19,6 +19,8 @@ jak do webu, tak do vygenerovaného PDF životopisu (viz [Životopis (CV)](#živ
 níže). Web i CV tak vždy zobrazují stejné informace, jen v jiném formátu, a přizpůsobují
 obsah podle role, o kterou se zrovna hlásím (`?role=frontend|backend|support`).
 
+![Náhled webu](docs/fullsize_screenshot.png)
+
 ## Technologie
 
 ### Frontend
