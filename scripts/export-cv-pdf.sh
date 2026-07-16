@@ -31,6 +31,4 @@ export_cv_pdf() {
   echo "Wrote $output"
 }
 
-for variant in FE BE SUPP; do
-  export_cv_pdf "CV-${variant}.md" "CV-${variant}.pdf"
-done
+export_cv_pdf "vesely_martin_cv.md" "vesely_martin_cv.pdf"

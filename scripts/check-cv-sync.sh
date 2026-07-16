@@ -3,7 +3,7 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-CV_MARKDOWN_FILES="CV-FE.md CV-BE.md CV-SUPP.md"
+CV_MARKDOWN_FILES="vesely_martin_cv.md"
 
 pnpm cv:generate >/dev/null
 
