@@ -35,6 +35,10 @@ git checkout main && git pull
 git checkout -b issue-<N>-<slug>
 ```
 
+If this repo depends on `vesely-dev-config`, note that plain `pnpm install` won't pull
+in commits pushed there since the last install — the lockfile pins the resolved version.
+If lint/format rules seem out of date, run `pnpm update vesely-dev-config` to refresh it.
+
 ## 2. Implement
 
 Do the actual work interactively — this step is not scripted. Follow the repo's
