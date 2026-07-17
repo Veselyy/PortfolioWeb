@@ -72,8 +72,8 @@ importers:
         specifier: ~6.0.2
         version: 6.0.2
       vesely-dev-config:
-        specifier: github:Veselyy/vesely-dev-config
-        version: git+https://git@github.com:Veselyy/vesely-dev-config.git#b7e79609b6a916a8d0ad45abc043f0540ce9c431(eslint@10.7.0)(prettier@3.8.2)(typescript@6.0.2)
+        specifier: git+https://github.com/Veselyy/vesely-dev-config.git
+        version: https://codeload.github.com/Veselyy/vesely-dev-config/tar.gz/b7e79609b6a916a8d0ad45abc043f0540ce9c431(eslint@10.7.0)(prettier@3.8.2)(typescript@6.0.2)
       vite:
         specifier: ^8.0.4
         version: 8.0.8(@types/node@24.12.2)
@@ -2698,12 +2698,10 @@ packages:
       }
     hasBin: true
 
-  vesely-dev-config@git+https://git@github.com:Veselyy/vesely-dev-config.git#b7e79609b6a916a8d0ad45abc043f0540ce9c431:
+  vesely-dev-config@https://codeload.github.com/Veselyy/vesely-dev-config/tar.gz/b7e79609b6a916a8d0ad45abc043f0540ce9c431:
     resolution:
       {
-        commit: b7e79609b6a916a8d0ad45abc043f0540ce9c431,
-        repo: git@github.com:Veselyy/vesely-dev-config.git,
-        type: git,
+        tarball: https://codeload.github.com/Veselyy/vesely-dev-config/tar.gz/b7e79609b6a916a8d0ad45abc043f0540ce9c431,
       }
     version: 0.1.0
     hasBin: true
@@ -4477,7 +4475,7 @@ snapshots:
   uuid@14.0.1:
     optional: true
 
-  vesely-dev-config@git+https://git@github.com:Veselyy/vesely-dev-config.git#b7e79609b6a916a8d0ad45abc043f0540ce9c431(eslint@10.7.0)(prettier@3.8.2)(typescript@6.0.2):
+  vesely-dev-config@https://codeload.github.com/Veselyy/vesely-dev-config/tar.gz/b7e79609b6a916a8d0ad45abc043f0540ce9c431(eslint@10.7.0)(prettier@3.8.2)(typescript@6.0.2):
     dependencies:
       '@eslint/js': 10.0.1(eslint@10.7.0)
       eslint: 10.7.0
