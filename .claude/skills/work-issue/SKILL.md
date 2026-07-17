@@ -20,7 +20,7 @@ which one. Then fetch full context:
 gh issue view <N> --repo Veselyy/PortfolioWeb --json title,body,labels,comments
 ```
 
-If title/body are terse or empty, use judgment (and the repo's `notes/CONTEXT.md`)
+If title/body are terse or empty, use judgment (and the repo's `portfolioweb_context/CONTEXT.md`)
 to infer what's actually being asked, and confirm the interpretation with the user
 before writing code if it's ambiguous.
 
@@ -38,7 +38,7 @@ git checkout -b issue-<N>-<slug>
 ## 2. Implement
 
 Do the actual work interactively — this step is not scripted. Follow the repo's
-existing conventions and CLAUDE.md / notes/CONTEXT.md. Keep the diff scoped to the issue.
+existing conventions and CLAUDE.md / portfolioweb_context/CONTEXT.md. Keep the diff scoped to the issue.
 
 ## 3. Commit
 
