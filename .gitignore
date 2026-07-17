@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 # Personal notes (Obsidian vault)
-notes/
+portfolioweb_context/
 
 # Editor/tooling caches
 .clj-kondo/
