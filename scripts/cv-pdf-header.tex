@@ -2,6 +2,23 @@
 \usepackage{enumitem}
 \usepackage{xurl}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{eso-pic}
+
+% Profile photo, top-right corner of the first page, rounded corners.
+\AddToShipoutPictureFG*{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north east, xshift=-12mm, yshift=-14mm, inner sep=0] at (current page.north east) {%
+      \begin{tikzpicture}
+        \clip (14mm,14mm) circle (14mm);
+        \node[anchor=south west, inner sep=0] at (0,0) {%
+          \includegraphics[width=28mm,height=28mm]{src/assets/photo_of_me.jpg}%
+        };
+      \end{tikzpicture}%
+    };
+  \end{tikzpicture}%
+}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.35em}
