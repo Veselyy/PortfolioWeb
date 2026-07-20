@@ -58,6 +58,8 @@ function formatPhone(phone: string): string {
 
 function formatHeader(): string {
   return [
+    '<img src="src/assets/photo_of_me.jpg" class="cv-photo" alt="Martin Veselý" />',
+    '',
     `## Martin Veselý - ${CV_SUBTITLE}`,
     '',
     `Pro více informací najdeš na: ${PORTFOLIO_URL}`,

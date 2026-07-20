@@ -50,3 +50,13 @@ blockquote {
 a {
   word-break: break-word;
 }
+
+.cv-photo {
+  position: absolute;
+  top: 12mm;
+  right: 12mm;
+  width: 28mm;
+  height: 28mm;
+  object-fit: cover;
+  border-radius: 50%;
+}
