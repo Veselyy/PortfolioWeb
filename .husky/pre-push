@@ -5,4 +5,5 @@ nvm use --silent >/dev/null 2>&1 || true
 
 pnpm run format:check
 pnpm run lint
+pnpm run test
 pnpm run cv:check
