@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
-import react, { reactCompilerPreset } from '@vitejs/plugin-react';
-import babel from '@rolldown/plugin-babel';
+import react from '@vitejs/plugin-react';
 
 const GA_MEASUREMENT_ID = 'G-H7NS5VRYQ7';
 
@@ -20,8 +19,7 @@ const googleAnalyticsSnippet = `
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [
-    react(),
-    babel({ presets: [reactCompilerPreset()] }),
+    react({ babel: { plugins: [['babel-plugin-react-compiler', {}]] } }),
     {
       name: 'inject-google-analytics',
       transformIndexHtml(html) {
