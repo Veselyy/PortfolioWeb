@@ -4,7 +4,7 @@
 - Rád budu **čelit** novým výzvám a **rád přispěju** ke společnému úspěchu.
 - Angličtina pro mě není překážka - gramatiku mám na úrovni **B1** a v mluvení jsem mezi **A2 - B1**.
 
-##### Dovednosti
+### Dovednosti
 
 **<u>2-3 roky zkušeností</u>**
 
@@ -14,7 +14,7 @@
 
 - REST API, SQL
 
-##### Koníčky
+### Koníčky
 
 **<u>Sport</u>**
 

@@ -1,7 +1,7 @@
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
-import MuiMarkdown from 'mui-markdown';
+import MuiMarkdown, { defaultOverrides } from 'mui-markdown';
 
 import aboutMeMarkdownCs from '../content/about-me.cs.md?raw';
 import aboutMeMarkdownEn from '../content/about-me.en.md?raw';
@@ -10,12 +10,20 @@ import { useLanguage } from '../context/useLanguage';
 
 const aboutMeMarkdown = { cs: aboutMeMarkdownCs, en: aboutMeMarkdownEn } as const;
 
+// Semantic tag stays h3 (see about-me.*.md), but rendered at the original h5 visual scale.
+const aboutMeMarkdownOverrides = {
+  ...defaultOverrides,
+  h3: {
+    component: Typography,
+    props: { component: 'h3', variant: 'h5', sx: { fontWeight: 700, mt: 3 } },
+  },
+};
+
 const styles = {
   title: { fontWeight: 700 },
   markdown: {
     '& p': { mt: 1 },
     '& ul': { m: 0, pl: 2.5 },
-    '& h5': { fontWeight: 700, mt: 3 },
     '& li': { mb: 1, '&:last-child': { mb: 0 } },
   },
   educationTitle: { fontWeight: 700 },
@@ -101,24 +109,24 @@ function AboutMe() {
   const quoteMarks = QUOTE_MARKS[lang];
 
   return (
-    <Stack id="about" spacing={3}>
-      <Typography variant="h4" align="center" sx={styles.title}>
+    <Stack component="section" id="about" spacing={3} aria-labelledby="about-heading">
+      <Typography id="about-heading" variant="h4" component="h2" align="center" sx={styles.title}>
         {content.title}
       </Typography>
 
       <Box sx={styles.markdown}>
-        <MuiMarkdown>{aboutMeMarkdown[lang]}</MuiMarkdown>
+        <MuiMarkdown overrides={aboutMeMarkdownOverrides}>{aboutMeMarkdown[lang]}</MuiMarkdown>
       </Box>
 
       <Stack spacing={2}>
-        <Typography variant="h5" sx={styles.educationTitle}>
+        <Typography variant="h5" component="h3" sx={styles.educationTitle}>
           {educationSection.title}
         </Typography>
 
         {educationSection.cards.map((card: EducationCard) => (
           <Paper key={card.title} sx={styles.educationCard}>
             <Stack spacing={1} sx={styles.educationCardContent}>
-              <Typography variant="h6" sx={styles.educationCardTitle}>
+              <Typography variant="h6" component="h4" sx={styles.educationCardTitle}>
                 {card.title}
               </Typography>
 
@@ -147,7 +155,7 @@ function AboutMe() {
                     <Divider sx={styles.referencesDivider} />
                   </Box>
 
-                  <Typography variant="subtitle1" sx={styles.referencesTitle}>
+                  <Typography variant="subtitle1" component="h4" sx={styles.referencesTitle}>
                     {REFERENCES_TITLE[lang]}
                   </Typography>
                   <Box component="ul" sx={styles.bulletList}>

@@ -59,8 +59,15 @@ const styles = {
     width: { md: '30%', xs: '100%' },
     p: { md: 0, xs: '0 20%' },
   },
+  // 'info.main' is tuned as a background surface (icon buttons, cards) and is too light/dark
+  // to use as text color directly against the page background (fails 3:1 contrast) —
+  // 'highlight.main' is the paired foreground shade instead (see ThemeModeProvider).
+  highlight: {
+    color: (theme: Theme) => theme.palette.highlight.main,
+  },
   heroImage: {
     width: '100%',
+    aspectRatio: '1 / 1',
     borderRadius: '50%',
     boxShadow: (theme: Theme) => {
       const c =
@@ -79,16 +86,18 @@ function Header() {
   const contactAriaLabels = CONTACT_ARIA_LABELS[lang];
 
   return (
-    <Stack direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
+    <Stack component="header" direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
       <Stack spacing={3} sx={styles.headerContent}>
         <Typography variant="h1" sx={{ fontWeight: '700' }}>
           {intro.title.parts.map((p, idx) => (
-            <Box key={idx} component="span" sx={p.highlight ? { color: 'info.main' } : undefined}>
+            <Box key={idx} component="span" sx={p.highlight ? styles.highlight : undefined}>
               {p.text}
             </Box>
           ))}
         </Typography>
-        <Typography variant="h4">{intro.subtitle}</Typography>
+        <Typography variant="h4" component="p">
+          {intro.subtitle}
+        </Typography>
 
         <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
           <Box sx={styles.availabilityDot} />

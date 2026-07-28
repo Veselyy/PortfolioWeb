@@ -92,7 +92,9 @@ function PillToggleSwitch({
   const { track, height, thumb } = size;
   const { margin } = getPillSwitchMetrics(size);
   const activeColor = isDark ? 'common.white' : 'common.black';
-  const inactiveColor = 'grey.500';
+  // grey.500 fails 4.5:1 against the light-mode background; grey.700 fixes light mode while
+  // staying well above the threshold in dark mode too.
+  const inactiveColor = isDark ? 'grey.500' : 'grey.700';
 
   return (
     <Tooltip title={tooltip}>
