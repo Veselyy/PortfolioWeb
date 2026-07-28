@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 
+import { SEO_CONTENT } from '../data/seoContent';
 import { LANGUAGE_STORAGE_KEY, LanguageContext, type Language } from './languageContext';
 
 function getInitialLanguage(): Language {
@@ -18,6 +19,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     window.localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
     document.documentElement.lang = lang;
+
+    const { title, description } = SEO_CONTENT[lang];
+    document.title = title;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', description);
   }, [lang]);
 
   return (

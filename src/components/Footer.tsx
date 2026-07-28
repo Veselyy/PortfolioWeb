@@ -123,9 +123,17 @@ function Footer() {
           spacing={2}
           onSubmit={submit}
         >
-          <Box aria-live="polite" role="status">
-            {status === 'success' && <Alert severity="success">{text.sent}</Alert>}
-            {status === 'error' && <Alert severity="error">{errorMsg}</Alert>}
+          <Box>
+            {status === 'success' && (
+              <Alert severity="success" role="status">
+                {text.sent}
+              </Alert>
+            )}
+            {status === 'error' && (
+              <Alert severity="error" role="status">
+                {errorMsg}
+              </Alert>
+            )}
           </Box>
 
           <TextField
