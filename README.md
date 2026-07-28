@@ -40,8 +40,9 @@ obsah podle role, o kterou se zrovna hlásím (`?role=frontend|backend|support`)
 - **pnpm** — správa balíčků
 - **ESLint** + **typescript-eslint** — lint
 - **Prettier** — formátování
-- **Husky** — git hooky (pre-commit / pre-push)
-- **GitHub Actions** — CI (`lint`, `format:check`)
+- **Jest** + **React Testing Library** — testy
+- **Husky** — git hooky (pre-commit / pre-push, včetně testů před pushnutím)
+- **GitHub Actions** — CI (`format:check`, `lint`, `test`, `cv:check`)
 
 ### Nasazení a backend
 
@@ -60,11 +61,13 @@ pnpm dev
 Další příkazy:
 
 ```bash
-pnpm build    # produkční build
-pnpm preview  # náhled buildu
+pnpm build      # produkční build
+pnpm preview    # náhled buildu
 pnpm lint
 pnpm format
-pnpm cv       # vygeneruje CV-FE/BE/SUPP a exportuje PDF
+pnpm test       # spustí testy (Jest)
+pnpm test:watch # testy ve watch módu
+pnpm cv         # vygeneruje CV-FE/BE/SUPP a exportuje PDF
 ```
 
 ### Životopis (CV)
