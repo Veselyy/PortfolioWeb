@@ -3,6 +3,15 @@ import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/s
 
 import { THEME_MODE_STORAGE_KEY, ThemeModeContext, type ThemeMode } from './themeModeContext';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    highlight: { main: string };
+  }
+  interface PaletteOptions {
+    highlight: { main: string };
+  }
+}
+
 function getInitialMode(): ThemeMode {
   if (typeof window === 'undefined') return 'light';
 
@@ -33,7 +42,14 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
                     paper: '#1b1c20',
                   },
                 }),
-            info: { main: mode === 'dark' ? '#1E4E8C' : '#87CEEB' },
+            info: {
+              main: mode === 'dark' ? '#1E4E8C' : '#87CEEB',
+            },
+            // Same hue as info.main, tuned as foreground text (e.g. the hero headline's
+            // highlighted word) rather than a fill — see Header.tsx.
+            highlight: {
+              main: mode === 'dark' ? '#7AB8EA' : '#0F6A99',
+            },
           },
           typography: {
             fontFamily: '"Figtree", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',

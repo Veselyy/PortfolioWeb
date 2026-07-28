@@ -18,8 +18,8 @@ function WorkApproach() {
   const content = WORK_APPROACH_CONTENT[lang];
 
   return (
-    <Stack id="work" spacing={3}>
-      <Typography variant="h4" align="center" sx={styles.title}>
+    <Stack component="section" id="work" spacing={3} aria-labelledby="work-heading">
+      <Typography id="work-heading" variant="h4" component="h2" align="center" sx={styles.title}>
         {content.title}
       </Typography>
 

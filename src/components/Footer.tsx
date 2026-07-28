@@ -89,8 +89,8 @@ function Footer() {
     useContactForm(lang);
 
   return (
-    <Stack id="footer" spacing={3}>
-      <Typography variant="h4" align="center" sx={styles.title}>
+    <Stack component="footer" id="footer" spacing={3}>
+      <Typography variant="h4" component="h2" align="center" sx={styles.title}>
         {content.title}
       </Typography>
 
@@ -123,13 +123,20 @@ function Footer() {
           spacing={2}
           onSubmit={submit}
         >
-          {status === 'success' && <Alert severity="success">{text.sent}</Alert>}
-          {status === 'error' && <Alert severity="error">{errorMsg}</Alert>}
+          <Box>
+            {status === 'success' && (
+              <Alert severity="success" role="status">
+                {text.sent}
+              </Alert>
+            )}
+            {status === 'error' && <Alert severity="error">{errorMsg}</Alert>}
+          </Box>
 
           <TextField
             label={text.firstName}
             name="firstName"
             autoComplete="given-name"
+            required
             value={values.firstName}
             onChange={(e) => setField('firstName', e.target.value)}
           />
@@ -137,6 +144,7 @@ function Footer() {
             label={text.lastName}
             name="lastName"
             autoComplete="family-name"
+            required
             value={values.lastName}
             onChange={(e) => setField('lastName', e.target.value)}
           />
@@ -145,6 +153,7 @@ function Footer() {
             name="email"
             type="email"
             autoComplete="email"
+            required
             value={values.email}
             onChange={(e) => setField('email', e.target.value)}
             error={values.email.trim().length > 0 && !validation.email}
@@ -155,6 +164,7 @@ function Footer() {
             name="message"
             multiline
             minRows={4}
+            required
             value={values.message}
             onChange={(e) => setField('message', e.target.value)}
             error={values.message.trim().length > 0 && !validation.message}

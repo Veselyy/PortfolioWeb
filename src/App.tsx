@@ -1,10 +1,10 @@
-import { Fragment } from 'react';
 import { Box, Container, Divider } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeModeProvider } from './context/ThemeModeProvider';
 import { LanguageProvider } from './context/LanguageProvider';
+import SkipLink from './components/SkipLink';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import AboutMe from './components/AboutMe';
@@ -22,6 +22,11 @@ const styles = {
     flexDirection: 'column',
     gap: { xs: 4, md: 6 },
   },
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: { xs: 4, md: 6 },
+  },
   divider: {
     width: '40%',
     mx: 'auto',
@@ -35,30 +40,26 @@ const styles = {
 } as const;
 
 function App() {
-  const sections = [
-    { key: 'navbar', node: <Navbar /> },
-    { key: 'header', node: <Header /> },
-    { key: 'about', node: <AboutMe /> },
-    { key: 'projects', node: <Projects /> },
-    { key: 'work', node: <WorkApproach /> },
-    { key: 'footer', node: <Footer /> },
-  ] as const;
-
   return (
     <LanguageProvider>
       <ThemeModeProvider>
         <CssBaseline enableColorScheme />
+        <SkipLink />
         <Container maxWidth={false} sx={styles.container} disableGutters>
-          {sections.map((section, idx) => (
-            <Fragment key={section.key}>
-              {section.key === 'navbar' ? (
-                <Box sx={styles.navbar}>{section.node}</Box>
-              ) : (
-                section.node
-              )}
-              {idx !== 0 && idx < sections.length - 1 && <Divider sx={styles.divider} />}
-            </Fragment>
-          ))}
+          <Box sx={styles.navbar}>
+            <Navbar />
+          </Box>
+          <Header />
+          <Divider sx={styles.divider} />
+          <Box component="main" id="main" sx={styles.main}>
+            <AboutMe />
+            <Divider sx={styles.divider} />
+            <Projects />
+            <Divider sx={styles.divider} />
+            <WorkApproach />
+          </Box>
+          <Divider sx={styles.divider} />
+          <Footer />
         </Container>
       </ThemeModeProvider>
     </LanguageProvider>

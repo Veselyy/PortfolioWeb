@@ -4,7 +4,7 @@
 - I look forward to **facing** new challenges and **contributing** to our shared success.
 - English isn't a barrier for me - my grammar is at **B1** level and my spoken English is between **A2 - B1**.
 
-##### Skills
+### Skills
 
 **<u>2-3 years of experience</u>**
 
@@ -14,7 +14,7 @@
 
 - REST API, SQL
 
-##### Hobbies
+### Hobbies
 
 **<u>Sport</u>**
 

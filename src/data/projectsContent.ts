@@ -35,7 +35,7 @@ export const PROJECTS_CONTENT = {
           },
         ],
         image: {
-          src: 'project_mind_maps.svg',
+          src: 'project_mind_maps.webp',
           alt: 'Náhled projektu Myšlenkové mapy',
         },
       },
@@ -77,7 +77,7 @@ export const PROJECTS_CONTENT = {
           },
         ],
         image: {
-          src: 'project_mind_maps.svg',
+          src: 'project_mind_maps.webp',
           alt: 'Preview of the Mind Maps project',
         },
       },

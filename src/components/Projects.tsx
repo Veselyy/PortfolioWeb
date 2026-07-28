@@ -24,6 +24,7 @@ const styles = {
   cardImageWrapper: { width: { xs: '100%', md: '30%' }, flexShrink: 0 },
   cardImage: {
     width: '100%',
+    aspectRatio: '1800 / 1530',
     p: { md: 0, sm: '0 20%', xs: '0 5%' },
   },
   cardTitle: { fontWeight: 700 },
@@ -61,8 +62,14 @@ function Projects() {
   const content = PROJECTS_CONTENT[lang];
 
   return (
-    <Stack id="projects" spacing={3}>
-      <Typography variant="h4" align="center" sx={styles.title}>
+    <Stack component="section" id="projects" spacing={3} aria-labelledby="projects-heading">
+      <Typography
+        id="projects-heading"
+        variant="h4"
+        component="h2"
+        align="center"
+        sx={styles.title}
+      >
         {content.title}
       </Typography>
 
@@ -71,7 +78,7 @@ function Projects() {
           <Paper key={card.title} sx={styles.card}>
             <Stack sx={styles.cardLayout}>
               <Stack spacing={1}>
-                <Typography variant="h6" sx={styles.cardTitle}>
+                <Typography variant="h6" component="h3" sx={styles.cardTitle}>
                   {card.title}
                 </Typography>
                 <Box
@@ -111,8 +118,7 @@ function Projects() {
                   component="img"
                   src={new URL(`../assets/${card.image.src}`, import.meta.url).toString()}
                   alt={card.image.alt}
-                  loading="eager"
-                  fetchPriority="high"
+                  loading="lazy"
                   sx={styles.cardImage}
                 />
               </Box>
