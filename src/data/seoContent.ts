@@ -9,4 +9,4 @@ export const SEO_CONTENT = {
     description:
       'Portfolio of Martin Veselý, a junior frontend developer from Brno. React, TypeScript — custom-built websites with a focus on modern UI and accessibility.',
   },
-};
+} as const;

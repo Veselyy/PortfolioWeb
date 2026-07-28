@@ -129,11 +129,7 @@ function Footer() {
                 {text.sent}
               </Alert>
             )}
-            {status === 'error' && (
-              <Alert severity="error" role="status">
-                {errorMsg}
-              </Alert>
-            )}
+            {status === 'error' && <Alert severity="error">{errorMsg}</Alert>}
           </Box>
 
           <TextField
