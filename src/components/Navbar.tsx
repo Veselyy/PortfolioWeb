@@ -27,9 +27,9 @@ const styles = {
     borderColor: 'divider',
     py: 1,
   },
-  drawerContent: { p: 2, alignItems: 'center' },
+  drawerContent: { paddingBlock: 1, paddingInline: 0, alignItems: 'center' },
   drawerClose: { alignSelf: 'flex-end' },
-  switchers: { alignItems: 'center' },
+  switchers: { alignItems: 'center', padding: '5px' },
 } as const;
 
 function Navbar() {
