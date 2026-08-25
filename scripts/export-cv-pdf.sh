@@ -31,4 +31,4 @@ export_cv_pdf() {
   echo "Wrote $output"
 }
 
-export_cv_pdf "vesely_martin_cv.md" "vesely_martin_cv.pdf"
+export_cv_pdf "cv/vesely_martin_cv.md" "cv/vesely_martin_cv.pdf"

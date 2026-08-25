@@ -167,6 +167,6 @@ function buildCvMarkdown(): string {
   ].join('\n');
 }
 
-const outputPath = join(rootDir, 'vesely_martin_cv.md');
+const outputPath = join(rootDir, 'cv', 'vesely_martin_cv.md');
 writeFileSync(outputPath, buildCvMarkdown(), 'utf8');
 console.log(`Wrote ${outputPath}`);
