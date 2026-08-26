@@ -2,8 +2,8 @@ import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import type { FormEvent } from 'react';
 
-import type { Language } from '../context/languageContext';
-import { useContactForm } from './useContactForm';
+import type { Language } from '../../../src/context/languageContext';
+import { useContactForm } from '../../../src/hooks/useContactForm';
 
 function fakeSubmitEvent() {
   return { preventDefault: jest.fn() } as unknown as FormEvent<HTMLFormElement>;

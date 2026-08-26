@@ -9,12 +9,15 @@ the generated CV as well as the site.
 - **Components**: functional components + hooks only. Styles via CSS Modules or MUI's `sx` —
   flag any Tailwind classes. Props should be typed (strict mode); avoid prop-drilling in favor of
   context/composition.
-- **Unit tests** (`src/**/*.test.ts(x)`, Jest + React Testing Library): should cover risky
-  logic/edge cases, not exist for coverage's sake. Prefer asserting user-facing behavior over
-  implementation details.
-- **E2E tests** (`e2e/**/*.spec.ts`, Playwright): follow the **Page Object Model** — locators and
-  page actions belong in `e2e/pages/*.ts` classes; spec files should only call POM
-  methods/locators and hold `expect()` assertions plus test-only data. Flag any raw
+- **Tests** live under the root `test/` folder, never colocated with source. Unit tests
+  (`test/unit/**/*.test.ts(x)`, Jest + React Testing Library) mirror the `src/` tree, so
+  `src/components/Footer.tsx` is covered by `test/unit/components/Footer.test.tsx`. Shared
+  render helpers belong in `test/helpers/`. Flag any new `*.test.ts(x)` added under `src/`.
+  Tests should cover risky logic/edge cases, not exist for coverage's sake — prefer asserting
+  user-facing behavior over implementation details.
+- **E2E tests** (`test/e2e/**/*.spec.ts`, Playwright): follow the **Page Object Model** —
+  locators and page actions belong in `test/e2e/pages/*.ts` classes; spec files should only call
+  POM methods/locators and hold `expect()` assertions plus test-only data. Flag any raw
   `page.locator()` / `page.goto()` calls inlined directly in a spec file.
 - **CV generation scripts** (`scripts/generate-cv.ts`, `scripts/cv-pdf-header.tex`,
   `scripts/export-cv-pdf.sh`): these have a history of relative-path bugs when the CV's

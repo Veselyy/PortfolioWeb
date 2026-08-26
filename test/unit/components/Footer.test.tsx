@@ -2,8 +2,8 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 
-import { renderWithLanguage } from '../test/renderWithLanguage';
-import Footer from './Footer';
+import { renderWithLanguage } from '../../helpers/renderWithLanguage';
+import Footer from '../../../src/components/Footer';
 
 function fillValidForm() {
   const user = userEvent.setup();
