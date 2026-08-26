@@ -35,3 +35,6 @@ portfolioweb_context/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Lighthouse CI
+/.lighthouseci/
