@@ -57,7 +57,7 @@ function App() {
           <Header />
           <Divider sx={styles.divider} />
           <Box component="main" id="main" sx={styles.main}>
-            <Suspense fallback={null}>
+            <Suspense fallback={<Box component="section" id="about" aria-hidden="true" />}>
               <AboutMe />
             </Suspense>
             <Divider sx={styles.divider} />
