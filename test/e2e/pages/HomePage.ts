@@ -2,6 +2,10 @@ import AxeBuilder from '@axe-core/playwright';
 import type { Locator, Page } from '@playwright/test';
 import type { Result } from 'axe-core';
 
+import { ContactForm } from './ContactForm';
+import { Hero } from './Hero';
+import { ProjectsSection } from './ProjectsSection';
+
 /** Same rule set Lighthouse's accessibility audit is built on. */
 const LIGHTHOUSE_EQUIVALENT_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
@@ -32,8 +36,17 @@ export class HomePage {
   readonly mobileNavOpenButton: Locator;
   readonly mobileNavCloseButton: Locator;
 
+  /** Sections of the page, each with its own locators. */
+  readonly hero: Hero;
+  readonly projects: ProjectsSection;
+  readonly contactForm: ContactForm;
+
   constructor(page: Page) {
     this.page = page;
+
+    this.hero = new Hero(page);
+    this.projects = new ProjectsSection(page);
+    this.contactForm = new ContactForm(page);
 
     this.h1 = page.locator('h1');
     this.html = page.locator('html');
@@ -66,6 +79,37 @@ export class HomePage {
 
   async goto() {
     await this.page.goto('/');
+  }
+
+  /**
+   * Seeds `localStorage` before the app boots.
+   *
+   * Must be called before {@link goto} — the providers read their initial state during the
+   * first render, so anything written after navigation is already too late.
+   */
+  async seedStorage(entries: Record<string, string>) {
+    await this.page.addInitScript((data: Record<string, string>) => {
+      for (const [key, value] of Object.entries(data)) {
+        window.localStorage.setItem(key, value);
+      }
+    }, entries);
+  }
+
+  async storedValue(key: string): Promise<string | null> {
+    return this.page.evaluate((k: string) => window.localStorage.getItem(k), key);
+  }
+
+  /** Marks the current document so a full page navigation can be detected afterwards. */
+  async markDocument() {
+    await this.page.evaluate(() => {
+      (window as unknown as { __navigationMarker?: boolean }).__navigationMarker = true;
+    });
+  }
+
+  async documentStillMarked(): Promise<boolean> {
+    return this.page.evaluate(
+      () => (window as unknown as { __navigationMarker?: boolean }).__navigationMarker === true,
+    );
   }
 
   /** Clicks the language switcher; `label` is the accessible name of its current state. */
