@@ -92,9 +92,9 @@ function PillToggleSwitch({
   const { track, height, thumb } = size;
   const { margin } = getPillSwitchMetrics(size);
   const activeColor = isDark ? 'common.white' : 'common.black';
-  // grey.500 fails 4.5:1 against the light-mode background; grey.700 fixes light mode while
-  // staying well above the threshold in dark mode too.
-  const inactiveColor = isDark ? 'grey.500' : 'grey.700';
+  // grey.700 (light) and grey.500 (dark) measure ~4.1:1 and ~4.4:1 against the track — just
+  // under the 4.5:1 WCAG AA minimum. grey.800/grey.400 clear it with margin (~6.6:1 / ~6.2:1).
+  const inactiveColor = isDark ? 'grey.400' : 'grey.800';
 
   return (
     <Tooltip title={tooltip}>
