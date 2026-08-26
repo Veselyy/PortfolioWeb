@@ -21,11 +21,15 @@ const styles = {
     gap: { xs: 5, md: 4 },
     alignItems: 'center',
   },
-  cardImageWrapper: { width: { xs: '100%', md: '30%' }, flexShrink: 0 },
+  cardImageWrapper: {
+    width: { xs: '100%', md: '30%' },
+    flexShrink: 0,
+    px: { xs: '5%', sm: '20%', md: 0 },
+  },
   cardImage: {
+    display: 'block',
     width: '100%',
-    aspectRatio: '1800 / 1530',
-    p: { md: 0, sm: '0 20%', xs: '0 5%' },
+    height: 'auto',
   },
   cardTitle: { fontWeight: 700 },
   cardLink: { typography: 'body1', color: 'inherit', textDecoration: 'none', fontWeight: '700' },
@@ -119,6 +123,8 @@ function Projects() {
                   src={new URL(`../assets/${card.image.src}`, import.meta.url).toString()}
                   alt={card.image.alt}
                   loading="lazy"
+                  width={card.image.width}
+                  height={card.image.height}
                   sx={styles.cardImage}
                 />
               </Box>
