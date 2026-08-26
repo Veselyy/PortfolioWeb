@@ -22,7 +22,7 @@ test.describe('Smoke', { tag: TAG.smoke }, () => {
 
   test('renders the hero photo, decoded and not just present', async ({ homePage }) => {
     await expect(homePage.hero.image).toBeVisible();
-    expect(await homePage.hero.imageHasLoaded()).toBe(true);
+    await expect.poll(() => homePage.hero.imageHasLoaded()).toBe(true);
   });
 
   test('renders the projects section', async ({ homePage }) => {
