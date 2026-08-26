@@ -9,13 +9,14 @@ import SkipLink from './components/SkipLink';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Projects from './components/Projects';
-import Footer from './components/Footer';
 
 // Both render markdown, so eager imports would pull mui-markdown (~89 kB) into the initial
 // bundle for content that starts below the fold. Loading them separately keeps that weight
 // off the critical path.
 const AboutMe = lazy(() => import('./components/AboutMe'));
 const WorkApproach = lazy(() => import('./components/WorkApproach'));
+// Same reasoning for the contact form's inputs — they sit at the very bottom of the page.
+const Footer = lazy(() => import('./components/Footer'));
 
 const styles = {
   container: {
@@ -68,7 +69,9 @@ function App() {
             </Suspense>
           </Box>
           <Divider sx={styles.divider} />
-          <Footer />
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
         </Container>
       </ThemeModeProvider>
     </LanguageProvider>

@@ -1,7 +1,18 @@
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { Alert, Box, Button, CircularProgress, Stack, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  OutlinedInput,
+  Stack,
+  Typography,
+} from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 
 import { FOOTER_CONTENT } from '../data/footerContent';
@@ -75,6 +86,61 @@ const styles = {
   },
 } as const;
 
+type ContactFieldProps = {
+  label: string;
+  name: string;
+  value: string;
+  onChange: (value: string) => void;
+  autoComplete?: string;
+  type?: 'text' | 'email';
+  multiline?: boolean;
+  minRows?: number;
+  error?: boolean;
+  /** Always rendered (a space when there is no error) so the layout does not jump. */
+  helperText?: string;
+};
+
+/**
+ * The outlined-input half of MUI's `TextField`, assembled by hand.
+ *
+ * `TextField` statically imports `Select` (and with it Menu/Popover/roving-tab-index, ~57 kB
+ * of code this form never runs), so the primitives it would render are composed directly.
+ */
+function ContactField({
+  label,
+  name,
+  value,
+  onChange,
+  autoComplete,
+  type = 'text',
+  multiline = false,
+  minRows,
+  error = false,
+  helperText = ' ',
+}: ContactFieldProps) {
+  const id = `contact-${name}`;
+  const helperId = `${id}-helper`;
+
+  return (
+    <FormControl required error={error} variant="outlined" fullWidth>
+      <InputLabel htmlFor={id}>{label}</InputLabel>
+      <OutlinedInput
+        id={id}
+        name={name}
+        label={label}
+        type={type}
+        autoComplete={autoComplete}
+        multiline={multiline}
+        minRows={minRows}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-describedby={helperId}
+      />
+      <FormHelperText id={helperId}>{helperText}</FormHelperText>
+    </FormControl>
+  );
+}
+
 const iconByKey = {
   mail: <MailOutlinedIcon fontSize="small" />,
   whatsapp: <WhatsAppIcon fontSize="small" />,
@@ -87,6 +153,8 @@ function Footer() {
   const text = FORM_TEXT[lang];
   const { values, setField, status, errorMsg, validation, canSubmit, submit } =
     useContactForm(lang);
+  const emailError = values.email.trim().length > 0 && !validation.email;
+  const messageError = values.message.trim().length > 0 && !validation.message;
 
   return (
     <Stack component="footer" id="footer" spacing={3}>
@@ -132,45 +200,39 @@ function Footer() {
             {status === 'error' && <Alert severity="error">{errorMsg}</Alert>}
           </Box>
 
-          <TextField
+          <ContactField
             label={text.firstName}
             name="firstName"
             autoComplete="given-name"
-            required
             value={values.firstName}
-            onChange={(e) => setField('firstName', e.target.value)}
+            onChange={(value) => setField('firstName', value)}
           />
-          <TextField
+          <ContactField
             label={text.lastName}
             name="lastName"
             autoComplete="family-name"
-            required
             value={values.lastName}
-            onChange={(e) => setField('lastName', e.target.value)}
+            onChange={(value) => setField('lastName', value)}
           />
-          <TextField
+          <ContactField
             label={text.email}
             name="email"
             type="email"
             autoComplete="email"
-            required
             value={values.email}
-            onChange={(e) => setField('email', e.target.value)}
-            error={values.email.trim().length > 0 && !validation.email}
-            helperText={values.email.trim().length > 0 && !validation.email ? text.emailError : ' '}
+            onChange={(value) => setField('email', value)}
+            error={emailError}
+            helperText={emailError ? text.emailError : ' '}
           />
-          <TextField
+          <ContactField
             label={text.message}
             name="message"
             multiline
             minRows={4}
-            required
             value={values.message}
-            onChange={(e) => setField('message', e.target.value)}
-            error={values.message.trim().length > 0 && !validation.message}
-            helperText={
-              values.message.trim().length > 0 && !validation.message ? text.messageError : ' '
-            }
+            onChange={(value) => setField('message', value)}
+            error={messageError}
+            helperText={messageError ? text.messageError : ' '}
           />
 
           <Button
