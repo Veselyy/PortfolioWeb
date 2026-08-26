@@ -3,22 +3,8 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 
 import { useThemeMode } from '../../context/useThemeMode';
 import { useLanguage } from '../../context/useLanguage';
+import { THEME_SWITCHER_TEXT } from '../../data/themeSwitcherText';
 import PillToggleSwitch from './PillSwitch';
-
-const TEXT = {
-  cs: {
-    lightMode: 'Světlý režim',
-    darkMode: 'Tmavý režim',
-    switchToLight: 'Přepnout na světlý motiv',
-    switchToDark: 'Přepnout na tmavý motiv',
-  },
-  en: {
-    lightMode: 'Light mode',
-    darkMode: 'Dark mode',
-    switchToLight: 'Switch to light theme',
-    switchToDark: 'Switch to dark theme',
-  },
-} as const;
 
 type Size = 'medium' | 'small';
 
@@ -32,7 +18,7 @@ function ThemeSwitcher({ small = false }: { small?: boolean }) {
   const { mode, toggle } = useThemeMode();
   const { lang } = useLanguage();
   const isDark = mode === 'dark';
-  const text = TEXT[lang];
+  const text = THEME_SWITCHER_TEXT[lang];
   const size: Size = small ? 'small' : 'medium';
   const { track, height, thumb, iconFontSize } = SIZES[size];
 

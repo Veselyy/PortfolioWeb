@@ -33,6 +33,7 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.7",
     "@babel/preset-react": "^7.29.7",
@@ -48,6 +49,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
+    "axe-core": "^4.13.0",
     "babel-jest": "^30.4.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "babel-plugin-transform-import-meta": "^2.3.3",
