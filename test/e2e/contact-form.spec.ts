@@ -1,30 +1,26 @@
-import { expect, test } from '@playwright/test';
-import { HomePage } from './pages/HomePage';
+import { CONTACT_FORM_TEXT } from '../../src/data/contactFormText';
+import { expect, test } from './fixtures';
 import type { FieldName } from './pages/ContactForm';
+import { TAG } from './tags';
 
-let homePage: HomePage;
-
-test.beforeEach(async ({ page }) => {
-  homePage = new HomePage(page);
-  await homePage.goto();
-});
+/** The Czech copy the app renders — asserted against the source, not retyped literals. */
+const TEXT = CONTACT_FORM_TEXT.cs;
 
 /** Field names the Netlify shadow form in index.html registers — these must stay in sync. */
 const FIELDS: { name: FieldName; label: string }[] = [
-  { name: 'firstName', label: 'Jméno' },
-  { name: 'lastName', label: 'Příjmení' },
-  { name: 'email', label: 'Email' },
-  { name: 'message', label: 'Zpráva' },
+  { name: 'firstName', label: TEXT.firstName },
+  { name: 'lastName', label: TEXT.lastName },
+  { name: 'email', label: TEXT.email },
+  { name: 'message', label: TEXT.message },
 ];
 
-const EMAIL_ERROR = 'Zadej platný email.';
-const MESSAGE_ERROR = 'Zpráva musí mít aspoň 5 znaků.';
-const INVALID_SUBMISSION_ERROR = 'Zkontroluj prosím email a zprávu.';
-const SUCCESS = 'Odesláno.';
+test.beforeEach(async ({ homePage }) => {
+  await homePage.goto();
+});
 
-test.describe('Contact form — fields', () => {
+test.describe('Contact form — fields', { tag: TAG.regression }, () => {
   for (const { name, label } of FIELDS) {
-    test(`${name} is a required input labelled "${label}"`, async () => {
+    test(`${name} is a required input labelled "${label}"`, async ({ homePage }) => {
       const field = homePage.contactForm.field(name);
 
       await expect(field).toHaveAttribute('required', '');
@@ -32,7 +28,7 @@ test.describe('Contact form — fields', () => {
     });
   }
 
-  test('submit is disabled until the email and message are both valid', async () => {
+  test('submit is disabled until the email and message are both valid', async ({ homePage }) => {
     const form = homePage.contactForm;
 
     await expect(form.submitButton).toBeDisabled();
@@ -43,40 +39,40 @@ test.describe('Contact form — fields', () => {
   });
 });
 
-test.describe('Contact form — email validation', () => {
+test.describe('Contact form — email validation', { tag: TAG.regression }, () => {
   const MALFORMED = ['plainaddress', '@b.com', 'a@b', 'a@b.', 'a b@c.com', 'a@@b.com'];
 
-  test('shows no inline error while the fields are untouched', async () => {
+  test('shows no inline error while the fields are untouched', async ({ homePage }) => {
     const form = homePage.contactForm;
 
-    await expect(form.helperText('email')).not.toHaveText(EMAIL_ERROR);
-    await expect(form.helperText('message')).not.toHaveText(MESSAGE_ERROR);
+    await expect(form.helperText('email')).not.toHaveText(TEXT.emailError);
+    await expect(form.helperText('message')).not.toHaveText(TEXT.messageError);
   });
 
   for (const email of MALFORMED) {
-    test(`rejects the malformed address ${email}`, async () => {
+    test(`rejects the malformed address ${email}`, async ({ homePage }) => {
       const form = homePage.contactForm;
 
       await form.fill({ email });
 
       await expect(form.email).toHaveAttribute('aria-invalid', 'true');
-      await expect(form.email).toHaveAccessibleDescription(EMAIL_ERROR);
+      await expect(form.email).toHaveAccessibleDescription(TEXT.emailError);
     });
   }
 
-  test('clears the inline error once the address becomes valid', async () => {
+  test('clears the inline error once the address becomes valid', async ({ homePage }) => {
     const form = homePage.contactForm;
 
     await form.fill({ email: 'martin@example' });
-    await expect(form.email).toHaveAccessibleDescription(EMAIL_ERROR);
+    await expect(form.email).toHaveAccessibleDescription(TEXT.emailError);
 
     await form.fill({ email: 'martin@example.com' });
 
     await expect(form.email).toHaveAttribute('aria-invalid', 'false');
-    await expect(form.helperText('email')).not.toHaveText(EMAIL_ERROR);
+    await expect(form.helperText('email')).not.toHaveText(TEXT.emailError);
   });
 
-  test('trims before validating, so a padded address is accepted', async () => {
+  test('trims before validating, so a padded address is accepted', async ({ homePage }) => {
     const form = homePage.contactForm;
 
     await form.fill({ email: '  a@b.com  ', message: 'hello there' });
@@ -86,22 +82,22 @@ test.describe('Contact form — email validation', () => {
   });
 });
 
-test.describe('Contact form — message validation', () => {
-  test('rejects a message shorter than 5 characters and clears at 5', async () => {
+test.describe('Contact form — message validation', { tag: TAG.regression }, () => {
+  test('rejects a message shorter than 5 characters and clears at 5', async ({ homePage }) => {
     const form = homePage.contactForm;
 
     await form.fill({ message: 'ahoj' });
 
     await expect(form.message).toHaveAttribute('aria-invalid', 'true');
-    await expect(form.message).toHaveAccessibleDescription(MESSAGE_ERROR);
+    await expect(form.message).toHaveAccessibleDescription(TEXT.messageError);
 
     await form.fill({ message: 'ahojky' });
 
     await expect(form.message).toHaveAttribute('aria-invalid', 'false');
-    await expect(form.helperText('message')).not.toHaveText(MESSAGE_ERROR);
+    await expect(form.helperText('message')).not.toHaveText(TEXT.messageError);
   });
 
-  test('treats a whitespace-only message as empty', async () => {
+  test('treats a whitespace-only message as empty', async ({ homePage }) => {
     const form = homePage.contactForm;
 
     await form.fill({ email: 'a@b.com', message: '       ' });
@@ -110,15 +106,17 @@ test.describe('Contact form — message validation', () => {
   });
 });
 
-test.describe('Contact form — submission', () => {
-  test('posts a urlencoded body naming the Netlify form, then resets the fields', async () => {
+test.describe('Contact form — submission', { tag: TAG.regression }, () => {
+  test('posts a urlencoded body naming the Netlify form, then resets the fields', async ({
+    homePage,
+  }) => {
     const form = homePage.contactForm;
     const submission = await form.stubSubmit({ status: 200 });
 
     await form.fillValid();
     await form.submit();
 
-    await expect(form.successAlert).toHaveText(SUCCESS);
+    await expect(form.successAlert).toHaveText(TEXT.sent);
     expect(submission.postedBody()).toContain('form-name=contact');
     expect(submission.postedBody()).toContain('email=a%40b.com');
 
@@ -128,39 +126,41 @@ test.describe('Contact form — submission', () => {
     await expect(form.message).toHaveValue('');
   });
 
-  test('announces success politely, with no assertive alert alongside it', async () => {
+  test('announces success politely, with no assertive alert alongside it', async ({ homePage }) => {
     const form = homePage.contactForm;
     await form.stubSubmit({ status: 200 });
 
     await form.fillValid();
     await form.submit();
 
-    await expect(form.successAlert).toHaveText(SUCCESS);
+    await expect(form.successAlert).toHaveText(TEXT.sent);
     await expect(form.errorAlert).toHaveCount(0);
   });
 
-  test('reports the HTTP status assertively when the server rejects the post', async () => {
+  test('reports the HTTP status assertively when the server rejects the post', async ({
+    homePage,
+  }) => {
     const form = homePage.contactForm;
     await form.stubSubmit({ status: 500 });
 
     await form.fillValid();
     await form.submit();
 
-    await expect(form.errorAlert).toContainText('500');
+    await expect(form.errorAlert).toHaveText(TEXT.sendFailedWithStatus(500));
     await expect(form.successAlert).toHaveCount(0);
   });
 
-  test('reports a dropped connection', async () => {
+  test('reports a dropped connection', async ({ homePage }) => {
     const form = homePage.contactForm;
     await form.stubSubmit({ networkError: true });
 
     await form.fillValid();
     await form.submit();
 
-    await expect(form.errorAlert).toBeVisible();
+    await expect(form.errorAlert).toHaveText(TEXT.sendFailed);
   });
 
-  test('clears the error alert once the user edits a field again', async () => {
+  test('clears the error alert once the user edits a field again', async ({ homePage }) => {
     const form = homePage.contactForm;
     await form.stubSubmit({ status: 500 });
 
@@ -173,7 +173,7 @@ test.describe('Contact form — submission', () => {
     await expect(form.errorAlert).toHaveCount(0);
   });
 
-  test('disables submit while a send is still in flight', async () => {
+  test('disables submit while a send is still in flight', async ({ homePage }) => {
     const form = homePage.contactForm;
     const submission = await form.stubSubmit({ hold: true });
 
@@ -184,23 +184,25 @@ test.describe('Contact form — submission', () => {
 
     submission.release();
 
-    await expect(form.successAlert).toHaveText(SUCCESS);
+    await expect(form.successAlert).toHaveText(TEXT.sent);
   });
 
-  test('submits without navigating away from the page', async () => {
+  test('submits without navigating away from the page', async ({ homePage }) => {
     const form = homePage.contactForm;
     await form.stubSubmit({ status: 200 });
 
     await form.fillValid();
     await homePage.markDocument();
     await form.submit();
-    await expect(form.successAlert).toHaveText(SUCCESS);
+    await expect(form.successAlert).toHaveText(TEXT.sent);
 
     // A full-page form POST would have replaced the document and wiped the marker.
     expect(await homePage.documentStillMarked()).toBe(true);
   });
 
-  test('rejects an invalid submission locally, without reaching the network', async () => {
+  test('rejects an invalid submission locally, without reaching the network', async ({
+    homePage,
+  }) => {
     const form = homePage.contactForm;
     const submission = await form.stubSubmit({ status: 200 });
 
@@ -216,7 +218,7 @@ test.describe('Contact form — submission', () => {
 
     await form.requestSubmit();
 
-    await expect(form.errorAlert).toHaveText(INVALID_SUBMISSION_ERROR);
+    await expect(form.errorAlert).toHaveText(TEXT.invalid);
     expect(submission.postedBody()).toBeUndefined();
   });
 });

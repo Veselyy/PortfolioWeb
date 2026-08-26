@@ -12,6 +12,7 @@
     "format:check": "prettier . --check",
     "preview": "vite preview",
     "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
     "test:ui": "playwright test --ui",
     "test:perf": "pnpm build && lhci autorun",
     "cv:generate": "node --experimental-strip-types scripts/generate-cv.ts",

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 
+import { CONTACT_FORM_TEXT } from '../data/contactFormText';
 import type { Language } from '../context/languageContext';
 
 type ContactFormValues = {
@@ -11,21 +12,8 @@ type ContactFormValues = {
 
 export type ContactFormStatus = 'idle' | 'sending' | 'success' | 'error';
 
-const MESSAGES = {
-  cs: {
-    invalid: 'Zkontroluj prosím email a zprávu.',
-    sendFailedWithStatus: (status: number) => `Odeslání selhalo (HTTP ${status}).`,
-    sendFailed: 'Nepodařilo se odeslat.',
-  },
-  en: {
-    invalid: 'Please check the email and message.',
-    sendFailedWithStatus: (status: number) => `Failed to send (HTTP ${status}).`,
-    sendFailed: 'Failed to send.',
-  },
-} as const;
-
 export function useContactForm(lang: Language) {
-  const messages = MESSAGES[lang];
+  const messages = CONTACT_FORM_TEXT[lang];
   const [values, setValues] = useState<ContactFormValues>({
     firstName: '',
     lastName: '',
@@ -74,14 +62,19 @@ export function useContactForm(lang: Language) {
       });
 
       if (!res.ok) {
-        throw new Error(messages.sendFailedWithStatus(res.status));
+        setStatus('error');
+        setErrorMsg(messages.sendFailedWithStatus(res.status));
+        return;
       }
 
       setStatus('success');
       setValues({ firstName: '', lastName: '', email: '', message: '' });
-    } catch (err) {
+    } catch {
+      // fetch rejects only on a transport failure, and the message it carries is the
+      // browser's own untranslated text ('Failed to fetch' in Chrome, 'Load failed' in
+      // Safari). Report our own message instead of leaking that into a Czech page.
       setStatus('error');
-      setErrorMsg(err instanceof Error ? err.message : messages.sendFailed);
+      setErrorMsg(messages.sendFailed);
     }
   }
 

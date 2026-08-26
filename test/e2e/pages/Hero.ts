@@ -15,4 +15,14 @@ export class Hero {
     this.page = page;
     this.image = page.getByRole('img', { name: 'Martin Veselý, portrétní fotografie' });
   }
+
+  /**
+   * Whether the photo decoded, rather than merely being present in the DOM.
+   *
+   * A broken `src` still yields a visible `<img>`, so visibility alone would not catch an
+   * asset that failed to ship in the build.
+   */
+  async imageHasLoaded(): Promise<boolean> {
+    return this.image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0);
+  }
 }
