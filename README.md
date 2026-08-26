@@ -40,8 +40,7 @@ obsah podle role, o kterou se zrovna hlásím (`?role=frontend|backend|support`)
 - **pnpm** — správa balíčků
 - **ESLint** + **typescript-eslint** — lint
 - **Prettier** — formátování
-- **Jest** + **React Testing Library** — unit testy
-- **Playwright** — e2e testy (SEO)
+- **Playwright** — všechny testy (SEO, přístupnost, kontaktní formulář, jazyk, obrázky)
 - **Husky** — git hooky (pre-commit / pre-push, včetně testů před pushnutím)
 - **GitHub Actions** — CI (`format:check`, `lint`, `test`, `cv:check`)
 
@@ -66,8 +65,8 @@ pnpm build      # produkční build
 pnpm preview    # náhled buildu
 pnpm lint
 pnpm format
-pnpm test       # spustí testy (Jest)
-pnpm test:watch # testy ve watch módu
+pnpm test       # spustí testy (Playwright)
+pnpm test:ui    # testy v Playwright UI módu
 pnpm cv         # vygeneruje CV-FE/BE/SUPP a exportuje PDF
 ```
 

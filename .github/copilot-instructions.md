@@ -9,16 +9,18 @@ the generated CV as well as the site.
 - **Components**: functional components + hooks only. Styles via CSS Modules or MUI's `sx` —
   flag any Tailwind classes. Props should be typed (strict mode); avoid prop-drilling in favor of
   context/composition.
-- **Tests** live under the root `test/` folder, never colocated with source. Unit tests
-  (`test/unit/**/*.test.ts(x)`, Jest + React Testing Library) mirror the `src/` tree, so
-  `src/components/Footer.tsx` is covered by `test/unit/components/Footer.test.tsx`. Shared
-  render helpers belong in `test/helpers/`. Flag any new `*.test.ts(x)` added under `src/`.
-  Tests should cover risky logic/edge cases, not exist for coverage's sake — prefer asserting
-  user-facing behavior over implementation details.
-- **E2E tests** (`test/e2e/**/*.spec.ts`, Playwright): follow the **Page Object Model** —
-  locators and page actions belong in `test/e2e/pages/*.ts` classes; spec files should only call
-  POM methods/locators and hold `expect()` assertions plus test-only data. Flag any raw
-  `page.locator()` / `page.goto()` calls inlined directly in a spec file.
+- **Tests are Playwright only** — there is no Jest, no React Testing Library and no jsdom in
+  this repo. Every test is an end-to-end spec under `test/e2e/`, running against the
+  production build. Flag any `*.test.ts(x)` file, any `jest`/`@testing-library/*` import, and
+  any suggestion to add a unit-test runner back. Tests should cover risky logic/edge cases,
+  not exist for coverage's sake — prefer asserting user-facing behavior over implementation
+  details.
+- **Page Object Model is mandatory**: locators and page actions belong in
+  `test/e2e/pages/*.ts` classes; spec files should only call POM methods/locators and hold
+  `expect()` assertions plus test-only data (expected copy, field tables). Flag any raw
+  `page.locator()` / `page.goto()` / `page.evaluate()` inlined directly in a spec file.
+  `HomePage` is the entry point and owns the section objects (`hero`, `projects`,
+  `contactForm`) — reach them through it rather than constructing them in a spec.
 - **CV generation scripts** (`scripts/generate-cv.ts`, `scripts/cv-pdf-header.tex`,
   `scripts/export-cv-pdf.sh`): these have a history of relative-path bugs when the CV's
   input/output location changes (see the `cv/` restructure). Check that any path changes there
