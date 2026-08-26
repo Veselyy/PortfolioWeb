@@ -15,32 +15,10 @@ import {
 } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 
+import { CONTACT_FORM_TEXT } from '../data/contactFormText';
 import { FOOTER_CONTENT } from '../data/footerContent';
 import { useContactForm } from '../hooks/useContactForm';
 import { useLanguage } from '../context/useLanguage';
-
-const FORM_TEXT = {
-  cs: {
-    sent: 'Odesláno.',
-    firstName: 'Jméno',
-    lastName: 'Příjmení',
-    email: 'Email',
-    emailError: 'Zadej platný email.',
-    message: 'Zpráva',
-    messageError: 'Zpráva musí mít aspoň 5 znaků.',
-    send: 'Odeslat',
-  },
-  en: {
-    sent: 'Sent.',
-    firstName: 'First name',
-    lastName: 'Last name',
-    email: 'Email',
-    emailError: 'Enter a valid email.',
-    message: 'Message',
-    messageError: 'Message must be at least 5 characters.',
-    send: 'Send',
-  },
-} as const;
 
 const styles = {
   title: { fontWeight: 700 },
@@ -150,7 +128,7 @@ const iconByKey = {
 function Footer() {
   const { lang } = useLanguage();
   const content = FOOTER_CONTENT[lang];
-  const text = FORM_TEXT[lang];
+  const text = CONTACT_FORM_TEXT[lang];
   const { values, setField, status, errorMsg, validation, canSubmit, submit } =
     useContactForm(lang);
   const emailError = values.email.trim().length > 0 && !validation.email;
