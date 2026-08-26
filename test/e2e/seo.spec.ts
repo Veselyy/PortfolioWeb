@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { HomePage } from './pages/HomePage';
-import { SEO_CONTENT } from '../src/data/seoContent';
-import { LANGUAGE_SWITCHER_TEXT } from '../src/data/languageSwitcherText';
+import { SEO_CONTENT } from '../../src/data/seoContent';
+import { LANGUAGE_SWITCHER_TEXT } from '../../src/data/languageSwitcherText';
 
 const SITE_URL = 'https://martinvesely.netlify.app/';
 

@@ -2,10 +2,10 @@ import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import type { ReactNode } from 'react';
 
-import { SEO_CONTENT } from '../data/seoContent';
-import { LANGUAGE_STORAGE_KEY } from './languageContext';
-import { LanguageProvider } from './LanguageProvider';
-import { useLanguage } from './useLanguage';
+import { SEO_CONTENT } from '../../../src/data/seoContent';
+import { LANGUAGE_STORAGE_KEY } from '../../../src/context/languageContext';
+import { LanguageProvider } from '../../../src/context/LanguageProvider';
+import { useLanguage } from '../../../src/context/useLanguage';
 
 function wrapper({ children }: { children: ReactNode }) {
   return <LanguageProvider>{children}</LanguageProvider>;

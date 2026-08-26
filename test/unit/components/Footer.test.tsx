@@ -2,8 +2,8 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 
-import { renderWithLanguage } from '../test/renderWithLanguage';
-import Footer from './Footer';
+import { renderWithLanguage } from '../../helpers/renderWithLanguage';
+import Footer from '../../../src/components/Footer';
 
 function fillValidForm() {
   const user = userEvent.setup();
@@ -16,6 +16,17 @@ function fillValidForm() {
     await user.type(screen.getByLabelText(/Zpráva/), 'Ahoj, mam zajem.');
   }
 }
+
+/** Mirrors the Netlify shadow form in index.html — the names have to stay in sync. */
+const FIELDS = [
+  { name: 'firstName', label: /Jméno/ },
+  { name: 'lastName', label: /Příjmení/ },
+  { name: 'email', label: /Email/ },
+  { name: 'message', label: /Zpráva/ },
+];
+
+const EMAIL_ERROR = 'Zadej platný email.';
+const MESSAGE_ERROR = 'Zpráva musí mít aspoň 5 znaků.';
 
 describe('Footer contact form', () => {
   beforeEach(() => {
@@ -66,6 +77,54 @@ describe('Footer contact form', () => {
     await waitFor(() => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument();
     });
+  });
+
+  it.each(FIELDS)('renders $name as a required input carrying its form name', ({ name, label }) => {
+    renderWithLanguage(<Footer />);
+
+    const input = screen.getByLabelText(label);
+
+    expect(input).toBeRequired();
+    expect(input).toHaveAttribute('name', name);
+  });
+
+  it('shows no inline field error while the inputs are still untouched', () => {
+    renderWithLanguage(<Footer />);
+
+    expect(screen.queryByText(EMAIL_ERROR)).not.toBeInTheDocument();
+    expect(screen.queryByText(MESSAGE_ERROR)).not.toBeInTheDocument();
+  });
+
+  it('describes a malformed email with its inline error and clears it once valid', async () => {
+    const user = userEvent.setup();
+    renderWithLanguage(<Footer />);
+    const email = screen.getByLabelText(/Email/);
+
+    await user.type(email, 'martin@example');
+
+    expect(email).toBeInvalid();
+    expect(email).toHaveAccessibleDescription(EMAIL_ERROR);
+
+    await user.type(email, '.com');
+
+    expect(email).toBeValid();
+    expect(screen.queryByText(EMAIL_ERROR)).not.toBeInTheDocument();
+  });
+
+  it('describes a too-short message with its inline error and clears it at 5 characters', async () => {
+    const user = userEvent.setup();
+    renderWithLanguage(<Footer />);
+    const message = screen.getByLabelText(/Zpráva/);
+
+    await user.type(message, 'ahoj');
+
+    expect(message).toBeInvalid();
+    expect(message).toHaveAccessibleDescription(MESSAGE_ERROR);
+
+    await user.type(message, 'ky');
+
+    expect(message).toBeValid();
+    expect(screen.queryByText(MESSAGE_ERROR)).not.toBeInTheDocument();
   });
 
   it('disables the submit button until the fields are valid', async () => {

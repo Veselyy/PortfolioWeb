@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { HomePage } from './pages/HomePage';
-import { THEME_SWITCHER_TEXT } from '../src/data/themeSwitcherText';
+import { THEME_SWITCHER_TEXT } from '../../src/data/themeSwitcherText';
 
 let homePage: HomePage;
 

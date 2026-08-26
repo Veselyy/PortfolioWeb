@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, it } from '@jest/globals';
 
-import { renderWithLanguage } from '../test/renderWithLanguage';
-import Projects from './Projects';
+import { renderWithLanguage } from '../../helpers/renderWithLanguage';
+import Projects from '../../../src/components/Projects';
 
 describe('Projects card image', () => {
   it('renders below-the-fold project images lazily, unlike the eager hero image', () => {
