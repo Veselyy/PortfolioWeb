@@ -1,13 +1,16 @@
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import { Drawer, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { alpha, type Theme } from '@mui/material/styles';
-import { useState } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import NavbarLinks from './navbar/NavbarLinks';
 import SocialsIcons from './navbar/SocialsIcons';
 import ThemeSwitcher from './navbar/ThemeSwitcher';
 import LanguageSwitcher from './navbar/LanguageSwitcher';
 import { useLanguage } from '../context/useLanguage';
+
+// Kept out of the initial bundle: the drawer can't be on screen before the menu button is
+// tapped, so its Modal/FocusTrap/Slide dependencies load with that first tap.
+const NavDrawer = lazy(() => import('./navbar/NavDrawer'));
 
 const NAV_ARIA_LABELS = {
   cs: { open: 'Otevřít navigaci', close: 'Zavřít navigaci' },
@@ -27,8 +30,6 @@ const styles = {
     borderColor: 'divider',
     py: 1,
   },
-  drawerContent: { paddingBlock: 1, paddingInline: 0, alignItems: 'center' },
-  drawerClose: { alignSelf: 'flex-end' },
   switchers: { alignItems: 'center', padding: '5px' },
 } as const;
 
@@ -36,10 +37,17 @@ function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [open, setOpen] = useState(false);
+  // Latches on the first open so the drawer stays mounted afterwards and keeps its
+  // closing transition instead of being unmounted mid-slide.
+  const [drawerRequested, setDrawerRequested] = useState(false);
   const { lang } = useLanguage();
   const navAriaLabels = NAV_ARIA_LABELS[lang];
 
   const close = () => setOpen(false);
+  const openDrawer = () => {
+    setDrawerRequested(true);
+    setOpen(true);
+  };
 
   if (isMobile) {
     return (
@@ -49,25 +57,16 @@ function Navbar() {
             <LanguageSwitcher small />
             <ThemeSwitcher small />
           </Stack>
-          <IconButton color="inherit" aria-label={navAriaLabels.open} onClick={() => setOpen(true)}>
+          <IconButton color="inherit" aria-label={navAriaLabels.open} onClick={openDrawer}>
             <MenuOutlinedIcon />
           </IconButton>
         </Stack>
 
-        <Drawer anchor="top" open={open} onClose={close}>
-          <Stack sx={styles.drawerContent} spacing={2}>
-            <IconButton
-              color="inherit"
-              aria-label={navAriaLabels.close}
-              onClick={close}
-              sx={styles.drawerClose}
-            >
-              <CloseOutlinedIcon />
-            </IconButton>
-            <NavbarLinks direction="column" spacing={2} onNavigate={close} />
-            <SocialsIcons direction="row" spacing={1} onNavigate={close} />
-          </Stack>
-        </Drawer>
+        {drawerRequested && (
+          <Suspense fallback={null}>
+            <NavDrawer open={open} onClose={close} closeLabel={navAriaLabels.close} />
+          </Suspense>
+        )}
       </>
     );
   }

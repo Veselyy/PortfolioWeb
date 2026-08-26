@@ -30,6 +30,7 @@ export class HomePage {
   readonly twitterImage: Locator;
 
   readonly mobileNavOpenButton: Locator;
+  readonly mobileNavCloseButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -58,6 +59,9 @@ export class HomePage {
     this.mobileNavOpenButton = page.getByRole('button', {
       name: /Otevřít navigaci|Open navigation/,
     });
+    this.mobileNavCloseButton = page.getByRole('button', {
+      name: /Zavřít navigaci|Close navigation/,
+    });
   }
 
   async goto() {
@@ -76,6 +80,8 @@ export class HomePage {
 
   async openMobileNav() {
     await this.mobileNavOpenButton.click();
+    // The drawer is a lazy chunk fetched on this first tap, so it is not in the DOM yet.
+    await this.mobileNavCloseButton.waitFor({ state: 'visible' });
   }
 
   async readJsonLd(): Promise<Record<string, unknown>> {

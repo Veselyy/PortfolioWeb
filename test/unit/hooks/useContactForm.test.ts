@@ -2,8 +2,8 @@ import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import type { FormEvent } from 'react';
 
-import type { Language } from '../context/languageContext';
-import { useContactForm } from './useContactForm';
+import type { Language } from '../../../src/context/languageContext';
+import { useContactForm } from '../../../src/hooks/useContactForm';
 
 function fakeSubmitEvent() {
   return { preventDefault: jest.fn() } as unknown as FormEvent<HTMLFormElement>;
@@ -46,6 +46,37 @@ describe('useContactForm', () => {
     });
 
     expect(result.current.validation.email).toBe(true);
+    expect(result.current.validation.message).toBe(true);
+  });
+
+  it.each(['plainaddress', '@b.com', 'a@b', 'a@b.', 'a b@c.com', 'a@@b.com'])(
+    'rejects the malformed email %s',
+    (email: string) => {
+      const { result } = renderHook(() => useContactForm('cs'));
+
+      act(() => {
+        result.current.setField('email', email);
+      });
+
+      expect(result.current.validation.email).toBe(false);
+    },
+  );
+
+  it('trims before validating, so a whitespace-only message stays invalid', () => {
+    const { result } = renderHook(() => useContactForm('cs'));
+
+    act(() => {
+      result.current.setField('email', '  a@b.com  ');
+      result.current.setField('message', '       ');
+    });
+
+    expect(result.current.validation.email).toBe(true);
+    expect(result.current.validation.message).toBe(false);
+
+    act(() => {
+      result.current.setField('message', '  hello  ');
+    });
+
     expect(result.current.validation.message).toBe(true);
   });
 
