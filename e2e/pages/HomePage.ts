@@ -1,4 +1,9 @@
+import AxeBuilder from '@axe-core/playwright';
 import type { Locator, Page } from '@playwright/test';
+import type { Result } from 'axe-core';
+
+/** Same rule set Lighthouse's accessibility audit is built on. */
+const LIGHTHOUSE_EQUIVALENT_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
 export class HomePage {
   readonly page: Page;
@@ -24,6 +29,8 @@ export class HomePage {
   readonly twitterDescription: Locator;
   readonly twitterImage: Locator;
 
+  readonly mobileNavOpenButton: Locator;
+
   constructor(page: Page) {
     this.page = page;
 
@@ -47,6 +54,10 @@ export class HomePage {
     this.twitterTitle = page.locator('meta[name="twitter:title"]');
     this.twitterDescription = page.locator('meta[name="twitter:description"]');
     this.twitterImage = page.locator('meta[name="twitter:image"]');
+
+    this.mobileNavOpenButton = page.getByRole('button', {
+      name: /Otevřít navigaci|Open navigation/,
+    });
   }
 
   async goto() {
@@ -58,8 +69,33 @@ export class HomePage {
     await this.page.getByLabel(label).click();
   }
 
+  /** Clicks the theme switcher; `label` is the accessible name of its current state. */
+  async switchTheme(label: string) {
+    await this.page.getByLabel(label).click();
+  }
+
+  async openMobileNav() {
+    await this.mobileNavOpenButton.click();
+  }
+
   async readJsonLd(): Promise<Record<string, unknown>> {
     const text = await this.jsonLd.textContent();
     return JSON.parse(text ?? '{}');
+  }
+
+  /** Runs axe against the current page state, scoped to Lighthouse's accessibility rule set. */
+  async scanForAccessibilityViolations(): Promise<Result[]> {
+    // Freeze CSS transitions/animations first so axe reads final colors, not a mid-transition
+    // frame (e.g. right after toggling the theme, or while the nav drawer is still sliding in).
+    await this.page.addStyleTag({
+      content:
+        '*, *::before, *::after { transition: none !important; animation: none !important; }',
+    });
+
+    const results = await new AxeBuilder({ page: this.page })
+      .withTags(LIGHTHOUSE_EQUIVALENT_TAGS)
+      .analyze();
+
+    return results.violations;
   }
 }
