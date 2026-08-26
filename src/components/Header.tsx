@@ -4,7 +4,7 @@ import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import { alpha, type Theme } from '@mui/material/styles';
 
 import { CONTACT } from '../data/contact';
-import { HEADER_CONTENT, HEADER_CTA } from '../data/headerContent';
+import { HEADER_CONTENT, HEADER_CTA, IS_OPEN_TO_WORK } from '../data/headerContent';
 import { useHeaderRoleFromQuery } from '../hooks/useHeaderRoleFromQuery';
 import { useLanguage } from '../context/useLanguage';
 
@@ -99,13 +99,15 @@ function Header() {
           {intro.subtitle}
         </Typography>
 
-        <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
-          <Box sx={styles.availabilityDot} />
-          <Typography variant="body1">
-            <strong>{intro.availability.strong}</strong>
-            {intro.availability.normal}
-          </Typography>
-        </Stack>
+        {IS_OPEN_TO_WORK && (
+          <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
+            <Box sx={styles.availabilityDot} />
+            <Typography variant="body1">
+              <strong>{intro.availability.strong}</strong>
+              {intro.availability.normal}
+            </Typography>
+          </Stack>
+        )}
 
         <Stack direction="row" spacing={3} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <Button

@@ -1,3 +1,6 @@
+// Flip to false when no longer job-hunting to hide the availability card in the header.
+export const IS_OPEN_TO_WORK = false;
+
 export const HEADER_CONTENT = {
   cs: {
     frontend: {
