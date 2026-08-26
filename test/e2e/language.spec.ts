@@ -1,25 +1,23 @@
-import { expect, test } from '@playwright/test';
-import { HomePage } from './pages/HomePage';
 import { LANGUAGE_STORAGE_KEY } from '../../src/context/languageContext';
 import { LANGUAGE_SWITCHER_TEXT } from '../../src/data/languageSwitcherText';
+import { expect, test } from './fixtures';
+import { TAG } from './tags';
 
-let homePage: HomePage;
-
-test.beforeEach(async ({ page }) => {
-  homePage = new HomePage(page);
-});
-
-// The head tags that the toggle keeps in sync (title, description, html lang) are covered in
-// seo.spec.ts. This file covers how the language is chosen and remembered across loads.
-
-test.describe('Language selection', () => {
-  test('defaults to Czech on a first visit', async () => {
+/**
+ * How the language is chosen and remembered across loads.
+ *
+ * What the toggle does to the head tags (title, description, html lang) is covered in
+ * seo.spec.ts. No shared `beforeEach` here: seeding `localStorage` has to happen before the
+ * app boots, so each test navigates at its own point.
+ */
+test.describe('Language selection', { tag: TAG.regression }, () => {
+  test('defaults to Czech on a first visit', async ({ homePage }) => {
     await homePage.goto();
 
     await expect(homePage.html).toHaveAttribute('lang', 'cs');
   });
 
-  test('restores a language saved from a previous visit', async () => {
+  test('restores a language saved from a previous visit', async ({ homePage }) => {
     await homePage.seedStorage({ [LANGUAGE_STORAGE_KEY]: 'en' });
 
     await homePage.goto();
@@ -27,7 +25,9 @@ test.describe('Language selection', () => {
     await expect(homePage.html).toHaveAttribute('lang', 'en');
   });
 
-  test('falls back to Czech when the saved value is not a supported language', async () => {
+  test('falls back to Czech when the saved value is not a supported language', async ({
+    homePage,
+  }) => {
     await homePage.seedStorage({ [LANGUAGE_STORAGE_KEY]: 'garbage' });
 
     await homePage.goto();
@@ -35,7 +35,7 @@ test.describe('Language selection', () => {
     await expect(homePage.html).toHaveAttribute('lang', 'cs');
   });
 
-  test('persists the choice, so it survives a reload', async ({ page }) => {
+  test('persists the choice, so it survives a reload', async ({ page, homePage }) => {
     await homePage.goto();
 
     await homePage.switchLanguage(LANGUAGE_SWITCHER_TEXT.cs.ariaLabel);
