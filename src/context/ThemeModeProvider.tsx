@@ -52,7 +52,8 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
             },
           },
           typography: {
-            fontFamily: '"Figtree", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+            fontFamily:
+              '"Figtree Variable", "Figtree Fallback", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
           },
           components: {
             MuiButton: {

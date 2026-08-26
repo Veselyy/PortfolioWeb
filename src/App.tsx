@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Box, Container, Divider } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 import './App.css';
@@ -7,10 +8,14 @@ import { LanguageProvider } from './context/LanguageProvider';
 import SkipLink from './components/SkipLink';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
-import AboutMe from './components/AboutMe';
 import Projects from './components/Projects';
-import WorkApproach from './components/WorkApproach';
 import Footer from './components/Footer';
+
+// Both render markdown, so eager imports would pull mui-markdown (~89 kB) into the initial
+// bundle for content that starts below the fold. Loading them separately keeps that weight
+// off the critical path.
+const AboutMe = lazy(() => import('./components/AboutMe'));
+const WorkApproach = lazy(() => import('./components/WorkApproach'));
 
 const styles = {
   container: {
@@ -52,11 +57,15 @@ function App() {
           <Header />
           <Divider sx={styles.divider} />
           <Box component="main" id="main" sx={styles.main}>
-            <AboutMe />
+            <Suspense fallback={<Box component="section" id="about" aria-hidden="true" />}>
+              <AboutMe />
+            </Suspense>
             <Divider sx={styles.divider} />
             <Projects />
             <Divider sx={styles.divider} />
-            <WorkApproach />
+            <Suspense fallback={null}>
+              <WorkApproach />
+            </Suspense>
           </Box>
           <Divider sx={styles.divider} />
           <Footer />

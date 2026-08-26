@@ -4,11 +4,22 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Both subsets are preloaded: Czech copy needs latin for the bulk of the text and
+         latin-ext for the diacritics, and the ext file would otherwise not be discovered
+         until text renders. crossorigin is required on font preloads even same-origin. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/figtree-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/figtree-latin-ext-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <title>Martin Veselý — Junior Frontend Developer (React/TypeScript)</title>
     <meta

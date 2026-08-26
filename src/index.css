@@ -1,7 +1,8 @@
 html,
 body {
   font-family:
-    'Figtree',
+    'Figtree Variable',
+    'Figtree Fallback',
     system-ui,
     -apple-system,
     Segoe UI,
