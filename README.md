@@ -40,7 +40,8 @@ obsah podle role, o kterou se zrovna hlásím (`?role=frontend|backend|support`)
 - **pnpm** — správa balíčků
 - **ESLint** + **typescript-eslint** — lint
 - **Prettier** — formátování
-- **Jest** + **React Testing Library** — testy
+- **Jest** + **React Testing Library** — unit testy
+- **Playwright** — e2e testy (SEO)
 - **Husky** — git hooky (pre-commit / pre-push, včetně testů před pushnutím)
 - **GitHub Actions** — CI (`format:check`, `lint`, `test`, `cv:check`)
 

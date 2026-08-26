@@ -29,3 +29,9 @@ portfolioweb_context/
 # Editor/tooling caches
 .clj-kondo/
 .lsp/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

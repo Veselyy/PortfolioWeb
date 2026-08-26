@@ -1,18 +1,8 @@
 import { Box } from '@mui/material';
 
 import { useLanguage } from '../../context/useLanguage';
+import { LANGUAGE_SWITCHER_TEXT } from '../../data/languageSwitcherText';
 import PillToggleSwitch from './PillSwitch';
-
-const TEXT = {
-  cs: {
-    tooltip: 'Switch to English',
-    ariaLabel: 'Přepnout jazyk na angličtinu',
-  },
-  en: {
-    tooltip: 'Přepnout do češtiny',
-    ariaLabel: 'Switch language to Czech',
-  },
-} as const;
 
 type Size = 'medium' | 'small';
 
@@ -25,7 +15,7 @@ const SIZES: Record<Size, { track: number; height: number; thumb: number; labelF
 function LanguageSwitcher({ small = false }: { small?: boolean }) {
   const { lang, toggle } = useLanguage();
   const isCs = lang === 'cs';
-  const text = TEXT[lang];
+  const text = LANGUAGE_SWITCHER_TEXT[lang];
   const size: Size = small ? 'small' : 'medium';
   const { track, height, thumb, labelFontSize } = SIZES[size];
 
