@@ -49,6 +49,37 @@ describe('useContactForm', () => {
     expect(result.current.validation.message).toBe(true);
   });
 
+  it.each(['plainaddress', '@b.com', 'a@b', 'a@b.', 'a b@c.com', 'a@@b.com'])(
+    'rejects the malformed email %s',
+    (email: string) => {
+      const { result } = renderHook(() => useContactForm('cs'));
+
+      act(() => {
+        result.current.setField('email', email);
+      });
+
+      expect(result.current.validation.email).toBe(false);
+    },
+  );
+
+  it('trims before validating, so a whitespace-only message stays invalid', () => {
+    const { result } = renderHook(() => useContactForm('cs'));
+
+    act(() => {
+      result.current.setField('email', '  a@b.com  ');
+      result.current.setField('message', '       ');
+    });
+
+    expect(result.current.validation.email).toBe(true);
+    expect(result.current.validation.message).toBe(false);
+
+    act(() => {
+      result.current.setField('message', '  hello  ');
+    });
+
+    expect(result.current.validation.message).toBe(true);
+  });
+
   it('canSubmit is false while a submission is in flight, even with valid fields', () => {
     jest.mocked(fetch).mockImplementation(() => new Promise(() => {}));
     const { result } = renderHook(() => useContactForm('cs'));
