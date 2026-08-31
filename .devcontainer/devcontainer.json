@@ -1,0 +1,10 @@
+{
+  "name": "portfolio",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:22",
+  "forwardPorts": [5173],
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+  ],
+  "postCreateCommand": "git config --global user.name 'Martin Veselý' && git config --global user.email 'veselymartin.online@gmail.com' && sudo chown node node_modules && npm install",
+  "remoteUser": "node"
+}
