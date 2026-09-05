@@ -1,8 +1,8 @@
-- Hi, I'm Martin, I'm from the countryside and I've been working in **IT** for **4 years** now, and I'm also **self-employed**.
-- I'm a **student**, I enjoy sports and talking with people I can learn from.
-- My strong interest in learning and **personal growth** motivates me to seize every **opportunity** for career growth.
-- I look forward to **facing** new challenges and **contributing** to our shared success.
-- English isn't a barrier for me - my grammar is at **B1** level and my spoken English is between **A2 - B1**.
+- Hi, my name is Martin. I come from the countryside and have been working in **IT** for **4 years**.
+- I'm a **student**, and in my free time I play sports and enjoy meeting people I can learn from.
+- I have a strong interest in learning and **personal growth**, which drives me to make the most of every **opportunity** for career growth.
+- I'm not afraid to **face** new challenges, and I'm glad to **contribute** to our shared success.
+- English isn't a barrier for me - my grammar is at **B1** level, and when speaking I'm somewhere between **A2 - B1**.
 
 ### Skills
 

@@ -43,6 +43,11 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
+        env:
+          # Lighthouse audits this as a stand-in for the real production build, which is the
+          # only deploy context vite.config.ts marks indexable — without this, the noindex
+          # meta tag added for non-production contexts fails the SEO category assertion.
+          CONTEXT: production
       - run: pnpm exec lhci autorun
 
       - name: Upload Lighthouse reports
