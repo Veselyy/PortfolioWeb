@@ -8,6 +8,7 @@ import type { Locator, Page } from '@playwright/test';
 export class Hero {
   readonly page: Page;
 
+  readonly root: Locator;
   readonly title: Locator;
   readonly subtitle: Locator;
 
@@ -16,17 +17,18 @@ export class Hero {
 
   constructor(page: Page) {
     this.page = page;
-    this.title = page.getByRole('heading', { level: 1 });
-    this.subtitle = page.getByRole('heading', { level: 4 });
-    this.image = page.getByRole('img', { name: 'Martin Veselý, portrétní fotografie' });
+    this.root = page.locator('header');
+    this.title = this.root.getByRole('heading', { level: 1 });
+    this.subtitle = this.root.getByRole('heading', { level: 2 });
+    this.image = this.root.getByRole('img', { name: 'Martin Veselý, portrétní fotografie' });
   }
 
   ctaLink(name: string): Locator {
-    return this.page.getByRole('link', { name });
+    return this.root.getByRole('link', { name });
   }
 
   contactLink(name: string): Locator {
-    return this.page.getByRole('link', { name });
+    return this.root.getByRole('link', { name });
   }
 
   /**
