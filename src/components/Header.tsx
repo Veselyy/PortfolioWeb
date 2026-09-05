@@ -1,10 +1,16 @@
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+import WebIcon from '@mui/icons-material/Web';
 import { alpha, type Theme } from '@mui/material/styles';
 
 import { CONTACT } from '../data/contact';
-import { HEADER_CONTENT, HEADER_CTA, IS_OPEN_TO_WORK } from '../data/headerContent';
+import {
+  HEADER_CONTENT,
+  HEADER_CTA,
+  HEADER_UNIVERSAL_EYEBROW,
+  HEADER_UNIVERSAL_TITLE,
+} from '../data/headerContent';
 import { useHeaderRoleFromQuery } from '../hooks/useHeaderRoleFromQuery';
 import { useLanguage } from '../context/useLanguage';
 
@@ -20,6 +26,21 @@ const styles = {
   },
   headerContent: {
     width: { md: '70%', xs: '100%' },
+  },
+  eyebrowPill: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 1,
+    border: '1px solid',
+    borderColor: 'divider',
+    borderRadius: 999,
+    px: 2,
+    py: 0.75,
+    width: 'fit-content',
+  },
+  eyebrowText: {
+    fontWeight: 500,
+    color: 'text.secondary',
   },
   ctaButton: {
     fontWeight: 700,
@@ -84,22 +105,42 @@ function Header() {
   const intro = HEADER_CONTENT[lang][role];
   const cta = HEADER_CTA[lang];
   const contactAriaLabels = CONTACT_ARIA_LABELS[lang];
+  const isOpenToWork = import.meta.env.VITE_IS_OPEN_TO_WORK === 'true';
+  const titleParts = isOpenToWork ? intro.title.parts : HEADER_UNIVERSAL_TITLE[lang].parts;
 
   return (
     <Stack component="header" direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
       <Stack spacing={3} sx={styles.headerContent}>
-        <Typography variant="h1" sx={{ fontWeight: '700' }}>
-          {intro.title.parts.map((p, idx) => (
-            <Box key={idx} component="span" sx={p.highlight ? styles.highlight : undefined}>
-              {p.text}
-            </Box>
-          ))}
-        </Typography>
-        <Typography variant="h4" component="p">
-          {intro.subtitle}
-        </Typography>
+        <Stack
+          spacing={1}
+          sx={{
+            alignItems: { xs: 'center', md: 'flex-start' },
+            textAlign: { xs: 'center', md: 'left' },
+          }}
+        >
+          {!isOpenToWork && (
+            <Stack direction="row" spacing={1} sx={styles.eyebrowPill}>
+              <WebIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+              <Typography variant="subtitle2" component="span" sx={styles.eyebrowText}>
+                {HEADER_UNIVERSAL_EYEBROW[lang]}
+              </Typography>
+            </Stack>
+          )}
+          <Typography variant="h1" sx={{ fontWeight: '700' }}>
+            {titleParts.map((p, idx) => (
+              <Box key={idx} component="span" sx={p.highlight ? styles.highlight : undefined}>
+                {p.text}
+              </Box>
+            ))}
+          </Typography>
+        </Stack>
+        {isOpenToWork && (
+          <Typography variant="h4" component="h2">
+            {intro.subtitle}
+          </Typography>
+        )}
 
-        {IS_OPEN_TO_WORK && (
+        {isOpenToWork && (
           <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
             <Box sx={styles.availabilityDot} />
             <Typography variant="body1">
@@ -109,35 +150,37 @@ function Header() {
           </Stack>
         )}
 
-        <Stack direction="row" spacing={3} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          <Button
-            component="a"
-            href="#footer"
-            variant="outlined"
-            color="info"
-            sx={styles.ctaButton}
-          >
-            {cta.title}
-          </Button>
-          <IconButton
-            component="a"
-            href={CONTACT.whatsapp.href}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={contactAriaLabels.whatsapp}
-            sx={styles.contactIconButton}
-          >
-            <WhatsAppIcon />
-          </IconButton>
-          <IconButton
-            component="a"
-            href={CONTACT.email.href}
-            aria-label={contactAriaLabels.email}
-            sx={styles.contactIconButton}
-          >
-            <MailOutlinedIcon />
-          </IconButton>
-        </Stack>
+        {isOpenToWork && (
+          <Stack direction="row" spacing={3} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <Button
+              component="a"
+              href="#footer"
+              variant="outlined"
+              color="info"
+              sx={styles.ctaButton}
+            >
+              {cta.title}
+            </Button>
+            <IconButton
+              component="a"
+              href={CONTACT.whatsapp.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={contactAriaLabels.whatsapp}
+              sx={styles.contactIconButton}
+            >
+              <WhatsAppIcon />
+            </IconButton>
+            <IconButton
+              component="a"
+              href={CONTACT.email.href}
+              aria-label={contactAriaLabels.email}
+              sx={styles.contactIconButton}
+            >
+              <MailOutlinedIcon />
+            </IconButton>
+          </Stack>
+        )}
       </Stack>
 
       <Box sx={styles.heroWrapper}>

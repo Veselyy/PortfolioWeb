@@ -20,7 +20,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     window.localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
     document.documentElement.lang = lang;
 
-    const { title, description } = SEO_CONTENT[lang];
+    const variant = import.meta.env.VITE_IS_OPEN_TO_WORK === 'true' ? 'jobHunting' : 'portfolio';
+    const { title, description } = SEO_CONTENT[lang][variant];
     document.title = title;
     document.querySelector('meta[name="description"]')?.setAttribute('content', description);
   }, [lang]);

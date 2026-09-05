@@ -8,12 +8,27 @@ import type { Locator, Page } from '@playwright/test';
 export class Hero {
   readonly page: Page;
 
+  readonly root: Locator;
+  readonly title: Locator;
+  readonly subtitle: Locator;
+
   /** The portrait photo — the LCP element, so its loading hints matter. */
   readonly image: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.image = page.getByRole('img', { name: 'Martin Veselý, portrétní fotografie' });
+    this.root = page.locator('header');
+    this.title = this.root.getByRole('heading', { level: 1 });
+    this.subtitle = this.root.getByRole('heading', { level: 2 });
+    this.image = this.root.getByRole('img', { name: 'Martin Veselý, portrétní fotografie' });
+  }
+
+  ctaLink(name: string): Locator {
+    return this.root.getByRole('link', { name });
+  }
+
+  contactLink(name: string): Locator {
+    return this.root.getByRole('link', { name });
   }
 
   /**

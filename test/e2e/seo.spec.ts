@@ -4,6 +4,7 @@ import { expect, test } from './fixtures';
 import { TAG } from './tags';
 
 const SITE_URL = 'https://martinvesely.netlify.app/';
+const seoVariant = process.env.VITE_IS_OPEN_TO_WORK === 'true' ? 'jobHunting' : 'portfolio';
 
 test.beforeEach(async ({ homePage }) => {
   await homePage.goto();
@@ -19,8 +20,11 @@ test.describe('SEO — static head tags', { tag: TAG.seo }, () => {
     page,
     homePage,
   }) => {
-    await expect(page).toHaveTitle(SEO_CONTENT.cs.title);
-    await expect(homePage.metaDescription).toHaveAttribute('content', SEO_CONTENT.cs.description);
+    await expect(page).toHaveTitle(SEO_CONTENT.cs[seoVariant].title);
+    await expect(homePage.metaDescription).toHaveAttribute(
+      'content',
+      SEO_CONTENT.cs[seoVariant].description,
+    );
   });
 
   test('declares the default document language as cs', async ({ homePage }) => {
@@ -77,8 +81,11 @@ test.describe('SEO — language toggle updates head tags', { tag: TAG.seo }, () 
   }) => {
     await homePage.switchLanguage(LANGUAGE_SWITCHER_TEXT.cs.ariaLabel);
 
-    await expect(page).toHaveTitle(SEO_CONTENT.en.title);
-    await expect(homePage.metaDescription).toHaveAttribute('content', SEO_CONTENT.en.description);
+    await expect(page).toHaveTitle(SEO_CONTENT.en[seoVariant].title);
+    await expect(homePage.metaDescription).toHaveAttribute(
+      'content',
+      SEO_CONTENT.en[seoVariant].description,
+    );
     await expect(homePage.html).toHaveAttribute('lang', 'en');
   });
 
@@ -89,8 +96,11 @@ test.describe('SEO — language toggle updates head tags', { tag: TAG.seo }, () 
     await homePage.switchLanguage(LANGUAGE_SWITCHER_TEXT.cs.ariaLabel);
     await homePage.switchLanguage(LANGUAGE_SWITCHER_TEXT.en.ariaLabel);
 
-    await expect(page).toHaveTitle(SEO_CONTENT.cs.title);
-    await expect(homePage.metaDescription).toHaveAttribute('content', SEO_CONTENT.cs.description);
+    await expect(page).toHaveTitle(SEO_CONTENT.cs[seoVariant].title);
+    await expect(homePage.metaDescription).toHaveAttribute(
+      'content',
+      SEO_CONTENT.cs[seoVariant].description,
+    );
     await expect(homePage.html).toHaveAttribute('lang', 'cs');
   });
 });
