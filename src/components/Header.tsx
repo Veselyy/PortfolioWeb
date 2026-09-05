@@ -135,7 +135,7 @@ function Header() {
           </Typography>
         </Stack>
         {isOpenToWork && (
-          <Typography variant="h4" component="p">
+          <Typography variant="h4" component="h2">
             {intro.subtitle}
           </Typography>
         )}
