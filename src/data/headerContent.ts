@@ -1,4 +1,4 @@
-// Shown instead of the role-specific title when IS_OPEN_TO_WORK is false (plain portfolio mode),
+// Shown instead of the role-specific title when the open-to-work flag is disabled (plain portfolio mode),
 // since the role switcher only makes sense when pitching for a specific job opening.
 export const HEADER_UNIVERSAL_EYEBROW = {
   cs: 'Vývoj · Testování · Nasazení',
