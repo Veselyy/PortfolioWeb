@@ -47,11 +47,5 @@
     "typescript": "~6.0.2",
     "vesely-dev-config": "git+https://github.com/Veselyy/vesely-dev-config.git",
     "vite": "^7.3.6"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "unrs-resolver"
-    ]
   }
 }

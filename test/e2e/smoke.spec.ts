@@ -21,7 +21,7 @@ test.describe('Smoke', { tag: TAG.smoke }, () => {
   });
 
   test('serves the page with its title and a single H1', async ({ page, homePage }) => {
-    await expect(page).toHaveTitle(SEO_CONTENT.cs.title);
+    await expect(page).toHaveTitle(SEO_CONTENT.cs.portfolio.title);
     await expect(homePage.h1).toHaveCount(1);
   });
 
