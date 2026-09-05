@@ -1,3 +1,25 @@
+// Shown instead of the role-specific title when IS_OPEN_TO_WORK is false (plain portfolio mode),
+// since the role switcher only makes sense when pitching for a specific job opening.
+export const HEADER_UNIVERSAL_EYEBROW = {
+  cs: 'Vývoj · Testování · Nasazení',
+  en: 'Development · Testing · Deployment',
+} as const;
+
+export const HEADER_UNIVERSAL_TITLE = {
+  cs: {
+    parts: [
+      { text: 'Vyvíjím weby od prvního nápadu ', highlight: false },
+      { text: 'až po spuštění', highlight: true },
+    ],
+  },
+  en: {
+    parts: [
+      { text: 'Building websites from the first idea ', highlight: false },
+      { text: 'to launch', highlight: true },
+    ],
+  },
+} as const;
+
 export const HEADER_CONTENT = {
   cs: {
     frontend: {
