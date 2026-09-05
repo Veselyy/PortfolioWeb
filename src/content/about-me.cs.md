@@ -1,8 +1,8 @@
-- Zdravím, jmenuji se Martin, pocházím z venkova a **IT** se věnuji už **4. rokem**.
-- Jsem **student**, ve volném čase sportuji a baví mě poznávat lidi, od kterých se mám co učit.
-- Zajímá mě neustálé učení a **osobní rozvoj**, a proto využívám každou **příležitost** ke kariérnímu růstu.
-- Nebojím se **čelit** novým výzvám a rád **přispěju** ke společnému úspěchu.
-- Angličtina pro mě není překážka - gramatiku mám na úrovni **B1** a mluvením se pohybuji mezi **A2 - B1**.
+- Zdravím, já jsem Martin, jsem z venkova a věnuji se **IT** už **4. rokem** a jsem také **OSVČ**.
+- Jsem **student**, rád dělám sporty a rád se bavím s lidmi, kteří mi mají co předat.
+- Můj silný zájem o učení a **osobní rozvoj** mě motivuje využívat každou **příležitost** ke kariérnímu růstu.
+- Rád budu **čelit** novým výzvám a **rád přispěju** ke společnému úspěchu.
+- Angličtina pro mě není překážka - gramatiku mám na úrovni **B1** a v mluvení jsem mezi **A2 - B1**.
 
 ### Dovednosti
 

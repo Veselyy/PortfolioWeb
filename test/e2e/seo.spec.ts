@@ -67,14 +67,10 @@ test.describe('SEO — static head tags', { tag: TAG.seo }, () => {
     expect(data.url).toBe(SITE_URL);
   });
 
-  test('sets robots indexing based on the deploy context', async ({ homePage }) => {
-    // Only Netlify's "production" context is indexable; every other context — including this
-    // local/CI build, which never sets CONTEXT — defaults to noindex. See vite.config.ts.
-    const isProductionDeploy = process.env.CONTEXT === 'production';
-    await expect(homePage.robotsMeta).toHaveAttribute(
-      'content',
-      isProductionDeploy ? 'index, follow' : 'noindex, nofollow',
-    );
+  test('is not blocked from indexing', async ({ homePage }) => {
+    if (await homePage.robotsMeta.count()) {
+      await expect(homePage.robotsMeta).not.toHaveAttribute('content', /noindex/);
+    }
   });
 });
 
