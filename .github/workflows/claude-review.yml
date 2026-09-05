@@ -1,0 +1,30 @@
+name: Claude Code Review
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Claude Code Review
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          direct_prompt: |
+            Review this PR. Focus on:
+            - Correctness and potential bugs
+            - TypeScript/React best practices and security issues
+            - SEO: meta tags, semantic HTML, Open Graph, structured data,
+              canonical URLs, alt attributes, page titles, heading hierarchy (h1-h6)
+            - Accessibility (WCAG 2.1 AA / axe rules): ARIA roles and labels,
+              keyboard navigation, focus management, color contrast, form labels,
+              interactive element roles, screen reader compatibility
+            Be concise. Post comments inline where relevant.
