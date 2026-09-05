@@ -4,7 +4,7 @@ import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import { alpha, type Theme } from '@mui/material/styles';
 
 import { CONTACT } from '../data/contact';
-import { HEADER_CONTENT, HEADER_CTA, IS_OPEN_TO_WORK } from '../data/headerContent';
+import { HEADER_CONTENT, HEADER_CTA } from '../data/headerContent';
 import { useHeaderRoleFromQuery } from '../hooks/useHeaderRoleFromQuery';
 import { useLanguage } from '../context/useLanguage';
 
@@ -84,6 +84,7 @@ function Header() {
   const intro = HEADER_CONTENT[lang][role];
   const cta = HEADER_CTA[lang];
   const contactAriaLabels = CONTACT_ARIA_LABELS[lang];
+  const isOpenToWork = import.meta.env.VITE_IS_OPEN_TO_WORK === 'true';
 
   return (
     <Stack component="header" direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
@@ -99,7 +100,7 @@ function Header() {
           {intro.subtitle}
         </Typography>
 
-        {IS_OPEN_TO_WORK && (
+        {isOpenToWork && (
           <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
             <Box sx={styles.availabilityDot} />
             <Typography variant="body1">

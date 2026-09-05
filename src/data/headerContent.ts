@@ -1,6 +1,3 @@
-// Flip to false when no longer job-hunting to hide the availability card in the header.
-export const IS_OPEN_TO_WORK = false;
-
 export const HEADER_CONTENT = {
   cs: {
     frontend: {
@@ -96,14 +93,14 @@ export const HEADER_CTA = {
   cs: {
     title: 'Klidně se ozvěte',
     photo: {
-      src: 'photo_of_me.webp',
+      src: 'photo-of-me.webp',
       alt: 'Martin Veselý, portrétní fotografie',
     },
   },
   en: {
     title: 'Feel free to reach out',
     photo: {
-      src: 'photo_of_me.webp',
+      src: 'photo-of-me.webp',
       alt: 'Martin Veselý, portrait photo',
     },
   },
