@@ -13,6 +13,9 @@ import { TAG } from './tags';
  */
 test.describe('Smoke', { tag: TAG.smoke }, () => {
   const isOpenToWork = process.env.VITE_IS_OPEN_TO_WORK === 'true';
+  const expectedSeoTitle = isOpenToWork
+    ? SEO_CONTENT.cs.jobHunting.title
+    : SEO_CONTENT.cs.portfolio.title;
   const universalTitle = HEADER_UNIVERSAL_TITLE.cs.parts.map((part) => part.text).join('');
   const frontendTitle = HEADER_CONTENT.cs.frontend.title.parts.map((part) => part.text).join('');
 
@@ -21,7 +24,7 @@ test.describe('Smoke', { tag: TAG.smoke }, () => {
   });
 
   test('serves the page with its title and a single H1', async ({ page, homePage }) => {
-    await expect(page).toHaveTitle(SEO_CONTENT.cs.portfolio.title);
+    await expect(page).toHaveTitle(expectedSeoTitle);
     await expect(homePage.h1).toHaveCount(1);
   });
 
