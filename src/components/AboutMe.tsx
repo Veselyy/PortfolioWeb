@@ -1,17 +1,5 @@
-import { useState } from 'react';
-
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Divider,
-  Paper,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 import MuiMarkdown, { defaultOverrides } from 'mui-markdown';
 
@@ -19,7 +7,6 @@ import aboutMeMarkdownCs from '../content/about-me.cs.md?raw';
 import aboutMeMarkdownEn from '../content/about-me.en.md?raw';
 import { ABOUT_ME_CONTENT } from '../data/aboutMeContent';
 import { useLanguage } from '../context/useLanguage';
-import { useSmoothScrollTo } from '../hooks/useSmoothScrollTo';
 
 const aboutMeMarkdown = { cs: aboutMeMarkdownCs, en: aboutMeMarkdownEn } as const;
 
@@ -32,59 +19,8 @@ const aboutMeMarkdownOverrides = {
   },
 };
 
-function splitIntroFromMarkdown(markdown: string): { intro: string; rest: string } {
-  const headingIndex = markdown.indexOf('\n### ');
-  if (headingIndex === -1) return { intro: markdown, rest: '' };
-
-  return {
-    intro: markdown.slice(0, headingIndex).trim(),
-    rest: markdown.slice(headingIndex).trim(),
-  };
-}
-
 const styles = {
   title: { fontWeight: 700 },
-  introList: {
-    '& ul': {
-      listStyle: 'none',
-      m: 0,
-      p: 0,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 1.5,
-      counterReset: 'intro-item',
-    },
-    '& li': {
-      position: 'relative',
-      counterIncrement: 'intro-item',
-      bgcolor: 'background.paper',
-      border: '1px solid',
-      borderColor: 'divider',
-      borderRadius: 3,
-      py: 1.5,
-      pl: 7,
-      pr: 2,
-      typography: 'body1',
-      lineHeight: 1.6,
-      '&::before': {
-        content: 'counter(intro-item)',
-        position: 'absolute',
-        left: 16,
-        top: '50%',
-        transform: 'translateY(-50%)',
-        width: 28,
-        height: 28,
-        borderRadius: '50%',
-        bgcolor: 'info.main',
-        color: 'info.contrastText',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontWeight: 700,
-        fontSize: '0.875rem',
-      },
-    },
-  },
   markdown: {
     '& p': { mt: 1 },
     '& ul': { m: 0, pl: 2.5 },
@@ -127,20 +63,6 @@ const styles = {
   },
   referencesTitle: { fontWeight: 700 },
   referenceItem: { typography: 'body1', mb: 1, fontStyle: 'italic', '&:last-child': { mb: 0 } },
-  referencesAccordion: {
-    width: '100%',
-    bgcolor: 'transparent',
-    boxShadow: 'none',
-    '&:before': { display: 'none' },
-  },
-  referencesAccordionSummary: {
-    px: 0,
-    minHeight: 'auto',
-    '&.Mui-expanded': { minHeight: 'auto' },
-    '& .MuiAccordionSummary-content': { m: 0 },
-    '& .MuiAccordionSummary-content.Mui-expanded': { m: 0 },
-  },
-  referencesAccordionDetails: { px: 0, pt: 1 },
 } as const;
 
 const EDUCATION_SECTION_TITLE = {
@@ -148,10 +70,7 @@ const EDUCATION_SECTION_TITLE = {
   en: 'Education, work and IT jobs',
 } as const;
 
-const REFERENCES_LABEL = {
-  cs: { show: 'Zobrazit reference', hide: 'Skrýt reference' },
-  en: { show: 'Show references', hide: 'Hide references' },
-} as const;
+const REFERENCES_TITLE = { cs: 'Reference', en: 'References' } as const;
 const QUOTE_MARKS = {
   cs: { open: '„', close: '“' },
   en: { open: '“', close: '”' },
@@ -188,9 +107,6 @@ function AboutMe() {
   const content = ABOUT_ME_CONTENT[lang];
   const educationSection = getEducationSection(lang);
   const quoteMarks = QUOTE_MARKS[lang];
-  const { intro, rest } = splitIntroFromMarkdown(aboutMeMarkdown[lang]);
-  const [expandedReferences, setExpandedReferences] = useState<Record<number, boolean>>({});
-  const smoothScrollTo = useSmoothScrollTo();
 
   return (
     <Stack component="section" id="about" spacing={3} aria-labelledby="about-heading">
@@ -198,12 +114,8 @@ function AboutMe() {
         {content.title}
       </Typography>
 
-      <Box sx={styles.introList}>
-        <MuiMarkdown overrides={defaultOverrides}>{intro}</MuiMarkdown>
-      </Box>
-
       <Box sx={styles.markdown}>
-        <MuiMarkdown overrides={aboutMeMarkdownOverrides}>{rest}</MuiMarkdown>
+        <MuiMarkdown overrides={aboutMeMarkdownOverrides}>{aboutMeMarkdown[lang]}</MuiMarkdown>
       </Box>
 
       <Stack spacing={2}>
@@ -211,7 +123,7 @@ function AboutMe() {
           {educationSection.title}
         </Typography>
 
-        {educationSection.cards.map((card: EducationCard, i: number) => (
+        {educationSection.cards.map((card: EducationCard) => (
           <Paper key={card.title} sx={styles.educationCard}>
             <Stack spacing={1} sx={styles.educationCardContent}>
               <Typography variant="h6" component="h4" sx={styles.educationCardTitle}>
@@ -230,8 +142,8 @@ function AboutMe() {
               </Box>
 
               <Box component="ul" sx={styles.bulletList}>
-                {card.bullets.map((bullet: string, bi: number) => (
-                  <Box key={`${card.title}-b-${bi}`} component="li" sx={styles.bulletItem}>
+                {card.bullets.map((bullet: string, i: number) => (
+                  <Box key={`${card.title}-b-${i}`} component="li" sx={styles.bulletItem}>
                     <MuiMarkdown options={{ forceInline: true }}>{bullet}</MuiMarkdown>
                   </Box>
                 ))}
@@ -243,56 +155,20 @@ function AboutMe() {
                     <Divider sx={styles.referencesDivider} />
                   </Box>
 
-                  <Accordion
-                    disableGutters
-                    expanded={!!expandedReferences[i]}
-                    onChange={(_e, isExpanded) => {
-                      setExpandedReferences((prev) => ({ ...prev, [i]: isExpanded }));
-                      if (isExpanded) {
-                        setTimeout(() => {
-                          const header = document.getElementById(
-                            `education-panel-${i}-references-header`,
-                          );
-                          if (header) smoothScrollTo(header);
-                        }, 50);
-                      }
-                    }}
-                    sx={styles.referencesAccordion}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls={`education-panel-${i}-references-content`}
-                      id={`education-panel-${i}-references-header`}
-                      sx={styles.referencesAccordionSummary}
-                    >
-                      <Typography variant="subtitle1" component="h4" sx={styles.referencesTitle}>
-                        {expandedReferences[i]
-                          ? REFERENCES_LABEL[lang].hide
-                          : REFERENCES_LABEL[lang].show}
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails
-                      id={`education-panel-${i}-references-content`}
-                      aria-labelledby={`education-panel-${i}-references-header`}
-                      sx={styles.referencesAccordionDetails}
-                    >
-                      <Box component="ul" sx={styles.bulletList}>
-                        {card.references.map((quote, ri) => (
-                          <Box
-                            key={`${card.title}-r-${ri}`}
-                            component="li"
-                            sx={styles.referenceItem}
-                          >
-                            <Box component="span">
-                              {quoteMarks.open}
-                              <MuiMarkdown options={{ forceInline: true }}>{quote}</MuiMarkdown>
-                              {quoteMarks.close}
-                            </Box>
-                          </Box>
-                        ))}
+                  <Typography variant="subtitle1" component="h4" sx={styles.referencesTitle}>
+                    {REFERENCES_TITLE[lang]}
+                  </Typography>
+                  <Box component="ul" sx={styles.bulletList}>
+                    {card.references.map((quote, i) => (
+                      <Box key={`${card.title}-r-${i}`} component="li" sx={styles.referenceItem}>
+                        <Box component="span">
+                          {quoteMarks.open}
+                          <MuiMarkdown options={{ forceInline: true }}>{quote}</MuiMarkdown>
+                          {quoteMarks.close}
+                        </Box>
                       </Box>
-                    </AccordionDetails>
-                  </Accordion>
+                    ))}
+                  </Box>
                 </>
               )}
             </Stack>
