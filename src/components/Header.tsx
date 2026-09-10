@@ -22,10 +22,10 @@ const CONTACT_ARIA_LABELS = {
 const styles = {
   headerWrapper: {
     alignItems: 'center',
-    gap: 5,
+    justifyContent: 'space-between',
   },
   headerContent: {
-    width: { md: '70%', xs: '100%' },
+    width: { md: '65%', xs: '100%' },
   },
   eyebrowPill: {
     display: 'inline-flex',
@@ -37,6 +37,7 @@ const styles = {
     px: 2,
     py: 0.75,
     width: 'fit-content',
+    alignSelf: { xs: 'center', md: 'flex-start' },
   },
   eyebrowText: {
     fontWeight: 500,
@@ -77,7 +78,7 @@ const styles = {
     maxWidth: 760,
   },
   heroWrapper: {
-    width: { md: '30%', xs: '100%' },
+    width: { md: '25%', xs: '100%' },
     p: { md: 0, xs: '0 20%' },
   },
   // 'info.main' is tuned as a background surface (icon buttons, cards) and is too light/dark
@@ -87,6 +88,7 @@ const styles = {
     color: (theme: Theme) => theme.palette.highlight.main,
   },
   heroImage: {
+    display: 'block',
     width: '100%',
     aspectRatio: '1 / 1',
     borderRadius: '50%',
@@ -109,90 +111,91 @@ function Header() {
   const titleParts = isOpenToWork ? intro.title.parts : HEADER_UNIVERSAL_TITLE[lang].parts;
 
   return (
-    <Stack component="header" direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
-      <Stack spacing={3} sx={styles.headerContent}>
-        <Stack
-          spacing={1}
-          sx={{
-            alignItems: { xs: 'center', md: 'flex-start' },
-            textAlign: { xs: 'center', md: 'left' },
-          }}
-        >
-          {!isOpenToWork && (
-            <Stack direction="row" spacing={1} sx={styles.eyebrowPill}>
-              <WebIcon fontSize="small" sx={{ color: 'text.secondary' }} />
-              <Typography variant="subtitle2" component="span" sx={styles.eyebrowText}>
-                {HEADER_UNIVERSAL_EYEBROW[lang]}
-              </Typography>
-            </Stack>
-          )}
-          <Typography variant="h1" sx={{ fontWeight: '700' }}>
+    <Stack component="header" sx={{ gap: { xs: 3, md: 0 } }}>
+      {!isOpenToWork && (
+        <Stack direction="row" spacing={1} sx={styles.eyebrowPill}>
+          <WebIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+          <Typography variant="subtitle2" component="span" sx={styles.eyebrowText}>
+            {HEADER_UNIVERSAL_EYEBROW[lang]}
+          </Typography>
+        </Stack>
+      )}
+
+      <Stack direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
+        <Stack spacing={3} sx={styles.headerContent}>
+          <Typography
+            variant="h1"
+            sx={{
+              fontWeight: '700',
+              textAlign: { xs: 'center', md: 'left' },
+            }}
+          >
             {titleParts.map((p, idx) => (
               <Box key={idx} component="span" sx={p.highlight ? styles.highlight : undefined}>
                 {p.text}
               </Box>
             ))}
           </Typography>
-        </Stack>
-        {isOpenToWork && (
-          <Typography variant="h4" component="h2">
-            {intro.subtitle}
-          </Typography>
-        )}
-
-        {isOpenToWork && (
-          <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
-            <Box sx={styles.availabilityDot} />
-            <Typography variant="body1">
-              <strong>{intro.availability.strong}</strong>
-              {intro.availability.normal}
+          {isOpenToWork && (
+            <Typography variant="h4" component="h2">
+              {intro.subtitle}
             </Typography>
-          </Stack>
-        )}
+          )}
 
-        {isOpenToWork && (
-          <Stack direction="row" spacing={3} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
-            <Button
-              component="a"
-              href="#footer"
-              variant="outlined"
-              color="info"
-              sx={styles.ctaButton}
-            >
-              {cta.title}
-            </Button>
-            <IconButton
-              component="a"
-              href={CONTACT.whatsapp.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={contactAriaLabels.whatsapp}
-              sx={styles.contactIconButton}
-            >
-              <WhatsAppIcon />
-            </IconButton>
-            <IconButton
-              component="a"
-              href={CONTACT.email.href}
-              aria-label={contactAriaLabels.email}
-              sx={styles.contactIconButton}
-            >
-              <MailOutlinedIcon />
-            </IconButton>
-          </Stack>
-        )}
+          {isOpenToWork && (
+            <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
+              <Box sx={styles.availabilityDot} />
+              <Typography variant="body1">
+                <strong>{intro.availability.strong}</strong>
+                {intro.availability.normal}
+              </Typography>
+            </Stack>
+          )}
+
+          {isOpenToWork && (
+            <Stack direction="row" spacing={3} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
+              <Button
+                component="a"
+                href="#footer"
+                variant="outlined"
+                color="info"
+                sx={styles.ctaButton}
+              >
+                {cta.title}
+              </Button>
+              <IconButton
+                component="a"
+                href={CONTACT.whatsapp.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={contactAriaLabels.whatsapp}
+                sx={styles.contactIconButton}
+              >
+                <WhatsAppIcon />
+              </IconButton>
+              <IconButton
+                component="a"
+                href={CONTACT.email.href}
+                aria-label={contactAriaLabels.email}
+                sx={styles.contactIconButton}
+              >
+                <MailOutlinedIcon />
+              </IconButton>
+            </Stack>
+          )}
+        </Stack>
+
+        <Box sx={styles.heroWrapper}>
+          <Box
+            component="img"
+            src={new URL(`../assets/${cta.photo.src}`, import.meta.url).toString()}
+            alt={cta.photo.alt}
+            loading="eager"
+            fetchPriority="high"
+            sx={styles.heroImage}
+          />
+        </Box>
       </Stack>
-
-      <Box sx={styles.heroWrapper}>
-        <Box
-          component="img"
-          src={new URL(`../assets/${cta.photo.src}`, import.meta.url).toString()}
-          alt={cta.photo.alt}
-          loading="eager"
-          fetchPriority="high"
-          sx={styles.heroImage}
-        />
-      </Box>
     </Stack>
   );
 }
