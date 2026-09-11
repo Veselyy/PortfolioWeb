@@ -23,6 +23,7 @@ const styles = {
   headerWrapper: {
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: { xs: 3, md: 0 },
   },
   headerContent: {
     width: { md: '65%', xs: '100%' },
