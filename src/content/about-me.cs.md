@@ -2,7 +2,7 @@
 - Jsem **student**, ve volném čase sportuji a baví mě poznávat lidi, od kterých se mám co učit.
 - Zajímá mě neustálé učení a **osobní rozvoj**, a proto využívám každou **příležitost** ke kariérnímu růstu.
 - Nebojím se **čelit** novým výzvám a rád **přispěju** ke společnému úspěchu.
-- Angličtina pro mě není překážka - gramatiku mám na úrovni **B1** a mluvením se pohybuji mezi **A2 - B1**.
+- Anglicky si bez problému přečtu dokumentaci i technické diskuze (**B1**), mluvený projev aktivně zlepšuji (**A2 - B1**).
 
 ### Dovednosti
 

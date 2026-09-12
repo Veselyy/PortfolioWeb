@@ -139,6 +139,14 @@ const styles = {
     '&.Mui-expanded': { minHeight: 'auto' },
     '& .MuiAccordionSummary-content': { m: 0 },
     '& .MuiAccordionSummary-content.Mui-expanded': { m: 0 },
+    // The summary is a ButtonBase but lands here with no visible focus indicator, so give it
+    // the same outline as the other focusable elements. `bgcolor` guards against the
+    // full-width `action.focus` tint MUI's own AccordionSummary styles would otherwise apply.
+    '&.Mui-focusVisible': {
+      bgcolor: 'transparent',
+      outline: '1px solid currentColor',
+      outlineOffset: 4,
+    },
   },
   referencesAccordionDetails: { px: 0, pt: 1 },
 } as const;
@@ -245,6 +253,7 @@ function AboutMe() {
 
                   <Accordion
                     disableGutters
+                    elevation={0}
                     expanded={!!expandedReferences[i]}
                     onChange={(_e, isExpanded) => {
                       setExpandedReferences((prev) => ({ ...prev, [i]: isExpanded }));
