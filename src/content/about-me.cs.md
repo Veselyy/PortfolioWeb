@@ -6,28 +6,28 @@
 
 ### Dovednosti
 
-**<u>2-3 roky zkušeností</u>**
+#### 2-3 roky zkušeností
 
 - React, Figma, HTML, CSS, TypeScript, C, Vite, Git, GitHub/GitLab, spolupráce s AI
 
-**<u>1 rok zkušeností</u>**
+#### 1 rok zkušeností
 
 - REST API, SQL
 
 ### Koníčky
 
-**<u>Sport</u>**
+#### Sport
 
 - Jakýkoliv sport, který mě udržuje aktivním a fit.
 
-**<u>Učení nových věcí</u>**
+#### Učení nových věcí
 
 - Rád se učím nové technologie, dovednosti a rozšiřuji své znalosti.
 
-**<u>Komunikace</u>**
+#### Komunikace
 
 - Komunikace s lidmi s podobným zájmem mě inspiruje a motivuje.
 
-**<u>Svět v IT</u>**
+#### Svět v IT
 
 - Věnuji se programování, designu aplikací a hledání inovativních řešení.

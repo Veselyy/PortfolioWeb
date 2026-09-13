@@ -6,28 +6,28 @@
 
 ### Skills
 
-**<u>2-3 years of experience</u>**
+#### 2-3 years of experience
 
 - React, Figma, HTML, CSS, TypeScript, C, Vite, Git, GitHub/GitLab, working with AI
 
-**<u>1 year of experience</u>**
+#### 1 year of experience
 
 - REST API, SQL
 
 ### Hobbies
 
-**<u>Sport</u>**
+#### Sport
 
 - Any sport that keeps me active and fit.
 
-**<u>Learning new things</u>**
+#### Learning new things
 
 - I enjoy learning new technologies and skills, and expanding my knowledge.
 
-**<u>Communication</u>**
+#### Communication
 
 - Talking with people who share my interests inspires and motivates me.
 
-**<u>The world of IT</u>**
+#### The world of IT
 
 - I'm into programming, app design, and finding innovative solutions.
