@@ -1,3 +1,9 @@
+/** Short codes shown inside the switch track; the same in both UI languages. */
+export const LANGUAGE_SWITCHER_LABELS = {
+  cs: 'CS',
+  en: 'EN',
+} as const;
+
 export const LANGUAGE_SWITCHER_TEXT = {
   cs: {
     tooltip: 'Switch to English',

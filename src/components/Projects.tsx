@@ -3,7 +3,7 @@ import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import { Box, Paper, Stack, Typography } from '@mui/material';
 
 import { EXTERNAL_LINK_PROPS } from '../constants/links';
-import { SECTION_IDS } from '../constants/sections';
+import { SECTION_IDS, sectionHeadingId } from '../constants/sections';
 import { CONTACT } from '../data/contact';
 import { PROJECTS_CONTENT } from '../data/projectsContent';
 import { useLanguage } from '../context/useLanguage';
@@ -55,21 +55,11 @@ const styles = {
 function Projects() {
   const { lang } = useLanguage();
   const content = PROJECTS_CONTENT[lang];
+  const headingId = sectionHeadingId(SECTION_IDS.projects);
 
   return (
-    <Stack
-      component="section"
-      id={SECTION_IDS.projects}
-      spacing={3}
-      aria-labelledby="projects-heading"
-    >
-      <Typography
-        id="projects-heading"
-        variant="h4"
-        component="h2"
-        align="center"
-        sx={styles.title}
-      >
+    <Stack component="section" id={SECTION_IDS.projects} spacing={3} aria-labelledby={headingId}>
+      <Typography id={headingId} variant="h4" component="h2" align="center" sx={styles.title}>
         {content.title}
       </Typography>
 

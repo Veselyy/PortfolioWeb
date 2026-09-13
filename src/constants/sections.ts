@@ -15,6 +15,11 @@ export const SECTION_IDS = {
 
 export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
 
+/** `'about-heading'` etc. — the id of a section's `<h2>`, referenced by `aria-labelledby`. */
+export function sectionHeadingId(id: SectionId): `${SectionId}-heading` {
+  return `${id}-heading`;
+}
+
 /** `'#about'` etc., for `href` attributes. */
 export function sectionHref(id: SectionId): `#${SectionId}` {
   return `#${id}`;

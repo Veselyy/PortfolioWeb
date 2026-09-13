@@ -63,13 +63,15 @@ src/
 │   │                    # visuallyHidden, getContrastColor
 │   └── theme.ts         # MUI téma (createAppTheme) sestavené z tokenů
 ├── constants/
-│   ├── sections.ts      # id sekcí (#about, #projects…) a sectionHref()
+│   ├── sections.ts      # id sekcí (#about, #projects…), sectionHref(), sectionHeadingId()
+│   ├── headerRole.ts    # název query parametru ?role= a výchozí role
 │   ├── preferences.ts   # klíče localStorage, výchozí jazyk a motiv
 │   ├── env.ts           # IS_OPEN_TO_WORK z .env
 │   ├── contactForm.ts   # název Netlify formuláře, validace (min. délka zprávy, regex e-mailu)
 │   └── links.ts         # EXTERNAL_LINK_PROPS (target="_blank" + rel)
 ├── data/
 │   ├── *Content.ts      # obsah sekcí (cs / en)
+│   ├── aboutMeMarkdown.ts # markdown sekce O mně (src/content/about-me.*.md)
 │   ├── contactFormText.ts
 │   └── uiText.ts        # drobné texty rozhraní: aria labely, skip link, navigace, uvozovky
 └── index.css            # jen to, co musí být čisté CSS: proměnné --font-family-base,
@@ -83,6 +85,8 @@ Pravidla:
 - **Hodnota se týká jen jedné komponenty** (např. šířka fotky v hlavičce) → zůstává v lokálním
   objektu `styles` na začátku souboru komponenty.
 - **Text viditelný uživateli nebo čtečkou obrazovky** → `src/data/` (vždy `cs` i `en`).
+  Komponenty neobsahují žádný obsah ani texty, ani markdown importy: jen je načtou z `src/data/`
+  podle aktuálního jazyka a vykreslí.
 - Čísla ve spacing vlastnostech `sx` (`p: 2`) jsou jednotky MUI (1 = 8 px), řetězce (`'10px'`)
   jsou doslovné CSS.
 - Při přejmenování id sekce uprav i selektor v `index.css`, při změně názvu formuláře

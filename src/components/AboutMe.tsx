@@ -11,11 +11,10 @@ import {
 } from '@mui/material';
 import MuiMarkdown, { defaultOverrides } from 'mui-markdown';
 
-import aboutMeMarkdownCs from '../content/about-me.cs.md?raw';
-import aboutMeMarkdownEn from '../content/about-me.en.md?raw';
 import { EXTERNAL_LINK_PROPS } from '../constants/links';
-import { SECTION_IDS } from '../constants/sections';
+import { SECTION_IDS, sectionHeadingId } from '../constants/sections';
 import { ABOUT_ME_CONTENT } from '../data/aboutMeContent';
+import { ABOUT_ME_MARKDOWN } from '../data/aboutMeMarkdown';
 import { UI_TEXT } from '../data/uiText';
 import { useLanguage } from '../context/useLanguage';
 import { useSmoothScrollTo } from '../hooks/useSmoothScrollTo';
@@ -28,8 +27,6 @@ import {
   visuallyHidden,
 } from '../theme/sharedStyles';
 import { FOCUS_OUTLINE, TOUCH_TARGET_SIZE } from '../theme/tokens';
-
-const aboutMeMarkdown = { cs: aboutMeMarkdownCs, en: aboutMeMarkdownEn } as const;
 
 // Semantic tag stays h3 (see about-me.*.md), but rendered at the original h5 visual scale.
 const aboutMeMarkdownOverrides = {
@@ -182,12 +179,13 @@ function AboutMe() {
   const educationSection = getEducationSection(lang);
   const text = UI_TEXT[lang];
   const { quoteMarks } = text;
-  const { intro, rest } = splitIntroFromMarkdown(aboutMeMarkdown[lang]);
+  const { intro, rest } = splitIntroFromMarkdown(ABOUT_ME_MARKDOWN[lang]);
   const smoothScrollTo = useSmoothScrollTo();
+  const headingId = sectionHeadingId(SECTION_IDS.about);
 
   return (
-    <Stack component="section" id={SECTION_IDS.about} spacing={3} aria-labelledby="about-heading">
-      <Typography id="about-heading" variant="h4" component="h2" align="center" sx={styles.title}>
+    <Stack component="section" id={SECTION_IDS.about} spacing={3} aria-labelledby={headingId}>
+      <Typography id={headingId} variant="h4" component="h2" align="center" sx={styles.title}>
         {content.title}
       </Typography>
 
