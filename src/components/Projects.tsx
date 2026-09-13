@@ -1,20 +1,28 @@
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import { Box, Paper, Stack, Typography } from '@mui/material';
-import type { Theme } from '@mui/material/styles';
 
+import { EXTERNAL_LINK_PROPS } from '../constants/links';
+import { SECTION_IDS } from '../constants/sections';
 import { CONTACT } from '../data/contact';
 import { PROJECTS_CONTENT } from '../data/projectsContent';
 import { useLanguage } from '../context/useLanguage';
+import {
+  bold,
+  bulletItem,
+  bulletList,
+  getContrastColor,
+  interactiveScale,
+  linkRow,
+} from '../theme/sharedStyles';
 
 const styles = {
-  title: { fontWeight: 700 },
+  title: bold,
   card: {
     p: 2,
     borderRadius: 1,
     border: '1px solid',
-    borderColor: (theme: Theme) =>
-      theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black,
+    borderColor: getContrastColor,
   },
   cardLayout: {
     flexDirection: { xs: 'column', md: 'row' },
@@ -31,34 +39,17 @@ const styles = {
     width: '100%',
     height: 'auto',
   },
-  cardTitle: { fontWeight: 700 },
-  cardLink: { typography: 'body1', color: 'inherit', textDecoration: 'none', fontWeight: '700' },
+  cardTitle: bold,
+  cardLink: { typography: 'body1', color: 'inherit', textDecoration: 'none', ...bold },
   cardLinkRowAnchor: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: 1,
-    color: 'inherit',
+    ...linkRow,
+    ...interactiveScale,
     textDecoration: 'none',
-    alignSelf: 'flex-start',
-    width: 'fit-content',
     transformOrigin: 'left center',
-    transition: (theme: Theme) =>
-      theme.transitions.create(['transform', 'outline-offset'], {
-        duration: theme.transitions.duration.shorter,
-      }),
-    '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
-    '&:focus-visible': {
-      outline: '1px solid currentColor',
-      outlineOffset: 4,
-    },
   },
-  bulletList: {
-    m: 0,
-    pl: 2.5,
-    listStyleType: 'disc',
-  },
-  bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
-  moreProjectsLink: { fontWeight: 700, textDecoration: 'underline', color: 'inherit' },
+  bulletList,
+  bulletItem,
+  moreProjectsLink: { ...bold, textDecoration: 'underline', color: 'inherit' },
 } as const;
 
 function Projects() {
@@ -66,7 +57,12 @@ function Projects() {
   const content = PROJECTS_CONTENT[lang];
 
   return (
-    <Stack component="section" id="projects" spacing={3} aria-labelledby="projects-heading">
+    <Stack
+      component="section"
+      id={SECTION_IDS.projects}
+      spacing={3}
+      aria-labelledby="projects-heading"
+    >
       <Typography
         id="projects-heading"
         variant="h4"
@@ -88,8 +84,7 @@ function Projects() {
                 <Box
                   component="a"
                   href={card.githubLinkHref}
-                  target="_blank"
-                  rel="noreferrer"
+                  {...EXTERNAL_LINK_PROPS}
                   sx={styles.cardLinkRowAnchor}
                 >
                   <LinkOutlinedIcon fontSize="small" />
@@ -99,8 +94,7 @@ function Projects() {
                 <Box
                   component="a"
                   href={card.websiteLinkHref}
-                  target="_blank"
-                  rel="noreferrer"
+                  {...EXTERNAL_LINK_PROPS}
                   sx={styles.cardLinkRowAnchor}
                 >
                   <LanguageOutlinedIcon fontSize="small" />
@@ -138,8 +132,7 @@ function Projects() {
             <Box
               component="a"
               href={CONTACT.github.href}
-              target="_blank"
-              rel="noreferrer"
+              {...EXTERNAL_LINK_PROPS}
               sx={styles.moreProjectsLink}
             >
               {content.moreProjectsCta.linkLabel}

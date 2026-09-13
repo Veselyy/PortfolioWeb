@@ -4,6 +4,9 @@ import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import WebIcon from '@mui/icons-material/Web';
 import { alpha, type Theme } from '@mui/material/styles';
 
+import { IS_OPEN_TO_WORK } from '../constants/env';
+import { EXTERNAL_LINK_PROPS } from '../constants/links';
+import { SECTION_IDS, sectionHref } from '../constants/sections';
 import { CONTACT } from '../data/contact';
 import {
   HEADER_CONTENT,
@@ -12,12 +15,10 @@ import {
   HEADER_UNIVERSAL_TITLE,
 } from '../data/headerContent';
 import { useHeaderRoleFromQuery } from '../hooks/useHeaderRoleFromQuery';
+import { UI_TEXT } from '../data/uiText';
 import { useLanguage } from '../context/useLanguage';
-
-const CONTACT_ARIA_LABELS = {
-  cs: { whatsapp: 'Kontaktovat přes WhatsApp', email: 'Napsat e-mail' },
-  en: { whatsapp: 'Contact via WhatsApp', email: 'Send an email' },
-} as const;
+import { bold, getContrastColor } from '../theme/sharedStyles';
+import { EFFECTS, FONT_WEIGHT, RADIUS, TOUCH_TARGET_SIZE } from '../theme/tokens';
 
 const styles = {
   headerWrapper: {
@@ -34,18 +35,18 @@ const styles = {
     gap: 1,
     border: '1px solid',
     borderColor: 'divider',
-    borderRadius: 999,
+    borderRadius: RADIUS.pill,
     px: 2,
     py: 0.75,
     width: 'fit-content',
     alignSelf: { xs: 'center', md: 'flex-start' },
   },
   eyebrowText: {
-    fontWeight: 500,
+    fontWeight: FONT_WEIGHT.medium,
     color: 'text.secondary',
   },
   ctaButton: {
-    fontWeight: 700,
+    ...bold,
     borderRadius: 1,
     borderColor: 'info.main',
     color: 'inherit',
@@ -57,14 +58,14 @@ const styles = {
     color: 'inherit',
     bgcolor: 'info.main',
     p: 1.5,
-    minWidth: 44,
-    minHeight: 44,
+    minWidth: TOUCH_TARGET_SIZE,
+    minHeight: TOUCH_TARGET_SIZE,
     '&:hover, &:focus-visible': { bgcolor: 'info.main' },
   },
   availabilityDot: {
     width: 10,
     height: 10,
-    borderRadius: '50%',
+    borderRadius: RADIUS.circle,
     bgcolor: 'success.main',
     flex: '0 0 auto',
   },
@@ -92,14 +93,17 @@ const styles = {
     display: 'block',
     width: '100%',
     aspectRatio: '1 / 1',
-    borderRadius: '50%',
-    boxShadow: (theme: Theme) => {
-      const c =
-        theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black;
-
-      return `0 0 20px ${alpha(c, 0.5)}`;
-    },
+    borderRadius: RADIUS.circle,
+    boxShadow: (theme: Theme) =>
+      `0 0 ${EFFECTS.heroShadowBlur} ${alpha(getContrastColor(theme), EFFECTS.heroShadowAlpha)}`,
   },
+  header: { gap: { xs: 3, md: 0 } },
+  eyebrowIcon: { color: 'text.secondary' },
+  title: {
+    ...bold,
+    textAlign: { xs: 'center', md: 'left' },
+  },
+  ctaRow: { alignItems: 'center', flexWrap: 'wrap' },
 } as const;
 
 function Header() {
@@ -107,15 +111,14 @@ function Header() {
   const role = useHeaderRoleFromQuery();
   const intro = HEADER_CONTENT[lang][role];
   const cta = HEADER_CTA[lang];
-  const contactAriaLabels = CONTACT_ARIA_LABELS[lang];
-  const isOpenToWork = import.meta.env.VITE_IS_OPEN_TO_WORK === 'true';
-  const titleParts = isOpenToWork ? intro.title.parts : HEADER_UNIVERSAL_TITLE[lang].parts;
+  const contactAriaLabels = UI_TEXT[lang].contactAria;
+  const titleParts = IS_OPEN_TO_WORK ? intro.title.parts : HEADER_UNIVERSAL_TITLE[lang].parts;
 
   return (
-    <Stack component="header" sx={{ gap: { xs: 3, md: 0 } }}>
-      {!isOpenToWork && (
+    <Stack component="header" sx={styles.header}>
+      {!IS_OPEN_TO_WORK && (
         <Stack direction="row" spacing={1} sx={styles.eyebrowPill}>
-          <WebIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+          <WebIcon fontSize="small" sx={styles.eyebrowIcon} />
           <Typography variant="subtitle2" component="span" sx={styles.eyebrowText}>
             {HEADER_UNIVERSAL_EYEBROW[lang]}
           </Typography>
@@ -124,26 +127,20 @@ function Header() {
 
       <Stack direction={{ xs: 'column', md: 'row' }} sx={styles.headerWrapper}>
         <Stack spacing={3} sx={styles.headerContent}>
-          <Typography
-            variant="h1"
-            sx={{
-              fontWeight: '700',
-              textAlign: { xs: 'center', md: 'left' },
-            }}
-          >
+          <Typography variant="h1" sx={styles.title}>
             {titleParts.map((p, idx) => (
               <Box key={idx} component="span" sx={p.highlight ? styles.highlight : undefined}>
                 {p.text}
               </Box>
             ))}
           </Typography>
-          {isOpenToWork && (
+          {IS_OPEN_TO_WORK && (
             <Typography variant="h4" component="h2">
               {intro.subtitle}
             </Typography>
           )}
 
-          {isOpenToWork && (
+          {IS_OPEN_TO_WORK && (
             <Stack direction="row" spacing={2} sx={styles.availabilityCard}>
               <Box sx={styles.availabilityDot} />
               <Typography variant="body1">
@@ -153,11 +150,11 @@ function Header() {
             </Stack>
           )}
 
-          {isOpenToWork && (
-            <Stack direction="row" spacing={3} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          {IS_OPEN_TO_WORK && (
+            <Stack direction="row" spacing={3} sx={styles.ctaRow}>
               <Button
                 component="a"
-                href="#footer"
+                href={sectionHref(SECTION_IDS.contact)}
                 variant="outlined"
                 color="info"
                 sx={styles.ctaButton}
@@ -167,8 +164,7 @@ function Header() {
               <IconButton
                 component="a"
                 href={CONTACT.whatsapp.href}
-                target="_blank"
-                rel="noreferrer"
+                {...EXTERNAL_LINK_PROPS}
                 aria-label={contactAriaLabels.whatsapp}
                 sx={styles.contactIconButton}
               >

@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 
+import { EXTERNAL_LINK_PROPS } from '../../constants/links';
+
 type SocialIconButtonProps = {
   href: string;
   tooltip: string;
@@ -22,8 +24,7 @@ export function SocialIconButton({
         color="inherit"
         component="a"
         href={href}
-        target="_blank"
-        rel="noreferrer"
+        {...EXTERNAL_LINK_PROPS}
         aria-label={ariaLabel}
         onClick={onClick}
       >

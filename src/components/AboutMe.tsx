@@ -9,14 +9,25 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import type { Theme } from '@mui/material/styles';
 import MuiMarkdown, { defaultOverrides } from 'mui-markdown';
 
 import aboutMeMarkdownCs from '../content/about-me.cs.md?raw';
 import aboutMeMarkdownEn from '../content/about-me.en.md?raw';
+import { EXTERNAL_LINK_PROPS } from '../constants/links';
+import { SECTION_IDS } from '../constants/sections';
 import { ABOUT_ME_CONTENT } from '../data/aboutMeContent';
+import { UI_TEXT } from '../data/uiText';
 import { useLanguage } from '../context/useLanguage';
 import { useSmoothScrollTo } from '../hooks/useSmoothScrollTo';
+import {
+  bold,
+  bulletItem,
+  bulletList,
+  interactiveScale,
+  linkRow,
+  visuallyHidden,
+} from '../theme/sharedStyles';
+import { FOCUS_OUTLINE, TOUCH_TARGET_SIZE } from '../theme/tokens';
 
 const aboutMeMarkdown = { cs: aboutMeMarkdownCs, en: aboutMeMarkdownEn } as const;
 
@@ -25,13 +36,13 @@ const aboutMeMarkdownOverrides = {
   ...defaultOverrides,
   h3: {
     component: Typography,
-    props: { component: 'h3', variant: 'h5', sx: { fontWeight: 700, mt: 3 } },
+    props: { component: 'h3', variant: 'h5', sx: { ...bold, mt: 3 } },
   },
   // Former `**<u>…</u>**` pseudo-headings (see about-me.*.md): underline reads as a link on the
   // web, so they are real h4s now, sized to sit between the h3 and the body copy.
   h4: {
     component: Typography,
-    props: { component: 'h4', variant: 'subtitle1', sx: { fontWeight: 700, mt: 2 } },
+    props: { component: 'h4', variant: 'subtitle1', sx: { ...bold, mt: 2 } },
   },
 };
 
@@ -50,23 +61,9 @@ function splitIntroFromMarkdown(markdown: string): { intro: string; rest: string
   };
 }
 
-// Comfortable tap size (WCAG 2.5.5 AAA / Apple HIG); AA 2.5.8 itself only requires 24px.
-const TOUCH_TARGET = 44;
-const BOLD = { fontWeight: 700 } as const;
-
 const styles = {
-  title: BOLD,
-  visuallyHidden: {
-    position: 'absolute',
-    width: '1px',
-    height: '1px',
-    p: 0,
-    m: '-1px',
-    overflow: 'hidden',
-    clip: 'rect(0 0 0 0)',
-    whiteSpace: 'nowrap',
-    border: 0,
-  },
+  title: bold,
+  visuallyHidden,
   // The intro bullets are five independent facts, not an ordered process, so they carry no
   // numbering -- a counter here would assert a sequence the content does not have.
   introList: {
@@ -94,7 +91,7 @@ const styles = {
     '& ul': { m: 0, pl: 2.5 },
     '& li': { mb: 1, '&:last-child': { mb: 0 } },
   },
-  educationTitle: BOLD,
+  educationTitle: bold,
   educationCard: {
     p: 2,
     borderRadius: 1,
@@ -104,38 +101,25 @@ const styles = {
     color: 'info.contrastText',
   },
   educationCardContent: { alignItems: 'flex-start' },
-  educationCardTitle: BOLD,
-  educationLink: { typography: 'body1', color: 'inherit', textDecoration: 'inherit', ...BOLD },
+  educationCardTitle: bold,
+  educationLink: { typography: 'body1', color: 'inherit', textDecoration: 'inherit', ...bold },
   educationLinkRowAnchor: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: 1,
-    minHeight: TOUCH_TARGET,
+    ...linkRow,
+    ...interactiveScale,
+    minHeight: TOUCH_TARGET_SIZE,
     py: 0.75,
-    color: 'inherit',
     // Underlined so the link is distinguishable from the bold copy around it without relying
     // on colour alone (WCAG 1.4.1).
     textDecoration: 'underline',
     textUnderlineOffset: 3,
-    alignSelf: 'flex-start',
-    width: 'fit-content',
-    transition: (theme: Theme) =>
-      theme.transitions.create(['transform', 'outline-offset'], {
-        duration: theme.transitions.duration.shorter,
-      }),
-    '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
-    '&:focus-visible': {
-      outline: '1px solid currentColor',
-      outlineOffset: 4,
-    },
     '@media (prefers-reduced-motion: reduce)': {
       transition: 'none',
       '&:hover, &:focus-visible': { transform: 'none' },
     },
   },
-  bulletList: { m: 0, pl: 2.5, listStyleType: 'disc' },
-  bulletItem: { typography: 'body1', mb: 1, '&:last-child': { mb: 0 } },
-  referencesTitle: BOLD,
+  bulletList,
+  bulletItem,
+  referencesTitle: bold,
   // Quotations are not a bulleted list of facts; drop the discs and let the quote marks carry it.
   referenceList: { m: 0, p: 0, listStyle: 'none' },
   referenceItem: { mb: 1, '&:last-child': { mb: 0 } },
@@ -154,8 +138,8 @@ const styles = {
   },
   referencesAccordionSummary: {
     px: 0,
-    minHeight: TOUCH_TARGET,
-    '&.Mui-expanded': { minHeight: TOUCH_TARGET },
+    minHeight: TOUCH_TARGET_SIZE,
+    '&.Mui-expanded': { minHeight: TOUCH_TARGET_SIZE },
     '& .MuiAccordionSummary-content': { m: 0 },
     '& .MuiAccordionSummary-content.Mui-expanded': { m: 0 },
     // The summary is a ButtonBase but lands here with no visible focus indicator, so give it
@@ -163,25 +147,10 @@ const styles = {
     // full-width `action.focus` tint MUI's own AccordionSummary styles would otherwise apply.
     '&.Mui-focusVisible': {
       bgcolor: 'transparent',
-      outline: '1px solid currentColor',
-      outlineOffset: 4,
+      ...FOCUS_OUTLINE,
     },
   },
   referencesAccordionDetails: { px: 0, pt: 1 },
-} as const;
-
-const REFERENCES_LABEL = {
-  cs: 'Reference',
-  en: 'References',
-} as const;
-
-const NEW_TAB_LABEL = {
-  cs: '(otevře se v novém okně)',
-  en: '(opens in a new tab)',
-} as const;
-const QUOTE_MARKS = {
-  cs: { open: '„', close: '“' },
-  en: { open: '“', close: '”' },
 } as const;
 
 type EducationCard = {
@@ -211,12 +180,13 @@ function AboutMe() {
   const { lang } = useLanguage();
   const content = ABOUT_ME_CONTENT[lang];
   const educationSection = getEducationSection(lang);
-  const quoteMarks = QUOTE_MARKS[lang];
+  const text = UI_TEXT[lang];
+  const { quoteMarks } = text;
   const { intro, rest } = splitIntroFromMarkdown(aboutMeMarkdown[lang]);
   const smoothScrollTo = useSmoothScrollTo();
 
   return (
-    <Stack component="section" id="about" spacing={3} aria-labelledby="about-heading">
+    <Stack component="section" id={SECTION_IDS.about} spacing={3} aria-labelledby="about-heading">
       <Typography id="about-heading" variant="h4" component="h2" align="center" sx={styles.title}>
         {content.title}
       </Typography>
@@ -245,14 +215,13 @@ function AboutMe() {
                 <Box
                   component="a"
                   href={card.linkHref}
-                  target="_blank"
-                  rel="noreferrer"
+                  {...EXTERNAL_LINK_PROPS}
                   sx={styles.educationLinkRowAnchor}
                 >
                   <LinkOutlinedIcon fontSize="small" />
                   <Typography sx={styles.educationLink}>{card.linkLabel}</Typography>
                   <Box component="span" sx={styles.visuallyHidden}>
-                    {NEW_TAB_LABEL[lang]}
+                    {text.newTab}
                   </Box>
                 </Box>
 
@@ -293,7 +262,7 @@ function AboutMe() {
                       sx={styles.referencesAccordionSummary}
                     >
                       <Typography variant="subtitle1" component="span" sx={styles.referencesTitle}>
-                        {REFERENCES_LABEL[lang]}
+                        {text.references}
                       </Typography>
                     </AccordionSummary>
                     {/* No id/aria-labelledby here: MUI's region wrapper takes both from the

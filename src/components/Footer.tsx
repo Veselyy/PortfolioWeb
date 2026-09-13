@@ -13,15 +13,17 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import type { Theme } from '@mui/material/styles';
-
+import { CONTACT_FORM } from '../constants/contactForm';
+import { SECTION_IDS } from '../constants/sections';
 import { CONTACT_FORM_TEXT } from '../data/contactFormText';
 import { FOOTER_CONTENT } from '../data/footerContent';
 import { useContactForm } from '../hooks/useContactForm';
 import { useLanguage } from '../context/useLanguage';
+import { bold, interactiveScale, linkRow } from '../theme/sharedStyles';
+import { RADIUS } from '../theme/tokens';
 
 const styles = {
-  title: { fontWeight: 700 },
+  title: bold,
   content: {
     gap: { xs: 5, md: 2 },
     flexDirection: { xs: 'column', md: 'row' },
@@ -31,27 +33,15 @@ const styles = {
     color: 'inherit',
     bgcolor: 'info.main',
     p: 1,
-    borderRadius: '50%',
+    borderRadius: RADIUS.circle,
     display: 'inline-flex',
     '&:hover, &:focus-visible': { bgcolor: 'info.main' },
   },
   contactRowAnchor: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: 1,
-    color: 'inherit',
+    ...linkRow,
+    ...interactiveScale,
     textDecoration: 'none',
     transformOrigin: 'left center',
-    alignSelf: 'flex-start',
-    transition: (theme: Theme) =>
-      theme.transitions.create(['transform', 'outline-offset'], {
-        duration: theme.transitions.duration.shorter,
-      }),
-    '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
-    '&:focus-visible': {
-      outline: '1px solid currentColor',
-      outlineOffset: 4,
-    },
   },
   contactText: {
     typography: 'body1',
@@ -135,7 +125,7 @@ function Footer() {
   const messageError = values.message.trim().length > 0 && !validation.message;
 
   return (
-    <Stack component="footer" id="footer" spacing={3}>
+    <Stack component="footer" id={SECTION_IDS.contact} spacing={3}>
       <Typography variant="h4" component="h2" align="center" sx={styles.title}>
         {content.title}
       </Typography>
@@ -163,7 +153,7 @@ function Footer() {
 
         <Stack
           component="form"
-          name="contact"
+          name={CONTACT_FORM.netlifyFormName}
           data-netlify="true"
           sx={styles.form}
           spacing={2}

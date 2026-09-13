@@ -1,4 +1,4 @@
-import { LANGUAGE_STORAGE_KEY } from '../../src/context/languageContext';
+import { LANGUAGE_STORAGE_KEY } from '../../src/constants/preferences';
 import { LANGUAGE_SWITCHER_TEXT } from '../../src/data/languageSwitcherText';
 import { expect, test } from './fixtures';
 import { TAG } from './tags';

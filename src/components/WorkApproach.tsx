@@ -1,11 +1,13 @@
 import { Box, Stack, Typography } from '@mui/material';
 import MuiMarkdown from 'mui-markdown';
 
+import { SECTION_IDS } from '../constants/sections';
 import { WORK_APPROACH_CONTENT } from '../data/workApproachContent';
 import { useLanguage } from '../context/useLanguage';
+import { bold } from '../theme/sharedStyles';
 
 const styles = {
-  title: { fontWeight: 700 },
+  title: bold,
   markdown: {
     '& blockquote': {
       borderColor: 'info.main',
@@ -18,7 +20,7 @@ function WorkApproach() {
   const content = WORK_APPROACH_CONTENT[lang];
 
   return (
-    <Stack component="section" id="work" spacing={3} aria-labelledby="work-heading">
+    <Stack component="section" id={SECTION_IDS.work} spacing={3} aria-labelledby="work-heading">
       <Typography id="work-heading" variant="h4" component="h2" align="center" sx={styles.title}>
         {content.title}
       </Typography>

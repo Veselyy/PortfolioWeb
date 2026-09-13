@@ -7,15 +7,12 @@ import SocialsIcons from './navbar/SocialsIcons';
 import ThemeSwitcher from './navbar/ThemeSwitcher';
 import LanguageSwitcher from './navbar/LanguageSwitcher';
 import { useLanguage } from '../context/useLanguage';
+import { UI_TEXT } from '../data/uiText';
+import { EFFECTS } from '../theme/tokens';
 
 // Kept out of the initial bundle: the drawer can't be on screen before the menu button is
 // tapped, so its Modal/FocusTrap/Slide dependencies load with that first tap.
 const NavDrawer = lazy(() => import('./navbar/NavDrawer'));
-
-const NAV_ARIA_LABELS = {
-  cs: { open: 'Otevřít navigaci', close: 'Zavřít navigaci' },
-  en: { open: 'Open navigation', close: 'Close navigation' },
-} as const;
 
 const styles = {
   bar: { alignItems: 'center', justifyContent: 'space-between' },
@@ -23,9 +20,10 @@ const styles = {
     position: 'sticky',
     top: 0,
     zIndex: (theme: Theme) => theme.zIndex.appBar,
-    backgroundColor: (theme: Theme) => alpha(theme.palette.background.paper, 0.7),
-    backdropFilter: 'blur(5px)',
-    WebkitBackdropFilter: 'blur(5px)',
+    backgroundColor: (theme: Theme) =>
+      alpha(theme.palette.background.paper, EFFECTS.navbarBackgroundAlpha),
+    backdropFilter: EFFECTS.navbarBlur,
+    WebkitBackdropFilter: EFFECTS.navbarBlur,
     borderBottom: '1px solid',
     borderColor: 'divider',
     py: 1,
@@ -41,7 +39,7 @@ function Navbar() {
   // closing transition instead of being unmounted mid-slide.
   const [drawerRequested, setDrawerRequested] = useState(false);
   const { lang } = useLanguage();
-  const navAriaLabels = NAV_ARIA_LABELS[lang];
+  const navAriaLabels = UI_TEXT[lang].nav;
 
   const close = () => setOpen(false);
   const openDrawer = () => {

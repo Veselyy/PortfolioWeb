@@ -6,6 +6,8 @@
  * and submits it), so the e2e specs can assert against the same source the app renders from
  * rather than repeating the literals.
  */
+import { CONTACT_FORM } from '../constants/contactForm';
+
 export const CONTACT_FORM_TEXT = {
   cs: {
     firstName: 'Jméno',
@@ -15,7 +17,7 @@ export const CONTACT_FORM_TEXT = {
     send: 'Odeslat',
 
     emailError: 'Zadej platný email.',
-    messageError: 'Zpráva musí mít aspoň 5 znaků.',
+    messageError: `Zpráva musí mít aspoň ${CONTACT_FORM.messageMinLength} znaků.`,
 
     sent: 'Odesláno.',
     invalid: 'Zkontroluj prosím email a zprávu.',
@@ -30,7 +32,7 @@ export const CONTACT_FORM_TEXT = {
     send: 'Send',
 
     emailError: 'Enter a valid email.',
-    messageError: 'Message must be at least 5 characters.',
+    messageError: `Message must be at least ${CONTACT_FORM.messageMinLength} characters.`,
 
     sent: 'Sent.',
     invalid: 'Please check the email and message.',

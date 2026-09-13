@@ -1,19 +1,12 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
-import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 
-import { THEME_MODE_STORAGE_KEY, ThemeModeContext, type ThemeMode } from './themeModeContext';
-
-declare module '@mui/material/styles' {
-  interface Palette {
-    highlight: { main: string };
-  }
-  interface PaletteOptions {
-    highlight: { main: string };
-  }
-}
+import { DEFAULT_THEME_MODE, THEME_MODE_STORAGE_KEY } from '../constants/preferences';
+import { createAppTheme } from '../theme/theme';
+import { ThemeModeContext, type ThemeMode } from './themeModeContext';
 
 function getInitialMode(): ThemeMode {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return DEFAULT_THEME_MODE;
 
   const saved = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
   if (saved === 'light' || saved === 'dark') return saved;
@@ -23,84 +16,7 @@ function getInitialMode(): ThemeMode {
 
 export function ThemeModeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<ThemeMode>(getInitialMode);
-  const theme = useMemo(
-    () =>
-      responsiveFontSizes(
-        createTheme({
-          palette: {
-            mode,
-            ...(mode === 'light'
-              ? {
-                  background: {
-                    default: '#f5f7fa',
-                    paper: '#fafbfd',
-                  },
-                }
-              : {
-                  background: {
-                    default: '#151518',
-                    paper: '#1b1c20',
-                  },
-                }),
-            info: {
-              main: mode === 'dark' ? '#1E4E8C' : '#87CEEB',
-            },
-            // Same hue as info.main, tuned as foreground text (e.g. the hero headline's
-            // highlighted word) rather than a fill — see Header.tsx.
-            highlight: {
-              main: mode === 'dark' ? '#7AB8EA' : '#0F6A99',
-            },
-          },
-          typography: {
-            fontFamily:
-              '"Figtree Variable", "Figtree Fallback", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
-          },
-          components: {
-            MuiButton: {
-              styleOverrides: {
-                root: ({ theme }) => ({
-                  transition: theme.transitions.create(['transform', 'outline-offset'], {
-                    duration: theme.transitions.duration.shorter,
-                  }),
-                  '&:hover, &:focus-visible': { boxShadow: 'none', transform: 'scale(1.1)' },
-                  '&:focus-visible': {
-                    outline: '1px solid currentColor',
-                    outlineOffset: 4,
-                  },
-                  '&.Mui-disabled': {
-                    transform: 'none',
-                    outline: 'none',
-                  },
-                }),
-              },
-            },
-            MuiIconButton: {
-              defaultProps: { size: 'small' },
-              styleOverrides: {
-                root: ({ theme }) => ({
-                  transition: theme.transitions.create(['transform', 'outline-offset'], {
-                    duration: theme.transitions.duration.shorter,
-                  }),
-                  '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
-                  '&:focus-visible': {
-                    outline: '1px solid currentColor',
-                    outlineOffset: 4,
-                  },
-                  '&.Mui-disabled': {
-                    transform: 'none',
-                    outline: 'none',
-                  },
-                }),
-              },
-            },
-            MuiSvgIcon: {
-              defaultProps: { fontSize: 'small' },
-            },
-          },
-        }),
-      ),
-    [mode],
-  );
+  const theme = useMemo(() => createAppTheme(mode), [mode]);
   const toggle = () => setMode((m) => (m === 'light' ? 'dark' : 'light'));
 
   useEffect(() => {

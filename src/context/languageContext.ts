@@ -8,6 +8,4 @@ export type LanguageContextValue = {
   toggle: () => void;
 };
 
-export const LANGUAGE_STORAGE_KEY = 'language';
-
 export const LanguageContext = createContext<LanguageContextValue | null>(null);

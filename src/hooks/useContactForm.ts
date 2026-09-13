@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 
+import { CONTACT_FORM } from '../constants/contactForm';
 import { CONTACT_FORM_TEXT } from '../data/contactFormText';
 import type { Language } from '../context/languageContext';
 
@@ -28,8 +29,8 @@ export function useContactForm(lang: Language) {
     const message = values.message.trim();
 
     return {
-      email: email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
-      message: message.length >= 5,
+      email: email.length > 0 && CONTACT_FORM.emailPattern.test(email),
+      message: message.length >= CONTACT_FORM.messageMinLength,
     };
   }, [values.email, values.message]);
 
@@ -48,14 +49,14 @@ export function useContactForm(lang: Language) {
     try {
       setStatus('sending');
       const body = new URLSearchParams({
-        'form-name': 'contact',
+        'form-name': CONTACT_FORM.netlifyFormName,
         firstName: values.firstName.trim(),
         lastName: values.lastName.trim(),
         email: values.email.trim(),
         message: values.message.trim(),
       }).toString();
 
-      const res = await fetch('/', {
+      const res = await fetch(CONTACT_FORM.submitUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body,

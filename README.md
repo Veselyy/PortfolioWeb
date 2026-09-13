@@ -49,6 +49,45 @@ obsah podle role, o kterou se zrovna hlásím (`?role=frontend|backend|support`)
 - **Netlify** — hosting
 - **Netlify Functions** + **Nodemailer** — odeslání kontaktního formuláře
 
+## Struktura kódu: styly, konstanty a texty
+
+Komponenty v sobě nedrží „magická čísla“ ani napevno zapsané texty. Každá sdílená nebo
+významová hodnota má jedno místo, odkud se importuje:
+
+```
+src/
+├── theme/
+│   ├── tokens.ts        # design tokeny: barvy (light/dark), font, tloušťky písma, radiusy,
+│   │                    # velikost dotykové plochy, focus outline, hover scale, efekty, rozměry přepínačů
+│   ├── sharedStyles.ts  # opakované sx kousky: bold, linkRow, interactiveScale, bulletList,
+│   │                    # visuallyHidden, getContrastColor
+│   └── theme.ts         # MUI téma (createAppTheme) sestavené z tokenů
+├── constants/
+│   ├── sections.ts      # id sekcí (#about, #projects…) a sectionHref()
+│   ├── preferences.ts   # klíče localStorage, výchozí jazyk a motiv
+│   ├── env.ts           # IS_OPEN_TO_WORK z .env
+│   ├── contactForm.ts   # název Netlify formuláře, validace (min. délka zprávy, regex e-mailu)
+│   └── links.ts         # EXTERNAL_LINK_PROPS (target="_blank" + rel)
+├── data/
+│   ├── *Content.ts      # obsah sekcí (cs / en)
+│   ├── contactFormText.ts
+│   └── uiText.ts        # drobné texty rozhraní: aria labely, skip link, navigace, uvozovky
+└── index.css            # jen to, co musí být čisté CSS: proměnné --font-family-base,
+                         # --mobile-navbar-offset a scroll-margin sekcí
+```
+
+Pravidla:
+
+- **Hodnota se opakuje nebo patří k vizuálnímu stylu** (barva, font, hover efekt, focus) →
+  `src/theme/tokens.ts`, případně hotový kousek v `sharedStyles.ts`.
+- **Hodnota se týká jen jedné komponenty** (např. šířka fotky v hlavičce) → zůstává v lokálním
+  objektu `styles` na začátku souboru komponenty.
+- **Text viditelný uživateli nebo čtečkou obrazovky** → `src/data/` (vždy `cs` i `en`).
+- Čísla ve spacing vlastnostech `sx` (`p: 2`) jsou jednotky MUI (1 = 8 px), řetězce (`'10px'`)
+  jsou doslovné CSS.
+- Při přejmenování id sekce uprav i selektor v `index.css`, při změně názvu formuláře
+  i skrytý `<form>` v `index.html`.
+
 ## Spuštění lokálně
 
 Požadavky: Node.js (viz `.nvmrc`), [pnpm](https://pnpm.io/).

@@ -1,5 +1,7 @@
+import { SECTION_IDS, sectionHref, type SectionId } from '../../constants/sections';
+
 export type NavbarLinkItem = {
-  id: 'about' | 'projects' | 'work' | 'footer';
+  id: Exclude<SectionId, typeof SECTION_IDS.main>;
   label: string;
   href: string;
   ariaLabel: string;
@@ -8,53 +10,53 @@ export type NavbarLinkItem = {
 export const navbarLinks = {
   cs: [
     {
-      id: 'about',
+      id: SECTION_IDS.about,
       label: 'O Mně',
-      href: '#about',
+      href: sectionHref(SECTION_IDS.about),
       ariaLabel: 'Přejít na sekci O mně',
     },
     {
-      id: 'projects',
+      id: SECTION_IDS.projects,
       label: 'Projekty',
-      href: '#projects',
+      href: sectionHref(SECTION_IDS.projects),
       ariaLabel: 'Přejít na sekci Projekty',
     },
     {
-      id: 'work',
+      id: SECTION_IDS.work,
       label: 'Spolupráce',
-      href: '#work',
+      href: sectionHref(SECTION_IDS.work),
       ariaLabel: 'Přejít na sekci Spolupráce a způsob práce',
     },
     {
-      id: 'footer',
+      id: SECTION_IDS.contact,
       label: 'Kontakt',
-      href: '#footer',
+      href: sectionHref(SECTION_IDS.contact),
       ariaLabel: 'Přejít na sekci Kontakt',
     },
   ],
   en: [
     {
-      id: 'about',
+      id: SECTION_IDS.about,
       label: 'About Me',
-      href: '#about',
+      href: sectionHref(SECTION_IDS.about),
       ariaLabel: 'Go to the About Me section',
     },
     {
-      id: 'projects',
+      id: SECTION_IDS.projects,
       label: 'Projects',
-      href: '#projects',
+      href: sectionHref(SECTION_IDS.projects),
       ariaLabel: 'Go to the Projects section',
     },
     {
-      id: 'work',
+      id: SECTION_IDS.work,
       label: 'Collaboration',
-      href: '#work',
+      href: sectionHref(SECTION_IDS.work),
       ariaLabel: 'Go to the Collaboration and Work Approach section',
     },
     {
-      id: 'footer',
+      id: SECTION_IDS.contact,
       label: 'Contact',
-      href: '#footer',
+      href: sectionHref(SECTION_IDS.contact),
       ariaLabel: 'Go to the Contact section',
     },
   ],

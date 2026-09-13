@@ -1,14 +1,22 @@
+/*
+ * Global CSS. Most styling lives in the components (MUI `sx`) and in src/theme/ — this file
+ * only holds what has to be plain CSS.
+ */
+
+:root {
+  /* Single source of the font stack: html/body below and the MUI theme (tokens.ts FONT_FAMILY)
+     both read this variable. The @font-face rules are in fonts.css. */
+  --font-family-base:
+    'Figtree Variable', 'Figtree Fallback', system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+
+  /* Height of the sticky mobile navbar, so anchor jumps don't hide a section heading under it. */
+  --mobile-navbar-offset: 66px;
+}
+
 html,
 body {
-  font-family:
-    'Figtree Variable',
-    'Figtree Fallback',
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Arial,
-    sans-serif;
+  font-family: var(--font-family-base);
 }
 
 html {
@@ -21,11 +29,13 @@ html {
   }
 }
 
+/* 600px = MUI's `sm` breakpoint, where Navbar.tsx switches to the sticky mobile bar.
+   The ids mirror src/constants/sections.ts. */
 @media (max-width: 600px) {
   #about,
   #projects,
   #footer,
   #work {
-    scroll-margin-top: 66px;
+    scroll-margin-top: var(--mobile-navbar-offset);
   }
 }

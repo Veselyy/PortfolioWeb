@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import { Box, Switch, Tooltip } from '@mui/material';
 import { alpha, styled, useTheme, type Theme } from '@mui/material/styles';
 
+import { EFFECTS } from '../../theme/tokens';
+
 type PillSwitchDims = { track: number; height: number; thumb: number };
 
 function getPillSwitchMetrics({ track, height, thumb }: PillSwitchDims) {
@@ -31,7 +33,7 @@ const PillSwitchRoot = styled(Switch, {
       '&.Mui-checked': {
         transform: `translateX(${travel}px)`,
         '& + .MuiSwitch-track': {
-          backgroundColor: alpha(theme.palette.text.primary, 0.15),
+          backgroundColor: alpha(theme.palette.text.primary, EFFECTS.switchTrackAlpha),
           opacity: 1,
         },
       },
@@ -48,7 +50,7 @@ const PillSwitchRoot = styled(Switch, {
     },
     '& .MuiSwitch-track': {
       borderRadius: height / 2,
-      backgroundColor: alpha(theme.palette.text.primary, 0.15),
+      backgroundColor: alpha(theme.palette.text.primary, EFFECTS.switchTrackAlpha),
       opacity: 1,
       transition: theme.transitions.create('background-color', {
         duration: theme.transitions.duration.standard,
