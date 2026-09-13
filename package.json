@@ -28,7 +28,8 @@
     "@mui/material": "^9.0.0",
     "mui-markdown": "^2.1.1",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "react-scroll": "^1.9.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -37,6 +38,7 @@
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/react-scroll": "^1.8.10",
     "@vitejs/plugin-react": "^5.2.0",
     "axe-core": "^4.13.0",
     "babel-plugin-react-compiler": "^1.0.0",

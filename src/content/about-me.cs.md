@@ -1,33 +1,33 @@
-- Zdravím, já jsem Martin, jsem z venkova a věnuji se **IT** už **4. rokem** a jsem také **OSVČ**.
-- Jsem **student**, rád dělám sporty a rád se bavím s lidmi, kteří mi mají co předat.
-- Můj silný zájem o učení a **osobní rozvoj** mě motivuje využívat každou **příležitost** ke kariérnímu růstu.
-- Rád budu **čelit** novým výzvám a **rád přispěju** ke společnému úspěchu.
-- Angličtina pro mě není překážka - gramatiku mám na úrovni **B1** a v mluvení jsem mezi **A2 - B1**.
+- Zdravím, jmenuji se Martin, pocházím z venkova a **IT** se věnuji už **4. rokem**.
+- Jsem **student**, ve volném čase sportuji a baví mě poznávat lidi, od kterých se mám co učit.
+- Zajímá mě neustálé učení a **osobní rozvoj**, a proto využívám každou **příležitost** ke kariérnímu růstu.
+- Nebojím se **čelit** novým výzvám a rád **přispěju** ke společnému úspěchu.
+- Anglicky si bez problému přečtu dokumentaci i technické diskuze (**B1**), mluvený projev aktivně zlepšuji (**A2 - B1**).
 
 ### Dovednosti
 
-**<u>2-3 roky zkušeností</u>**
+#### 2-3 roky zkušeností
 
 - React, Figma, HTML, CSS, TypeScript, C, Vite, Git, GitHub/GitLab, spolupráce s AI
 
-**<u>1 rok zkušeností</u>**
+#### 1 rok zkušeností
 
 - REST API, SQL
 
 ### Koníčky
 
-**<u>Sport</u>**
+#### Sport
 
 - Jakýkoliv sport, který mě udržuje aktivním a fit.
 
-**<u>Učení nových věcí</u>**
+#### Učení nových věcí
 
 - Rád se učím nové technologie, dovednosti a rozšiřuji své znalosti.
 
-**<u>Komunikace</u>**
+#### Komunikace
 
 - Komunikace s lidmi s podobným zájmem mě inspiruje a motivuje.
 
-**<u>Svět v IT</u>**
+#### Svět v IT
 
 - Věnuji se programování, designu aplikací a hledání inovativních řešení.
