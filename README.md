@@ -92,6 +92,31 @@ Pravidla:
 - Při přejmenování id sekce uprav i selektor v `index.css`, při změně názvu formuláře
   i skrytý `<form>` v `index.html`.
 
+### Komponenty
+
+Každá velká sekce stránky má hlavní soubor v `src/components/`, který jen načte data podle
+jazyka a poskládá podkomponenty ze své složky:
+
+```
+src/components/
+├── common/
+│   └── PageSection.tsx       # <section>/<footer> s id a nadpisem <h2> (sdílí všechny sekce)
+├── Header.tsx                # → header/: EyebrowPill, HeroTitle, AvailabilityCard, HeaderCta, HeroPhoto
+├── AboutMe.tsx               # → aboutMe/: AboutMeIntro, AboutMeDetails, EducationSection,
+│                             #   EducationCard, EducationLink, EducationReferences
+├── Projects.tsx              # → projects/: ProjectCard, ProjectLink, MoreProjectsCta
+├── WorkApproach.tsx
+├── Footer.tsx                # → footer/: ContactList, ContactForm, ContactField
+├── Navbar.tsx                # → navbar/: přepínače, odkazy, sociální sítě, mobilní drawer
+└── SkipLink.tsx
+```
+
+- Podkomponenta dostává obsah přes props, nebo si drobné UI texty (`UI_TEXT`) načte sama přes
+  `useLanguage()`. Nikdy neobsahuje text napevno.
+- Pomocná logika a typy sekce leží vedle komponent (např. `aboutMe/education.ts`,
+  `aboutMe/splitIntroFromMarkdown.ts`), styly sdílené jen v rámci sekce v `<sekce>/styles.ts`.
+- Obrázky z `src/assets/` se v podsložkách načítají přes `new URL('../../assets/…', import.meta.url)`.
+
 ## Spuštění lokálně
 
 Požadavky: Node.js (viz `.nvmrc`), [pnpm](https://pnpm.io/).

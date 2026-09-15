@@ -34,6 +34,20 @@ component's local `styles` object only composes them plus its own one-off layout
 **Stays local in the component:** a layout value used by that component only (e.g. `width: { md: '25%' }`),
 kept in its `const styles = { ... } as const` at the top of the file.
 
+## Component structure
+
+A top-level section file (`Header.tsx`, `AboutMe.tsx`, `Projects.tsx`, `Footer.tsx`,
+`WorkApproach.tsx`) only reads data by `lang` and composes subcomponents from its own folder
+(`header/`, `aboutMe/`, `projects/`, `footer/`, `navbar/`). Wrap a page section in
+`common/PageSection.tsx` (landmark + id + centred `<h2>`) instead of repeating that markup.
+
+- New visual block inside a section → new file in that section's folder, content passed as props.
+- Section-only helpers/types → next to the components (`aboutMe/education.ts`); styles shared by
+  several files of one section → `<section>/styles.ts`.
+- Prop types for content are written out structurally (`title: string`), not
+  `(typeof X_CONTENT)['cs'][...]` — `as const` makes cs/en literal types incompatible.
+- Asset URLs from a subfolder: `new URL('../../assets/<file>', import.meta.url)` (template literal with the file name).
+
 ## Pattern
 
 ```tsx

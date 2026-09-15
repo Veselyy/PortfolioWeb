@@ -1,13 +1,12 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import MuiMarkdown from 'mui-markdown';
 
-import { SECTION_IDS, sectionHeadingId } from '../constants/sections';
-import { WORK_APPROACH_CONTENT } from '../data/workApproachContent';
+import { SECTION_IDS } from '../constants/sections';
 import { useLanguage } from '../context/useLanguage';
-import { bold } from '../theme/sharedStyles';
+import { WORK_APPROACH_CONTENT } from '../data/workApproachContent';
+import PageSection from './common/PageSection';
 
 const styles = {
-  title: bold,
   markdown: {
     '& blockquote': {
       borderColor: 'info.main',
@@ -18,18 +17,13 @@ const styles = {
 function WorkApproach() {
   const { lang } = useLanguage();
   const content = WORK_APPROACH_CONTENT[lang];
-  const headingId = sectionHeadingId(SECTION_IDS.work);
 
   return (
-    <Stack component="section" id={SECTION_IDS.work} spacing={3} aria-labelledby={headingId}>
-      <Typography id={headingId} variant="h4" component="h2" align="center" sx={styles.title}>
-        {content.title}
-      </Typography>
-
+    <PageSection id={SECTION_IDS.work} title={content.title}>
       <Box sx={styles.markdown}>
         <MuiMarkdown>{content.markdown}</MuiMarkdown>
       </Box>
-    </Stack>
+    </PageSection>
   );
 }
 
