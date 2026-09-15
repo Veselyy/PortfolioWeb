@@ -3,7 +3,7 @@ import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Box, Stack, Typography } from '@mui/material';
 
-import { interactiveScale, linkRow } from '../../theme/sharedStyles';
+import { interactiveScale, linkRow, visuallyHidden } from '../../theme/sharedStyles';
 import { RADIUS } from '../../theme/tokens';
 
 const styles = {
@@ -26,6 +26,7 @@ const styles = {
     typography: 'body1',
     textDecoration: 'underline',
   },
+  visuallyHidden,
 } as const;
 
 const iconByKey = {
@@ -39,7 +40,8 @@ type ContactItem = {
   icon: keyof typeof iconByKey;
   text: string;
   href: string;
-  ariaLabel: string;
+  /** Screen-reader-only suffix describing what the link does, e.g. `(zavolat)`. */
+  purpose: string;
 };
 
 /** WhatsApp, e-mail and phone links, each with a round icon. */
@@ -47,16 +49,12 @@ function ContactList({ items }: { items: readonly ContactItem[] }) {
   return (
     <Stack spacing={2} sx={styles.list}>
       {items.map((item) => (
-        <Box
-          key={item.key}
-          component="a"
-          href={item.href}
-          aria-label={item.ariaLabel}
-          sx={styles.anchor}
-          target="_blank"
-        >
+        <Box key={item.key} component="a" href={item.href} sx={styles.anchor} target="_blank">
           <Box sx={styles.icon}>{iconByKey[item.icon]}</Box>
           <Typography sx={styles.text}>{item.text}</Typography>
+          <Box component="span" sx={styles.visuallyHidden}>
+            {item.purpose}
+          </Box>
         </Box>
       ))}
     </Stack>
