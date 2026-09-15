@@ -8,7 +8,7 @@ export const FOOTER_CONTENT = {
       {
         key: 'whatsapp',
         icon: 'whatsapp',
-        text: 'Martin Veselý',
+        text: CONTACT.name,
         href: CONTACT.whatsapp.href,
         purpose: UI_TEXT.cs.contactPurpose.whatsapp,
         external: true,
@@ -23,7 +23,7 @@ export const FOOTER_CONTENT = {
       {
         key: 'phone',
         icon: 'phone',
-        text: '+420 732 424 435',
+        text: CONTACT.whatsapp.phoneDisplay,
         href: `tel:${CONTACT.whatsapp.phone}`,
         purpose: UI_TEXT.cs.contactPurpose.phone,
       },
@@ -35,7 +35,7 @@ export const FOOTER_CONTENT = {
       {
         key: 'whatsapp',
         icon: 'whatsapp',
-        text: 'Martin Veselý',
+        text: CONTACT.name,
         href: CONTACT.whatsapp.href,
         purpose: UI_TEXT.en.contactPurpose.whatsapp,
         external: true,
@@ -50,7 +50,7 @@ export const FOOTER_CONTENT = {
       {
         key: 'phone',
         icon: 'phone',
-        text: '+420 732 424 435',
+        text: CONTACT.whatsapp.phoneDisplay,
         href: `tel:${CONTACT.whatsapp.phone}`,
         purpose: UI_TEXT.en.contactPurpose.phone,
       },

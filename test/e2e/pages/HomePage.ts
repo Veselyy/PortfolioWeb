@@ -4,6 +4,7 @@ import type { Result } from 'axe-core';
 
 import { SECTION_IDS, sectionHeadingId } from '../../../src/constants/sections';
 import { ContactForm } from './ContactForm';
+import { Footer } from './Footer';
 import { Hero } from './Hero';
 import { ProjectsSection } from './ProjectsSection';
 
@@ -58,6 +59,7 @@ export class HomePage {
   readonly hero: Hero;
   readonly projects: ProjectsSection;
   readonly contactForm: ContactForm;
+  readonly footer: Footer;
 
   constructor(page: Page) {
     this.page = page;
@@ -65,6 +67,7 @@ export class HomePage {
     this.hero = new Hero(page);
     this.projects = new ProjectsSection(page);
     this.contactForm = new ContactForm(page);
+    this.footer = new Footer(page);
 
     this.h1 = page.locator('h1');
     this.html = page.locator('html');

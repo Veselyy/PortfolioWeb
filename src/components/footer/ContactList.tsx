@@ -4,6 +4,8 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Box, Stack, Typography } from '@mui/material';
 
 import { EXTERNAL_LINK_PROPS } from '../../constants/links';
+import { useLanguage } from '../../context/useLanguage';
+import { UI_TEXT } from '../../data/uiText';
 import { interactiveScale, linkRow, visuallyHidden } from '../../theme/sharedStyles';
 import { RADIUS } from '../../theme/tokens';
 
@@ -52,6 +54,8 @@ type ContactItem = {
 
 /** WhatsApp, e-mail and phone links, each with a round icon. */
 function ContactList({ items }: { items: readonly ContactItem[] }) {
+  const { lang } = useLanguage();
+
   return (
     <Stack spacing={2} sx={styles.list}>
       {items.map((item) => (
@@ -67,6 +71,11 @@ function ContactList({ items }: { items: readonly ContactItem[] }) {
           <Box component="span" sx={styles.visuallyHidden}>
             {item.purpose}
           </Box>
+          {item.external && (
+            <Box component="span" sx={styles.visuallyHidden}>
+              {UI_TEXT[lang].newTab}
+            </Box>
+          )}
         </Box>
       ))}
     </Stack>
