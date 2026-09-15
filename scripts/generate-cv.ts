@@ -47,15 +47,6 @@ function stripMarkdownInline(text: string): string {
   return text.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1');
 }
 
-function formatPhone(phone: string): string {
-  const digits = phone.replace(/\D/g, '');
-  if (digits.length !== 12 || !digits.startsWith('420')) {
-    return phone;
-  }
-
-  return `+${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 9)} ${digits.slice(9)}`;
-}
-
 function formatHeader(): string {
   return [
     '<img src="../cv-assets/photo-of-me.jpg" class="cv-photo" alt="Martin Veselý" />',
@@ -131,7 +122,7 @@ function formatContactSection(): string {
     '## Kontakt',
     '',
     `- Email: ${CONTACT.email.address}`,
-    `- Telefon / WhatsApp: ${formatPhone(CONTACT.whatsapp.phone)}`,
+    `- Telefon / WhatsApp: ${CONTACT.whatsapp.phoneDisplay}`,
     `- GitHub: ${CONTACT.github.href}`,
     `- LinkedIn: ${LINKEDIN_URL}`,
   ].join('\n');

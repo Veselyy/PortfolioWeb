@@ -2,12 +2,25 @@ import AxeBuilder from '@axe-core/playwright';
 import type { Locator, Page } from '@playwright/test';
 import type { Result } from 'axe-core';
 
+import { SECTION_IDS, sectionHeadingId } from '../../../src/constants/sections';
 import { ContactForm } from './ContactForm';
+import { Footer } from './Footer';
 import { Hero } from './Hero';
 import { ProjectsSection } from './ProjectsSection';
 
 /** Same rule set Lighthouse's accessibility audit is built on. */
 const LIGHTHOUSE_EQUIVALENT_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
+
+/**
+ * Rules carrying one of the tags above that axe still ships as `experimental`, so it skips
+ * them unless asked. Lighthouse runs them, so the suite has to as well or a violation it
+ * reports would pass here.
+ */
+const EXPERIMENTAL_RULES_LIGHTHOUSE_RUNS = {
+  // WCAG 2.5.3: a control's accessible name must contain its visible text, or voice-control
+  // users can't activate it by reading the label off the screen.
+  'label-content-name-mismatch': { enabled: true },
+};
 
 export class HomePage {
   readonly page: Page;
@@ -36,10 +49,17 @@ export class HomePage {
   readonly mobileNavOpenButton: Locator;
   readonly mobileNavCloseButton: Locator;
 
+  /**
+   * One marker per lazily-loaded section, each rendered only once its chunk has arrived —
+   * `#about`'s own Suspense fallback keeps the section element, so its `<h2>` is the tell.
+   */
+  readonly lazySectionMarkers: readonly Locator[];
+
   /** Sections of the page, each with its own locators. */
   readonly hero: Hero;
   readonly projects: ProjectsSection;
   readonly contactForm: ContactForm;
+  readonly footer: Footer;
 
   constructor(page: Page) {
     this.page = page;
@@ -47,6 +67,7 @@ export class HomePage {
     this.hero = new Hero(page);
     this.projects = new ProjectsSection(page);
     this.contactForm = new ContactForm(page);
+    this.footer = new Footer(page);
 
     this.h1 = page.locator('h1');
     this.html = page.locator('html');
@@ -75,10 +96,23 @@ export class HomePage {
     this.mobileNavCloseButton = page.getByRole('button', {
       name: /Zavřít navigaci|Close navigation/,
     });
+
+    this.lazySectionMarkers = [
+      page.locator(`#${sectionHeadingId(SECTION_IDS.about)}`),
+      page.locator(`#${SECTION_IDS.work}`),
+      page.locator(`#${SECTION_IDS.contact}`),
+    ];
   }
 
   async goto() {
     await this.page.goto('/');
+
+    // `load` fires before AboutMe, WorkApproach and Footer mount — they are dynamic imports
+    // kicked off on React's first render. Without this wait an accessibility scan or an
+    // assertion silently runs against a page that is missing everything below the fold.
+    await Promise.all(
+      this.lazySectionMarkers.map((marker) => marker.waitFor({ state: 'attached' })),
+    );
   }
 
   /**
@@ -142,8 +176,13 @@ export class HomePage {
         '*, *::before, *::after { transition: none !important; animation: none !important; }',
     });
 
+    // `runOnly` goes inside options rather than via `.withTags()`: passing an options object
+    // replaces the builder's tag filter, so the two have to travel together.
     const results = await new AxeBuilder({ page: this.page })
-      .withTags(LIGHTHOUSE_EQUIVALENT_TAGS)
+      .options({
+        runOnly: { type: 'tag', values: LIGHTHOUSE_EQUIVALENT_TAGS },
+        rules: EXPERIMENTAL_RULES_LIGHTHOUSE_RUNS,
+      })
       .analyze();
 
     return results.violations;

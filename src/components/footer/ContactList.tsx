@@ -3,7 +3,10 @@ import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Box, Stack, Typography } from '@mui/material';
 
-import { interactiveScale, linkRow } from '../../theme/sharedStyles';
+import { EXTERNAL_LINK_PROPS } from '../../constants/links';
+import { useLanguage } from '../../context/useLanguage';
+import { UI_TEXT } from '../../data/uiText';
+import { interactiveScale, linkRow, visuallyHidden } from '../../theme/sharedStyles';
 import { RADIUS } from '../../theme/tokens';
 
 const styles = {
@@ -26,6 +29,7 @@ const styles = {
     typography: 'body1',
     textDecoration: 'underline',
   },
+  visuallyHidden,
 } as const;
 
 const iconByKey = {
@@ -39,11 +43,19 @@ type ContactItem = {
   icon: keyof typeof iconByKey;
   text: string;
   href: string;
-  ariaLabel: string;
+  /** Screen-reader-only suffix describing what the link does, e.g. `(zavolat)`. */
+  purpose: string;
+  /**
+   * Only for links leading to another website. `mailto:`/`tel:` hand off to a local app and
+   * have no page to show, so opening them in a new tab just strands an empty one.
+   */
+  external?: boolean;
 };
 
 /** WhatsApp, e-mail and phone links, each with a round icon. */
 function ContactList({ items }: { items: readonly ContactItem[] }) {
+  const { lang } = useLanguage();
+
   return (
     <Stack spacing={2} sx={styles.list}>
       {items.map((item) => (
@@ -51,12 +63,19 @@ function ContactList({ items }: { items: readonly ContactItem[] }) {
           key={item.key}
           component="a"
           href={item.href}
-          aria-label={item.ariaLabel}
           sx={styles.anchor}
-          target="_blank"
+          {...(item.external ? EXTERNAL_LINK_PROPS : {})}
         >
           <Box sx={styles.icon}>{iconByKey[item.icon]}</Box>
           <Typography sx={styles.text}>{item.text}</Typography>
+          <Box component="span" sx={styles.visuallyHidden}>
+            {item.purpose}
+          </Box>
+          {item.external && (
+            <Box component="span" sx={styles.visuallyHidden}>
+              {UI_TEXT[lang].newTab}
+            </Box>
+          )}
         </Box>
       ))}
     </Stack>

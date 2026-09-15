@@ -2,7 +2,10 @@
 <html lang="cs">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- 64px PNG rather than the source SVG: the artwork is a vectorised portrait whose
+         shading paths weighed 128 kB, none of which is legible at the 16-32 px a favicon
+         is actually drawn at. 64px covers 32 CSS px on a 2x display. -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Both subsets are preloaded: Czech copy needs latin for the bulk of the text and
          latin-ext for the diacritics, and the ext file would otherwise not be discovered
