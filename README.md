@@ -49,6 +49,74 @@ obsah podle role, o kterou se zrovna hlásím (`?role=frontend|backend|support`)
 - **Netlify** — hosting
 - **Netlify Functions** + **Nodemailer** — odeslání kontaktního formuláře
 
+## Struktura kódu: styly, konstanty a texty
+
+Komponenty v sobě nedrží „magická čísla“ ani napevno zapsané texty. Každá sdílená nebo
+významová hodnota má jedno místo, odkud se importuje:
+
+```
+src/
+├── theme/
+│   ├── tokens.ts        # design tokeny: barvy (light/dark), font, tloušťky písma, radiusy,
+│   │                    # velikost dotykové plochy, focus outline, hover scale, efekty, rozměry přepínačů
+│   ├── sharedStyles.ts  # opakované sx kousky: bold, linkRow, interactiveScale, bulletList,
+│   │                    # visuallyHidden, getContrastColor
+│   └── theme.ts         # MUI téma (createAppTheme) sestavené z tokenů
+├── constants/
+│   ├── sections.ts      # id sekcí (#about, #projects…), sectionHref(), sectionHeadingId()
+│   ├── headerRole.ts    # název query parametru ?role= a výchozí role
+│   ├── preferences.ts   # klíče localStorage, výchozí jazyk a motiv
+│   ├── env.ts           # IS_OPEN_TO_WORK z .env
+│   ├── contactForm.ts   # název Netlify formuláře, validace (min. délka zprávy, regex e-mailu)
+│   └── links.ts         # EXTERNAL_LINK_PROPS (target="_blank" + rel)
+├── data/
+│   ├── *Content.ts      # obsah sekcí (cs / en)
+│   ├── aboutMeMarkdown.ts # markdown sekce O mně (src/content/about-me.*.md)
+│   ├── contactFormText.ts
+│   └── uiText.ts        # drobné texty rozhraní: aria labely, skip link, navigace, uvozovky
+└── index.css            # jen to, co musí být čisté CSS: proměnné --font-family-base,
+                         # --mobile-navbar-offset a scroll-margin sekcí
+```
+
+Pravidla:
+
+- **Hodnota se opakuje nebo patří k vizuálnímu stylu** (barva, font, hover efekt, focus) →
+  `src/theme/tokens.ts`, případně hotový kousek v `sharedStyles.ts`.
+- **Hodnota se týká jen jedné komponenty** (např. šířka fotky v hlavičce) → zůstává v lokálním
+  objektu `styles` na začátku souboru komponenty.
+- **Text viditelný uživateli nebo čtečkou obrazovky** → `src/data/` (vždy `cs` i `en`).
+  Komponenty neobsahují žádný obsah ani texty, ani markdown importy: jen je načtou z `src/data/`
+  podle aktuálního jazyka a vykreslí.
+- Čísla ve spacing vlastnostech `sx` (`p: 2`) jsou jednotky MUI (1 = 8 px), řetězce (`'10px'`)
+  jsou doslovné CSS.
+- Při přejmenování id sekce uprav i selektor v `index.css`, při změně názvu formuláře
+  i skrytý `<form>` v `index.html`.
+
+### Komponenty
+
+Každá velká sekce stránky má hlavní soubor v `src/components/`, který jen načte data podle
+jazyka a poskládá podkomponenty ze své složky:
+
+```
+src/components/
+├── common/
+│   └── PageSection.tsx       # <section>/<footer> s id a nadpisem <h2> (sdílí všechny sekce)
+├── Header.tsx                # → header/: EyebrowPill, HeroTitle, AvailabilityCard, HeaderCta, HeroPhoto
+├── AboutMe.tsx               # → aboutMe/: AboutMeIntro, AboutMeDetails, EducationSection,
+│                             #   EducationCard, EducationLink, EducationReferences
+├── Projects.tsx              # → projects/: ProjectCard, ProjectLink, MoreProjectsCta
+├── WorkApproach.tsx
+├── Footer.tsx                # → footer/: ContactList, ContactForm, ContactField
+├── Navbar.tsx                # → navbar/: přepínače, odkazy, sociální sítě, mobilní drawer
+└── SkipLink.tsx
+```
+
+- Podkomponenta dostává obsah přes props, nebo si drobné UI texty (`UI_TEXT`) načte sama přes
+  `useLanguage()`. Nikdy neobsahuje text napevno.
+- Pomocná logika a typy sekce leží vedle komponent (např. `aboutMe/education.ts`,
+  `aboutMe/splitIntroFromMarkdown.ts`), styly sdílené jen v rámci sekce v `<sekce>/styles.ts`.
+- Obrázky z `src/assets/` se v podsložkách načítají přes `new URL('../../assets/…', import.meta.url)`.
+
 ## Spuštění lokálně
 
 Požadavky: Node.js (viz `.nvmrc`), [pnpm](https://pnpm.io/).

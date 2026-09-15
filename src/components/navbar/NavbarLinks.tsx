@@ -2,9 +2,8 @@ import { Stack } from '@mui/material';
 
 import { NavbarLink } from './NavbarLink';
 import { navbarLinks } from '../../data/navbar/navbarLinksData';
+import { UI_TEXT } from '../../data/uiText';
 import { useLanguage } from '../../context/useLanguage';
-
-const NAV_ARIA_LABEL = { cs: 'Navigace', en: 'Navigation' } as const;
 
 type NavbarLinksProps = {
   direction?: 'row' | 'column';
@@ -20,7 +19,7 @@ export function NavbarLinks({ direction = 'row', spacing = 8, onNavigate }: Navb
       component="nav"
       direction={direction}
       spacing={spacing}
-      aria-label={NAV_ARIA_LABEL[lang]}
+      aria-label={UI_TEXT[lang].nav.landmark}
       sx={{ alignItems: 'center' }}
     >
       {navbarLinks[lang].map(({ id, label, href, ariaLabel }) => (

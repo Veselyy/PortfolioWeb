@@ -1,7 +1,5 @@
 import { lazy, Suspense } from 'react';
 import { Box, Container, Divider } from '@mui/material';
-import type { Theme } from '@mui/material/styles';
-import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeModeProvider } from './context/ThemeModeProvider';
 import { LanguageProvider } from './context/LanguageProvider';
@@ -9,6 +7,9 @@ import SkipLink from './components/SkipLink';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Projects from './components/Projects';
+import { SECTION_IDS } from './constants/sections';
+import { getContrastColor } from './theme/sharedStyles';
+import { LAYOUT } from './theme/tokens';
 
 // Both render markdown, so eager imports would pull mui-markdown (~89 kB) into the initial
 // bundle for content that starts below the fold. Loading them separately keeps that weight
@@ -20,23 +21,23 @@ const Footer = lazy(() => import('./components/Footer'));
 
 const styles = {
   container: {
-    width: '95%',
-    maxWidth: '1200px',
+    width: LAYOUT.containerWidth,
+    maxWidth: LAYOUT.containerMaxWidth,
     marginInline: 'auto',
     paddingBottom: '10px',
     display: 'flex',
     flexDirection: 'column',
-    gap: { xs: 4, md: 6 },
+    gap: LAYOUT.sectionGap,
   },
   main: {
     display: 'flex',
     flexDirection: 'column',
-    gap: { xs: 4, md: 6 },
+    gap: LAYOUT.sectionGap,
   },
   divider: {
-    width: '40%',
+    width: LAYOUT.dividerWidth,
     mx: 'auto',
-    bgcolor: (theme: Theme) => (theme.palette.mode === 'dark' ? 'common.white' : 'common.black'),
+    bgcolor: getContrastColor,
   },
   navbar: {
     width: { xs: '100vw', md: 'auto' },
@@ -57,8 +58,10 @@ function App() {
           </Box>
           <Header />
           <Divider sx={styles.divider} />
-          <Box component="main" id="main" sx={styles.main}>
-            <Suspense fallback={<Box component="section" id="about" aria-hidden="true" />}>
+          <Box component="main" id={SECTION_IDS.main} sx={styles.main}>
+            <Suspense
+              fallback={<Box component="section" id={SECTION_IDS.about} aria-hidden="true" />}
+            >
               <AboutMe />
             </Suspense>
             <Divider sx={styles.divider} />

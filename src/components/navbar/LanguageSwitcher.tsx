@@ -1,23 +1,17 @@
 import { Box } from '@mui/material';
 
 import { useLanguage } from '../../context/useLanguage';
-import { LANGUAGE_SWITCHER_TEXT } from '../../data/languageSwitcherText';
+import { LANGUAGE_SWITCHER_LABELS, LANGUAGE_SWITCHER_TEXT } from '../../data/languageSwitcherText';
+import { bold } from '../../theme/sharedStyles';
+import { PILL_SWITCH_SIZES } from '../../theme/tokens';
 import PillToggleSwitch from './PillSwitch';
-
-type Size = 'medium' | 'small';
-
-const SIZES: Record<Size, { track: number; height: number; thumb: number; labelFontSize: number }> =
-  {
-    medium: { track: 64, height: 32, thumb: 24, labelFontSize: 12 },
-    small: { track: 52, height: 26, thumb: 20, labelFontSize: 10 },
-  };
 
 function LanguageSwitcher({ small = false }: { small?: boolean }) {
   const { lang, toggle } = useLanguage();
   const isCs = lang === 'cs';
   const text = LANGUAGE_SWITCHER_TEXT[lang];
-  const size: Size = small ? 'small' : 'medium';
-  const { track, height, thumb, labelFontSize } = SIZES[size];
+  const { track, height, thumb, labelFontSize } = PILL_SWITCH_SIZES[small ? 'small' : 'medium'];
+  const labelSx = { fontSize: labelFontSize, ...bold };
 
   return (
     <PillToggleSwitch
@@ -27,13 +21,13 @@ function LanguageSwitcher({ small = false }: { small?: boolean }) {
       ariaLabel={text.ariaLabel}
       tooltip={text.tooltip}
       startContent={
-        <Box component="span" sx={{ fontSize: labelFontSize, fontWeight: 700 }}>
-          EN
+        <Box component="span" sx={labelSx}>
+          {LANGUAGE_SWITCHER_LABELS.en}
         </Box>
       }
       endContent={
-        <Box component="span" sx={{ fontSize: labelFontSize, fontWeight: 700 }}>
-          CS
+        <Box component="span" sx={labelSx}>
+          {LANGUAGE_SWITCHER_LABELS.cs}
         </Box>
       }
     />

@@ -8,6 +8,4 @@ export type ThemeModeContextValue = {
   toggle: () => void;
 };
 
-export const THEME_MODE_STORAGE_KEY = 'themeMode';
-
 export const ThemeModeContext = createContext<ThemeModeContextValue | null>(null);

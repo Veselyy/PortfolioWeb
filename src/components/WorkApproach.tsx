@@ -1,11 +1,12 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import MuiMarkdown from 'mui-markdown';
 
-import { WORK_APPROACH_CONTENT } from '../data/workApproachContent';
+import { SECTION_IDS } from '../constants/sections';
 import { useLanguage } from '../context/useLanguage';
+import { WORK_APPROACH_CONTENT } from '../data/workApproachContent';
+import PageSection from './common/PageSection';
 
 const styles = {
-  title: { fontWeight: 700 },
   markdown: {
     '& blockquote': {
       borderColor: 'info.main',
@@ -18,15 +19,11 @@ function WorkApproach() {
   const content = WORK_APPROACH_CONTENT[lang];
 
   return (
-    <Stack component="section" id="work" spacing={3} aria-labelledby="work-heading">
-      <Typography id="work-heading" variant="h4" component="h2" align="center" sx={styles.title}>
-        {content.title}
-      </Typography>
-
+    <PageSection id={SECTION_IDS.work} title={content.title}>
       <Box sx={styles.markdown}>
         <MuiMarkdown>{content.markdown}</MuiMarkdown>
       </Box>
-    </Stack>
+    </PageSection>
   );
 }
 

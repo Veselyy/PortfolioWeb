@@ -1,5 +1,6 @@
 import { Link } from '@mui/material';
-import type { Theme } from '@mui/material/styles';
+
+import { bold, interactiveScale } from '../../theme/sharedStyles';
 
 type NavbarLinkProps = {
   label: string;
@@ -10,17 +11,9 @@ type NavbarLinkProps = {
 
 const styles = {
   link: {
-    fontWeight: 700,
+    ...bold,
     fontSize: 16,
-    transition: (theme: Theme) =>
-      theme.transitions.create(['transform', 'outline-offset'], {
-        duration: theme.transitions.duration.shorter,
-      }),
-    '&:hover, &:focus-visible': { transform: 'scale(1.1)' },
-    '&:focus-visible': {
-      outline: '1px solid currentColor',
-      outlineOffset: 4,
-    },
+    ...interactiveScale,
   },
 } as const;
 

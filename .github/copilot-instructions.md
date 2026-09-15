@@ -9,6 +9,13 @@ the generated CV as well as the site.
 - **Components**: functional components + hooks only. Styles via CSS Modules or MUI's `sx` —
   flag any Tailwind classes. Props should be typed (strict mode); avoid prop-drilling in favor of
   context/composition.
+- **Constants and styling**: shared design values live in `src/theme/tokens.ts`, repeated `sx`
+  patterns in `src/theme/sharedStyles.ts`, the MUI theme in `src/theme/theme.ts`, and non-style
+  constants (section ids, storage keys, env flags, form rules) in `src/constants/`. Small UI
+  strings (aria labels etc.) belong in `src/data/uiText.ts`. Flag hardcoded colours, repeated
+  `fontWeight: 700` / focus-outline / hover-scale blocks, `import.meta.env` comparisons, or
+  `{ cs, en }` label objects defined inside components. One-off layout values in a component's
+  local `styles` object are fine.
 - **Tests are Playwright only** — there is no Jest, no React Testing Library and no jsdom in
   this repo. Every test is an end-to-end spec under `test/e2e/`, running against the
   production build. Flag any `*.test.ts(x)` file, any `jest`/`@testing-library/*` import, and

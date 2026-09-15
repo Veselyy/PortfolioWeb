@@ -1,9 +1,10 @@
 import { Box } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 
+import { SECTION_IDS, sectionHref } from '../constants/sections';
+import { UI_TEXT } from '../data/uiText';
 import { useLanguage } from '../context/useLanguage';
-
-const SKIP_LINK_TEXT = { cs: 'Přeskočit na obsah', en: 'Skip to content' } as const;
+import { bold } from '../theme/sharedStyles';
 
 const styles = {
   position: 'absolute',
@@ -16,7 +17,7 @@ const styles = {
   py: 1,
   borderRadius: 1,
   textDecoration: 'none',
-  fontWeight: 700,
+  ...bold,
   '&:focus-visible': {
     top: 8,
   },
@@ -26,8 +27,8 @@ function SkipLink() {
   const { lang } = useLanguage();
 
   return (
-    <Box component="a" href="#main" sx={styles}>
-      {SKIP_LINK_TEXT[lang]}
+    <Box component="a" href={sectionHref(SECTION_IDS.main)} sx={styles}>
+      {UI_TEXT[lang].skipLink}
     </Box>
   );
 }

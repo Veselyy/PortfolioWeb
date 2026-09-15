@@ -1,8 +1,10 @@
 import { useCallback } from 'react';
 import { animateScroll } from 'react-scroll';
 
+import { SCROLL } from '../theme/tokens';
+
 export function useSmoothScrollTo() {
-  return useCallback((element: HTMLElement, duration = 500) => {
+  return useCallback((element: HTMLElement, duration: number = SCROLL.durationMs) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       element.scrollIntoView({ block: 'start' });
       return;
@@ -25,6 +27,6 @@ export function useSmoothScrollTo() {
 
     window.setTimeout(() => {
       html.style.scrollBehavior = previousScrollBehavior;
-    }, duration + 50);
+    }, duration + SCROLL.restoreDelayMs);
   }, []);
 }
