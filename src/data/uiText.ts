@@ -16,7 +16,6 @@ export const UI_TEXT = {
     contactAria: {
       whatsapp: 'Kontaktovat přes WhatsApp',
       email: 'Napsat e-mail',
-      phone: 'Zavolat',
     },
     /**
      * Screen-reader-only suffix for the footer contact links, which already show the contact
@@ -43,7 +42,6 @@ export const UI_TEXT = {
     contactAria: {
       whatsapp: 'Contact via WhatsApp',
       email: 'Send an email',
-      phone: 'Call',
     },
     contactPurpose: {
       whatsapp: '(contact via WhatsApp)',

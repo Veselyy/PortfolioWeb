@@ -11,6 +11,7 @@ export const FOOTER_CONTENT = {
         text: 'Martin Veselý',
         href: CONTACT.whatsapp.href,
         purpose: UI_TEXT.cs.contactPurpose.whatsapp,
+        external: true,
       },
       {
         key: 'email',
@@ -37,6 +38,7 @@ export const FOOTER_CONTENT = {
         text: 'Martin Veselý',
         href: CONTACT.whatsapp.href,
         purpose: UI_TEXT.en.contactPurpose.whatsapp,
+        external: true,
       },
       {
         key: 'email',
