@@ -48,6 +48,6 @@
     "prettier": "^3.8.2",
     "typescript": "~6.0.2",
     "vesely-dev-config": "git+https://github.com/Veselyy/vesely-dev-config.git",
-    "vite": "^7.3.6"
+    "vite": "^7.3.7"
   }
 }
